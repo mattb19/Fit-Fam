@@ -48,6 +48,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="/mlb">Profile</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/mlb">Search</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/mlb">Acct</a>
+            </li>
             </ul>
         </div>
         </div>
