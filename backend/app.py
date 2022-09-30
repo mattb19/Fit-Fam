@@ -8,7 +8,7 @@ CORS(app, resources={r'/*':{'origins': 'http://localhost:8080', "allow_headers" 
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
-    return "Hello Backend"
+    return "This message is a test for backend."
 
 @app.route("/")
 def default():

@@ -60,5 +60,36 @@
     </nav>
     </div>
     <h3 class="large centeralign">WOOHOO FITFAM!!!!</h3>
+    <p></p>
+    <p></p>
+    <p>{{ backend }}</p>
 </template>
+
+<script>
+    import axios from "axios";
+    
+    export default {
+      data() {
+        return {
+          backend: "",
+        };
+      },
+      methods: {
+        getStats() {
+          const path = "http://127.0.0.1:5000/home";
+          axios
+            .get(path)
+            .then((res) => {
+              this.backend = res.data;
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        },
+      },
+      created() {
+        this.getStats();
+      },
+    };
+</script>
     
