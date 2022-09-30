@@ -40,7 +40,7 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto">
             <li class="nav-item">
-                <a class="nav-link active" href="/">Global</a>
+                <a class="nav-link" href="/">Global</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/groups">Groups</a>
@@ -52,14 +52,14 @@
                 <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link active" href="/login">Login</a>
             </li>
             </ul>
         </div>
         </div>
     </nav>
     </div>
-    <h3 class="large centeralign">WOOHOO FITFAM!!!!</h3>
+    <h3 class="large centeralign">WOOHOO LOGIN!!!!</h3>
     <p></p>
     <p></p>
     <p>{{ backend }}</p>
