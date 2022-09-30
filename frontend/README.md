@@ -1,4 +1,4 @@
-# fitfam1
+# frontend
 
 ## Project setup
 ```

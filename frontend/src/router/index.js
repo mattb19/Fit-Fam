@@ -1,45 +1,49 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../components/HomeView.vue'
-import loginView from '../components/loginView.vue'
-import search from '../components/search.vue'
-import profileView from '../components/profileView.vue'
-import groupsView from '../components/groupsView.vue'
+import VueRouter from "vue-router";
+import Vue from "vue";
+import HomeView from "../components/HomeView.vue";
+import loginView from "../components/loginView.vue";
+import searchView from "../components/searchView.vue";
+import profileView from "../components/profileView.vue";
+import groupsView from "../components/groupsView.vue";
+
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/home',
-    name: 'home',
-    component: HomeView
+    path: "/home",
+    name: "home",
+    component: HomeView,
   },
   {
-    path: '/login',
-    name: 'login',
-    component: loginView
+    path: "/login",
+    name: "login",
+    component: loginView,
   },
   {
-    path: '/search',
-    name: 'search',
-    component: search
+    path: "/search",
+    name: "search",
+    component: searchView,
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: profileView
+    path: "/profile",
+    name: "profile",
+    component: profileView,
   },
   {
-    path: '/groups',
-    name: 'groups',
-    component: groupsView
+    path: "/groups",
+    name: "groups",
+    component: groupsView,
   },
   {
-    path: '/',
-    redirect: '/home'
-  }
-]
+    path: "/",
+    redirect: "/home",
+  },
+];
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes
-})
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes,
+});
 
-export default router
+export default router;

@@ -40,10 +40,10 @@
               <a class="nav-link" href="/groups">Groups</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/profile">Profile</a>
+              <a class="nav-link" href="/profile">Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/search">Search</a>
+              <a class="nav-link active" href="/search">Search</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/login">Login</a>
@@ -52,7 +52,7 @@
         </div>
       </div>
     </nav>
-    <h3 class="large centeralign">WOOHOO PROFILES OH YEAH!!!!</h3>
+    <h3 class="large centeralign">WOOHOO SEARCH!!!!</h3>
     <p></p>
     <p></p>
     <p>{{ backend }}</p>

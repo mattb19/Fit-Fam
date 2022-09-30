@@ -1,11 +1,10 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import "bootstrap";
-import BootstrapVue from "bootstrap-vue";
+console.log("Running on Vue.js version " + Vue.version);
 
 Vue.config.productionTip = false;
-Vue.use(BootstrapVue);
+
 new Vue({
   router,
   render: (h) => h(App),
