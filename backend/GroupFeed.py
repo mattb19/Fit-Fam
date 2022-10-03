@@ -1,0 +1,2 @@
+class GroupFeed():
+    pass

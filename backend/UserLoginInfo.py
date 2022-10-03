@@ -1,0 +1,2 @@
+class UserLoginInfo():
+    pass
