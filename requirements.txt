@@ -11,13 +11,21 @@ To fix lint errors
     npm run lint
 
 In another terminal, navigate to the backend folder and run the following
-python3 -m pip install flask
-python3 -m pip install flask-cors
+    python3 -m pip install flask
+    python3 -m pip install flask-cors
 
 To run the backend
     python3 -m flask run
 
-
 It is ideal to run the backend and then open a new terminal and run the front end second
+
+
+Extensions
+    eslint
+    Intellisense
+    Intellisense (Pylance)
+    Vue 3 Snippets
+    Vue Language
+
 
 
