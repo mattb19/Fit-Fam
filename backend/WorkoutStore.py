@@ -1,0 +1,2 @@
+class WorkoutStore:
+    pass
