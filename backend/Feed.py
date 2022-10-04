@@ -5,7 +5,7 @@ class Feed():
     pass
 
 
-def queryFeed(filter: String) -> List[Post]:
+def queryFeed(filter):
     """
     Queries the SQL database for a number of posts matching parameters passed through the string argument.
     :param filter: takes a string that will be pipe delimited as query parameters
@@ -13,7 +13,7 @@ def queryFeed(filter: String) -> List[Post]:
     """
     pass
 
-def loadBufferedFeed(filter: String, positionPostId: Int) -> List[Post]:
+def loadBufferedFeed(filter, positionPostId):
     """
     A continuation of the queryFeed() function. Queries more posts.
     :param filter: takes a string that will be pipe delimited as query parameters
@@ -22,7 +22,7 @@ def loadBufferedFeed(filter: String, positionPostId: Int) -> List[Post]:
     """
     pass
 
-def getFilter() -> String:
+def getFilter():
     """
     Call the search querier to get a tag search string.
     :params: None
@@ -30,7 +30,7 @@ def getFilter() -> String:
     """
     pass
 
-def like(userId: Int, postId: Int) -> None:
+def like(userId, postId):
     """
     Provides like counting functionality to posts by adding a user to a list of previous like'ers and increments the like counter.
     :param userId: Int of who is liking
@@ -39,7 +39,7 @@ def like(userId: Int, postId: Int) -> None:
     """
     pass
 
-def deletePost(userId: Int, postId: Int) -> None:
+def deletePost(userId, postId):
     """
     Tells the SQL database to delete a post of a user when requested by a user. 
     :param userId: Int of who is requesting the deletion
