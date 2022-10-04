@@ -25,6 +25,9 @@ class UserWorkout:
         self.__workoutList = workoutList
     
     def getWorkoutFromList(self, workout):
+        '''
+        Gets a specified workout (string: workout) from dictionary and returns the details of the workout
+        '''
         return self.__workoutList[workout]
     
 
