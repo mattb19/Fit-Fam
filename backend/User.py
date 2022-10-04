@@ -6,7 +6,42 @@ class User:
         self.__email = email            # string
         self.__nickname = None          # string
         self.__password = password      # string | password is hashed before creating user
+        self.__roles = []               # List of Roles
 
+    def deleteUser(self, userId):
+        '''
+        Deletes an instance of the User class
+        :param name: userId
+        :return: None
+        '''
+        pass
+
+    def setUserRole(self, role):
+        '''
+        Add a role to a user
+        :param name: role of type SiteRole or GroupRole
+        :return: None
+        '''
+        pass
+    def getUserRoles(self, userId):
+        '''
+        :param userId: string user ID
+        :return: list of a user's roles
+        '''
+    def deleteUserRole(self, role):
+        '''
+        Removes a role from a user
+        :param name: SiteRole or GroupRole
+        '''
+        pass
+
+    def hashPassword(self, password):
+        '''
+        Hashes a given password for secure storing
+        :param name: password string
+        :return: hashed password string
+        '''
+        pass
 
     '''
     Setters and Getters
