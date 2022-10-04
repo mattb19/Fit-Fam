@@ -1,6 +1,11 @@
 class UserWorkout:
     def __init__(self, userId, muscleGroup, workoutList):
-        self.__userId = userId
+        '''
+        Takes a userID integer
+        Takes a muscleGroup string
+        Takes a workoutList dictionary
+        '''
+        self.__userId = int(userId)
         self.__muscleGroup = muscleGroup
         self.__workoutList = workoutList
     
@@ -18,5 +23,8 @@ class UserWorkout:
     
     def setWorkoutList(self, workoutList):
         self.__workoutList = workoutList
+    
+    def getWorkoutFromList(self, workout):
+        return self.__workoutList[workout]
     
 
