@@ -17,7 +17,7 @@ Vue.js 2.7.10 and Python 3.10.7
 ## FIRST TIME INSTALLATION MAC:
 1. Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
 2. Clone the github repo into your desired directory then open the directory in vscode
-3. Open terminal in vscode, navigate to the backend folder
+3. Open terminal in vscode, navigate to the backend folder and
 run the following:
 
     python3 -m pip install flask
@@ -27,7 +27,7 @@ using:
 
     python3 -m flask run
 6. While keeping the backend terminal instance running, open a NEW terminal instance
-7. Navigate to the frontend folder
+7. Navigate to the frontend folder and
 run the following:
 
     npm i -g @vue/cli
@@ -43,7 +43,7 @@ using:
 ## FIRST TIME INSTALLATION WINDOWS:
 1. Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
 2. Clone the github repo into your desired directory then open the directory in vscode
-3. Open terminal in vscode, navigate to the backend folder
+3. Open terminal in vscode, navigate to the backend folder and
 run the following:
 
     python -m pip install flask
@@ -53,7 +53,7 @@ using:
 
     python -m flask run
 5. While keeping the backend terminal instance running, open a NEW terminal instance
-6. Navigate to the frontend folder
+6. Navigate to the frontend folder and
 run the following:
 
     npm i -g @vue/cli
