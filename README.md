@@ -92,7 +92,6 @@ type:
 4. Navigate to the frontend folder and
 type: 
 
-        npm run lint -- --fix
         npm run serve
 
 ---
