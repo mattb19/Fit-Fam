@@ -15,7 +15,7 @@ Vue.js 2.7.10 and Python 3.10.7
 - WINDOWS
         
 ## FIRST TIME INSTALLATION MAC:
-1. Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
+1. Install Vue.js 2.7.10, Python 3.10.7 and Visual Studio Code
 2. Clone the github repo into your desired directory then open the directory in vscode
 3. Open terminal in vscode, navigate to the backend folder and
 run the following:
@@ -41,7 +41,7 @@ using:
 ---
 
 ## FIRST TIME INSTALLATION WINDOWS:
-1. Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
+1. Install Vue.js 2.7.10, Python 3.10.7 and Visual Studio Code
 2. Clone the github repo into your desired directory then open the directory in vscode
 3. Open terminal in vscode, navigate to the backend folder and
 run the following:
