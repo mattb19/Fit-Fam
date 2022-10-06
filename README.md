@@ -1,79 +1,77 @@
-# CSC 450 - 2 Team Project
-## Team Members: Nick, Noah, Jacob, Michael, Matt
-## Using Vue.js 2.7.10 and Python 3.10.7
+CSC 450 - 2 Team Project
+========================
+## Team Members:
+Nick, Noah, Jacob, Michael, Matt
+## Using
+Vue.js 2.7.10 and Python 3.10.7
 
 ## TABLE OF CONTENTS:
-### First Time Installations:
-######        MAC
-######        WINDOWS
 
+### First Time Installations:
+    - MAC
+    - WINDOWS
 ### Running:
-######        MAC
-######        WINDOWS
+    - MAC
+    - WINDOWS
         
-# FIRST TIME INSTALLATION MAC:
-### Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
-### Clone the github repo into your desired directory then open the directory in vscode
-### Open terminal in vscode, navigate to the backend folder and run the following:
+## FIRST TIME INSTALLATION MAC:
+1. Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
+2. Clone the github repo into your desired directory then open the directory in vscode
+3. Open terminal in vscode, navigate to the backend folder and run the following:
     python3 -m pip install flask
     python3 -m pip install flask-cors
-
-### Run it with:
+4. Run it with:
     python3 -m flask run
-
-### While keeping the backend terminal instance running, open a NEW terminal instance
-### Navigate to the frontend folder and run the following:
+5. While keeping the backend terminal instance running, open a NEW terminal instance
+6. Navigate to the frontend folder and run the following:
     npm i -g @vue/cli
     npm i --save-dev eslint eslint-plugin-vue
     npm i axios
-
-### Run it with:
+7. Run it with:
     npm run serve
 
 --------------------------------------------------------------------------------------------------
 
-# FIRST TIME INSTALLATION WINDOWS:
-### Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
-### Clone the github repo into your desired directory then open the directory in vscode
-### Open terminal in vscode, navigate to the backend folder and run the following:
+## FIRST TIME INSTALLATION WINDOWS:
+1. Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
+2. Clone the github repo into your desired directory then open the directory in vscode
+3. Open terminal in vscode, navigate to the backend folder and run the following:
     python -m pip install flask
     python -m pip install flask-cors
-
-### Run it with:
+4. Run it with:
     python -m flask run
-
-### While keeping the backend terminal instance running, open a NEW terminal instance
-### Navigate to the frontend folder and run the following:
+5. While keeping the backend terminal instance running, open a NEW terminal instance
+6. Navigate to the frontend folder and run the following:
     npm i -g @vue/cli
     npm i --save-dev eslint eslint-plugin-vue
     npm i axios
-
-### Clean up the incorrect End of Line characters with:
+7. Clean up the incorrect End of Line characters with:
     npm run lint -- --fix
-
-### Run it with:
+8. Run it with:
     npm run serve
 
-# RUNNING ON MAC:
-### Open a new terminal instance
-### Navigate to the backend folder and type:
+--------------------------------------------------------------------------------------------------
+
+## RUNNING ON MAC:
+1. Open a new terminal instance
+2. Navigate to the backend folder and type:
     python3 -m flask run
-
-### Open a NEW terminal instance (without closing the backend one)
-### Navigate to the frontend folder and type:
+3. Open a NEW terminal instance (without closing the backend one)
+4. Navigate to the frontend folder and type:
     npm run serve
 
-# RUNNING ON WINDOWS:
-### Open a new terminal instance
-### Navigate to the backend folder and type:
+## RUNNING ON WINDOWS:
+1. Open a new terminal instance
+2. Navigate to the backend folder and type:
     python -m flask run
-
-### Open a NEW terminal instance (without closing the backend one)
-### Navigate to the frontend folder and type:
+3. Open a NEW terminal instance (without closing the backend one)
+4. Navigate to the frontend folder and type:
     npm run lint -- --fix
     npm run serve
 
-# Extensions
+--------------------------------------------------------------------------------------------------
+
+## Extensions
     eslint
     Intellisense
     Intellisense (Pylance)
