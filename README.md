@@ -7,12 +7,12 @@ Vue.js 2.7.10 and Python 3.10.7
 
 ## TABLE OF CONTENTS:  
 
-###     First Time Installations:
--       MAC
--       WINDOWS
+### First Time Installations:
+- MAC
+- WINDOWS
 ### Running:
--       MAC
--       WINDOWS
+- MAC
+- WINDOWS
         
 ## FIRST TIME INSTALLATION MAC:
 1. Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
