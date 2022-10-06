@@ -21,14 +21,14 @@ Vue.js 2.7.10 and Python 3.10.7
     python3 -m pip install flask
     python3 -m pip install flask-cors
 4. Run it with:
-    `python3 -m flask run`
-5. While keeping the backend terminal instance running, open a NEW terminal instance
-6. Navigate to the frontend folder and run the following:
-    `npm i -g @vue/cli`
-    `npm i --save-dev eslint eslint-plugin-vue`
-    `npm i axios`
+    python3 -m flask run
+6. While keeping the backend terminal instance running, open a NEW terminal instance
+7. Navigate to the frontend folder and run the following:
+    npm i -g @vue/cli
+    npm i --save-dev eslint eslint-plugin-vue
+    npm i axios
 7. Run it with:
-    `npm run serve`
+    npm run serve
 
 ---
 
@@ -36,38 +36,38 @@ Vue.js 2.7.10 and Python 3.10.7
 1. Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
 2. Clone the github repo into your desired directory then open the directory in vscode
 3. Open terminal in vscode, navigate to the backend folder and run the following:
-    `python -m pip install flask`
-    `python -m pip install flask-cors`
+    python -m pip install flask
+    python -m pip install flask-cors
 4. Run it with:
-    `python -m flask run`
+    python -m flask run
 5. While keeping the backend terminal instance running, open a NEW terminal instance
 6. Navigate to the frontend folder and run the following:
-    `npm i -g @vue/cli`
-    `npm i --save-dev eslint eslint-plugin-vue`
-    `npm i axios`
+    npm i -g @vue/cli
+    npm i --save-dev eslint eslint-plugin-vue
+    npm i axios
 7. Clean up the incorrect End of Line characters with:
-    `npm run lint -- --fix`
+    npm run lint -- --fix
 8. Run it with:
-    `npm run serve`
+    npm run serve
 
 ---
 
 ## RUNNING ON MAC:
 1. Open a new terminal instance
 2. Navigate to the backend folder and type:
-    `python3 -m flask run`
+    python3 -m flask run
 3. Open a NEW terminal instance (without closing the backend one)
 4. Navigate to the frontend folder and type:
-    `npm run serve`
+    npm run serve
 
 ## RUNNING ON WINDOWS:
 1. Open a new terminal instance
 2. Navigate to the backend folder and type:
-    `python -m flask run`
+    python -m flask run
 3. Open a NEW terminal instance (without closing the backend one)
 4. Navigate to the frontend folder and type:
-    `npm run lint -- --fix`
-    `npm run serve`
+    npm run lint -- --fix
+    npm run serve
 
 ---
 
