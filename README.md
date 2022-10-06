@@ -1,16 +1,15 @@
 # CSC 450 - 2 Team Project
 ## Team Members: Nick, Noah, Jacob, Michael, Matt
-
 ## Using Vue.js 2.7.10 and Python 3.10.7
 
-# TABLE OF CONTENTS:
+## TABLE OF CONTENTS:
 ### First Time Installations:
-        MAC
-        WINDOWS
+######        MAC
+######        WINDOWS
 
 ### Running:
-        MAC
-        WINDOWS
+######        MAC
+######        WINDOWS
         
 # FIRST TIME INSTALLATION MAC:
 ### Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
