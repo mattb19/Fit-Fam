@@ -18,8 +18,8 @@ Vue.js 2.7.10 and Python 3.10.7
 1. Install Vue.js 2.7.10 and Python 3.10.7 and Visual Studio Code
 2. Clone the github repo into your desired directory then open the directory in vscode
 3. Open terminal in vscode, navigate to the backend folder and run the following:
-    `python3 -m pip install flask`
-    `python3 -m pip install flask-cors`
+    python3 -m pip install flask
+    python3 -m pip install flask-cors
 4. Run it with:
     `python3 -m flask run`
 5. While keeping the backend terminal instance running, open a NEW terminal instance
