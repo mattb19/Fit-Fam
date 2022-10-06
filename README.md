@@ -1,9 +1,9 @@
 CSC 450 - 2 Team Project
 ===
 ### Team Members:  
-Nick, Noah, Jacob, Michael, Matt
+- Nick, Noah, Jacob, Michael, Matt
 ### Using:  
-Vue.js 2.7.10 and Python 3.10.7
+- Vue.js 2.7.10 and Python 3.10.7
 
 ## TABLE OF CONTENTS:  
 
