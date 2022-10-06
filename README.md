@@ -8,11 +8,11 @@ CSC 450 - 2 Team Project
 ## TABLE OF CONTENTS:  
 
 ### 1. First Time Installations:
-1. MAC
-2. WINDOWS
+a. MAC
+b. WINDOWS
 ### 2. Running:
-1. MAC
-2. WINDOWS
+a. MAC
+b. WINDOWS
         
 ## FIRST TIME INSTALLATION MAC:
 1. Install Vue.js 2.7.10, Python 3.10.7 and Visual Studio Code
