@@ -3,9 +3,41 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
 .col-sm-12 {
   margin-right: 100px;
+}
+form {
+  max-width: 30%;
+  margin: 1% auto;
+  background: #fff;
+  text-align: left;
+  padding: 1.25em;
+  outline: 0.2em solid black;
+}
+label {
+  color: rgb(128, 128, 128);
+  display: inline-block;
+  margin: 1.5em 0em 0.9375em;
+  text-transform: uppercase;
+}
+input {
+  display: block;
+  padding: 0.625em 0.375em;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 0.07em solid #ddd;
+  color: #555;
+}
+button {
+  background: #2c3e50;
+  border: 0;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 20px;
+}
+.submit {
+  margin-top: 1.5em;
+  text-align: center;
 }
 </style>
 
@@ -52,10 +84,30 @@
         </div>
       </div>
     </nav>
-    <h3 class="large centeralign">WOOHOO LOGIN PAGE!!!!</h3>
-    <p></p>
-    <p></p>
+    <h1 class="large centeralign">Create an Account</h1>
+    <form>
+      <label>First name:</label>
+      <input type="text" v-model="first" required />
+
+      <label>Last name:</label>
+      <input type="text" v-model="last" required />
+
+      <label>Email:</label>
+      <input type="email" v-model="email" required />
+
+      <label>Password:</label>
+      <input type="password" v-model="password" required />
+
+      <div class="button">
+        <button class="submit" type="submit">Submit</button>
+      </div>
+    </form>
+    <!--
+    <p>Name: {{ first }} {{ last }}</p>
+    <p>Email: {{ email }}</p>
+    <p>Password: {{ password }}</p>
     <p>{{ backend }}</p>
+    -->
   </div>
 </template>
 
@@ -65,6 +117,10 @@ import axios from "axios";
 export default {
   data() {
     return {
+      first: "",
+      last: "",
+      email: "",
+      password: "",
       backend: "",
     };
   },
