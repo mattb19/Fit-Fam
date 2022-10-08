@@ -1,10 +1,10 @@
 <style scoped>
 .addmargin {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0.625em;
+  margin-bottom: 0.625em;
 }
 .col-sm-12 {
-  margin-right: 100px;
+  margin-right: 6.25em;
 }
 form {
   max-width: 30%;
@@ -31,13 +31,16 @@ input {
 button {
   background: #2c3e50;
   border: 0;
-  padding: 10px 20px;
+  padding: 0.625em 1.25em;
   color: white;
-  border-radius: 20px;
+  border-radius: 1.25em;
 }
 .submit {
   margin-top: 1.5em;
   text-align: center;
+}
+nav {
+  margin-bottom: 2em;
 }
 </style>
 
