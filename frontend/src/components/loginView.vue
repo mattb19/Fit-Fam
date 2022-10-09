@@ -145,7 +145,7 @@ export default {
     },
     onSubmit() {
       // rediredt to home page after submitting
-      this.$router.push({ name: "home" });
+      this.$router.push({ name: "security_questions" });
     },
   },
   created() {
