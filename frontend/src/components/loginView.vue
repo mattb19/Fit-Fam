@@ -12,10 +12,10 @@ form {
   background: #fff;
   text-align: left;
   padding: 1.25em;
-  outline: 0.2em solid black;
+  outline: 0.2em solid #488084;
 }
 label {
-  color: rgb(128, 128, 128);
+  color: #488084;
   display: inline-block;
   margin: 1.5em 0em 0.9375em;
   text-transform: uppercase;
@@ -29,7 +29,7 @@ input {
   color: #555;
 }
 button {
-  background: #2c3e50;
+  background: #488084;
   border: 0;
   padding: 0.625em 1.25em;
   color: white;
@@ -41,6 +41,9 @@ button {
 }
 nav {
   margin-bottom: 2em;
+}
+.large {
+  color: #488084;
 }
 </style>
 
@@ -88,7 +91,7 @@ nav {
       </div>
     </nav>
     <h1 class="large centeralign">Create an Account</h1>
-    <form>
+    <form @submit="onSubmit">
       <label>First name:</label>
       <input type="text" v-model="first" required />
 
@@ -120,6 +123,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      // in case you want to do something with these variables on the page
       first: "",
       last: "",
       email: "",
@@ -138,6 +142,10 @@ export default {
         .catch((err) => {
           console.error(err);
         });
+    },
+    onSubmit() {
+      // rediredt to home page after submitting
+      this.$router.push({ name: "home" });
     },
   },
   created() {
