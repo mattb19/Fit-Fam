@@ -10,10 +10,10 @@ class SecurityQuestions:
   question9 = "What year was your father (or mother) born?"
   questionList = [question1, question2, question3, question4, question5, question6, question7, question8, question9]
 
-  def __init__(self, userId, questionString, answerString):
+  def __init__(self, userId, questionStringA, questionStringB, answerStringA, answerStringB):
     self.__userId = userId
-    self.__questionString = questionString #2 questions delimited via commas
-    self.__answerString = answerString #2 answers delimited via commas
+    self.__questionString = self.combineAandB(questionStringA,questionStringB) #2 questions delimited via commas
+    self.__answerString = self.combineAandB(answerStringA,answerStringB) #2 answers delimited via commas
     self.sendDataToSQL(questionString)
     self.sendDataToSQL(answerString)
 
@@ -25,4 +25,4 @@ class SecurityQuestions:
 
 for i in range(0, len(SecurityQuestions.questionList)):
   answer = SecurityQuestions.questionList[i]
-  print(SecurityQuestions.combineAandB( str(i) , answer))
+  print(SecurityQuestions.combineAandB(str(i) , answer))
