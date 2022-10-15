@@ -14,6 +14,15 @@ class SecurityQuestions:
     self.__userId = userId
     self.__questionString = questionString #2 questions delimited via commas
     self.__answerString = answerString #2 answers delimited via commas
+    self.sendDataToSQL(questionString)
+    self.sendDataToSQL(answerString)
 
-  def comQAndA(self, selectedQuestionNum: int, answer: str):
-    return selectedQuestionNum + "," + answer
+  def sendDataToSQL(data: str):
+    return  #temp for when I get with someone to send data to the SQL server
+
+  def combineAandB(stringA: str, stringB: str):
+    return stringA + "," + stringB
+
+for i in range(0, len(SecurityQuestions.questionList)):
+  answer = SecurityQuestions.questionList[i]
+  print(SecurityQuestions.combineAandB( str(i) , answer))
