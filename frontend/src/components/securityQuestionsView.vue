@@ -1,49 +1,11 @@
 <style scoped>
 .addmargin {
-  margin-top: 0.625em;
-  margin-bottom: 0.625em;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-.col-sm-12 {
-  margin-right: 6.25em;
-}
-form {
-  max-width: 30%;
-  margin: 1% auto;
-  background: #fff;
-  text-align: left;
-  padding: 1.25em;
-  outline: 0.2em solid #488084;
-}
-label {
-  color: #488084;
-  display: inline-block;
-  margin: 1.5em 0em 0.9375em;
-  text-transform: uppercase;
-}
-input {
-  display: block;
-  padding: 0.625em 0.375em;
-  width: 100%;
-  box-sizing: border-box;
-  border-bottom: 0.07em solid #ddd;
-  color: #555;
-}
-button {
-  background: #488084;
-  border: 0;
-  padding: 0.625em 1.25em;
-  color: white;
-  border-radius: 1.25em;
-}
-.submit {
-  margin-top: 1.5em;
-  text-align: center;
-}
-nav {
-  margin-bottom: 2em;
-}
-.large {
-  color: #488084;
+
+.home {
+  background-color: #383c44;
 }
 </style>
 
@@ -84,36 +46,16 @@ nav {
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/login">Login</a>
+              <a class="nav-link" href="/login">Login</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <h1 class="large centeralign">Create an Account</h1>
-    <form @submit="onSubmit">
-      <label>First name:</label>
-      <input type="text" v-model="first" required />
-
-      <label>Last name:</label>
-      <input type="text" v-model="last" required />
-
-      <label>Email:</label>
-      <input type="email" v-model="email" required />
-
-      <label>Password:</label>
-      <input type="password" v-model="password" required />
-
-      <div class="button">
-        <button class="submit" type="submit">Submit</button>
-      </div>
-    </form>
-    <!--
-    <p>Name: {{ first }} {{ last }}</p>
-    <p>Email: {{ email }}</p>
-    <p>Password: {{ password }}</p>
+    <h3 class="large centeralign">Security Questions</h3>
+    <p></p>
+    <p></p>
     <p>{{ backend }}</p>
-    -->
   </div>
 </template>
 
@@ -123,11 +65,6 @@ import axios from "axios";
 export default {
   data() {
     return {
-      // in case you want to do something with these variables on the page
-      first: "",
-      last: "",
-      email: "",
-      password: "",
       backend: "",
     };
   },
@@ -142,10 +79,6 @@ export default {
         .catch((err) => {
           console.error(err);
         });
-    },
-    onSubmit() {
-      // rediredt to home page after submitting
-      this.$router.push({ name: "security_questions" });
     },
   },
   created() {
