@@ -12,17 +12,17 @@ class SecurityQuestions:
 
   def __init__(self, userId, questionStringA, questionStringB, answerStringA, answerStringB):
     self.__userId = userId
-    self.__questionString = self.combineAandB(questionStringA,questionStringB) #2 questions delimited via commas
-    self.__answerString = self.combineAandB(answerStringA,answerStringB) #2 answers delimited via commas
-    self.sendDataToSQL(questionString)
-    self.sendDataToSQL(answerString)
+    self.__questionString = self.combineAB(questionStringA,questionStringB) #2 questions delimited via commas
+    self.__answerString = self.combineAB(answerStringA,answerStringB) #2 answers delimited via commas
+    self.sendDataToSQL(self.questionString)
+    self.sendDataToSQL(self.answerString)
 
   def sendDataToSQL(data: str):
     return  #temp for when I get with someone to send data to the SQL server
 
-  def combineAandB(stringA: str, stringB: str):
+  def combineAB(stringA: str, stringB: str):
     return stringA + "," + stringB
 
 for i in range(0, len(SecurityQuestions.questionList)):
   answer = SecurityQuestions.questionList[i]
-  print(SecurityQuestions.combineAandB(str(i) , answer))
+  print(SecurityQuestions.combineAB(str(i) , answer))
