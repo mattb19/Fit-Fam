@@ -71,15 +71,17 @@ nav {
       <input type="password" v-model="password" required />
 
       <div class="button">
-        <button class="submit" type="submit">Submit</button>
+        <button class="submit" type="submit" v-on:click="getStats">
+          Submit
+        </button>
       </div>
     </form>
     <!--
     <p>Name: {{ first }} {{ last }}</p>
     <p>Email: {{ email }}</p>
     <p>Password: {{ password }}</p>
-    <p>{{ backend }}</p>
     -->
+    <p>{{ backend }}</p>
   </div>
 </template>
 
@@ -90,18 +92,23 @@ export default {
   data() {
     return {
       // in case you want to do something with these variables on the page
-      first: "",
-      last: "",
-      email: "",
-      password: "",
+      first: "Jacob",
+      last: "Jones",
+      email: "e@mail",
+      password: "pass1",
       backend: "",
     };
   },
   methods: {
     getStats() {
-      const path = "http://127.0.0.1:5000/home";
+      const path = "http://127.0.0.1:5000/login";
       axios
-        .get(path)
+        .post(path, {
+          first: this.first,
+          last: this.last,
+          email: this.email,
+          password: this.password,
+        })
         .then((res) => {
           this.backend = res.data;
         })
@@ -110,7 +117,7 @@ export default {
         });
     },
     onSubmit() {
-      // redirect to home page after submitting
+      // redirect to security questions page after submitting
       this.$router.push({ name: "security_questions" });
     },
   },
