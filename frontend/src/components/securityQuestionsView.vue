@@ -93,10 +93,10 @@ nav {
     </nav>
     <h1 class="large centeralign">Security Questions</h1>
 
-    <form action="/action_page.php" method="get">
-      <label for="SecQuestion1">Choose a security question:</label>
+    <form @submit="getStats">
+      <label for="secQuestion1">Choose a security question:</label>
 
-      <select name="SecQuestion1" required v-model="SecQuestion1" id="Question">
+      <select name="secQuestion1" required v-model="secQuestion1" id="Question">
         <option value="Q1">In what city were you born?</option>
         <option value="Q2">What is the name of your favorite pet?</option>
         <option value="Q3">What is your mother's maiden name?</option>
@@ -107,17 +107,17 @@ nav {
         <option value="Q8">Where did you meet your spouse?</option>
         <option value="Q9">What year was your father (or mother) born?</option>
       </select>
-      <label for="Answer1">Answer to Question1:</label>
+      <label for="answer1">Answer to Question1:</label>
       <input
         type="text"
-        id="Answer1"
-        name="Answer1"
+        id="answer1"
+        name="answer1"
         required
-        v-model="Answer1"
+        v-model="answer1"
       /><br /><br required />
-      <label for="SecQuestion2">Choose a security question:</label>
+      <label for="secQuestion2">Choose a security question:</label>
 
-      <select name="SecQuestion2" required v-model="SecQuestion2" id="Question">
+      <select name="secQuestion2" required v-model="secQuestion2" id="Question">
         <option value="Q1">In what city were you born?</option>
         <option value="Q2">What is the name of your favorite pet?</option>
         <option value="Q3">What is your mother's maiden name?</option>
@@ -128,20 +128,20 @@ nav {
         <option value="Q8">Where did you meet your spouse?</option>
         <option value="Q9">What year was your father (or mother) born?</option>
       </select>
-      <label for="Answer2">Answer to Question2:</label>
+      <label for="answer2">Answer to Question2:</label>
       <input
         type="text"
-        id="Answer2"
-        name="Answer2"
+        id="answer2"
+        name="answer2"
         required
-        v-model="Answer2"
+        v-model="answer2"
       /><br /><br />
       <input type="submit" value="Submit" />
     </form>
-    <p>SecQuestion1 {{ SecQuestion1 }}</p>
-    <p>Answer1 {{ Answer1 }}</p>
-    <p>SecQuestion2 {{ SecQuestion2 }}</p>
-    <p>Answer2 {{ Answer2 }}</p>
+    <p>secQuestion1 {{ secQuestion1 }}</p>
+    <p>answer1 {{ answer1 }}</p>
+    <p>secQuestion2 {{ secQuestion2 }}</p>
+    <p>answer2 {{ answer2 }}</p>
   </div>
 </template>
 
@@ -151,28 +151,31 @@ import axios from "axios";
 export default {
   data() {
     return {
-      SecQuestion1: "",
-      Answer1: "",
-      SecQuestion2: "",
-      Answer2: "",
+      secQuestion1: "",
+      answer1: "",
+      secQuestion2: "",
+      answer2: "",
       backend: "",
     };
   },
   methods: {
     getStats() {
-      const path = "http://127.0.0.1:5000/home";
+      const path = "http://127.0.0.1:5000//security_questions";
       axios
-        .get(path)
+        .post(path, {
+          secQuestion1: this.secQuestion1,
+          answer1: this.answer1,
+          secQuestion2: this.secQuestion2,
+          answer2: this.answer2,
+        })
         .then((res) => {
           this.backend = res.data;
         })
         .catch((err) => {
           console.error(err);
         });
+      this.$router.push({ name: "home" });
     },
-  },
-  created() {
-    this.getStats();
   },
 };
 </script>
