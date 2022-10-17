@@ -1,44 +1,10 @@
 <style scoped>
 .addmargin {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0.625em;
+  margin-bottom: 0.625em;
 }
-
-.home {
-  background-color: #383c44;
-}
-form {
-  max-width: 30%;
-  margin: 1% auto;
-  background: #fff;
-  text-align: left;
-  padding: 1.25em;
-  outline: 0.2em solid #488084;
-}
-label {
-  color: #488084;
-  display: inline-block;
-  margin: 1.5em 0em 0.9375em;
-  text-transform: uppercase;
-}
-input {
-  display: block;
-  padding: 0.625em 0.375em;
-  width: 100%;
-  box-sizing: border-box;
-  border-bottom: 0.07em solid #ddd;
-  color: #555;
-}
-button {
-  background: #488084;
-  border: 0;
-  padding: 0.625em 1.25em;
-  color: white;
-  border-radius: 1.25em;
-}
-.submit {
-  margin-top: 1.5em;
-  text-align: center;
+.col-sm-12 {
+  margin-right: 6.25em;
 }
 nav {
   margin-bottom: 2em;
