@@ -73,7 +73,7 @@
       </div>
     </nav>
     <p></p>
-    <!--Template from Site-->
+    <!--Bootstarp Template from Site
     <div class="card mb-3">
       <h3 class="card-header text-left">Profile Nickname</h3>
       <div class="card-body">
@@ -88,7 +88,8 @@
       </div>
       <div class="card-footer text-muted">2 days ago</div>
     </div>
-    <!--Template from Site end-->
+    Bootstrap Template from Site end-->
+    <Post />
     <p></p>
     <p>{{ backend }}</p>
   </div>
@@ -137,12 +138,16 @@
 -->
 <script>
 import axios from "axios";
+import Post from "./postView.vue";
 
 export default {
   data() {
     return {
       backend: "",
     };
+  },
+  components: {
+    Post,
   },
   methods: {
     getStats() {
