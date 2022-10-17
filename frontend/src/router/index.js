@@ -7,6 +7,9 @@ import profileView from "../components/profileView.vue";
 import groupsView from "../components/groupsView.vue";
 import security_questions from "../components/securityQuestionsView.vue";
 
+// stylesheets
+import "/src/assets/stylesheets/forms.css";
+
 Vue.use(VueRouter);
 
 const routes = [
