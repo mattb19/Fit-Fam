@@ -48,6 +48,9 @@
             <li class="nav-item">
               <a class="nav-link active" href="/login">Login</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/post">Post</a>
+            </li>
           </ul>
         </div>
       </div>
