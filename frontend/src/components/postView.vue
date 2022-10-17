@@ -1,20 +1,34 @@
 <template>
-  <article>
-    <h2>{{ postItem.userId }}</h2>
-    <p>
-      <!-- Formating Test text
-        
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris,
-      sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis,
-      fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae
-      elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at
-      mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut
-      justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan
-      ex id porta. Proin elementum convallis tellus id malesuada. Morbi et
-      fermentum velit.-->
-      {{ postItem.postText }}
-    </p>
-  </article>
+  <div class="card mb-3">
+    <h3 class="card-header" style="text-align: left">
+      {{ postItem.userId }}
+      <span style="float: right"> 2 Days Ago </span>
+    </h3>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="d-block user-select-none"
+      width="100%"
+      height="200"
+      aria-label="Placeholder: Image cap"
+      focusable="false"
+      role="img"
+      preserveAspectRatio="xMidYMid slice"
+      viewBox="0 0 318 180"
+      style="font-size: 1.125rem; text-anchor: middle"
+    >
+      <rect width="100%" height="100%" fill="#868e96"></rect>
+      <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+    </svg>
+    <div class="card-body">
+      <p class="card-text">{{ postItem.postText }}</p>
+    </div>
+    <div class="conatiner">
+      <span class="badge bg-primary">Legs</span>
+      <span class="badge bg-primary">Chest</span>
+      <span class="badge bg-primary">Cardio</span>
+      <span class="badge bg-primary">Tricepts</span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -35,5 +49,14 @@ article {
 
 article h2 {
   margin-bottom: 1rem;
+}
+
+.container > * {
+  display: inline-block;
+}
+
+#HASH {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
