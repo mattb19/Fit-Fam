@@ -44,6 +44,7 @@ const routes = [
     name: "post",
     component: createPost,
   },
+  {
     path: "/security_questions",
     name: "security_questions",
     component: security_questions,
