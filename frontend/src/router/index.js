@@ -5,6 +5,10 @@ import loginView from "../components/loginView.vue";
 import searchView from "../components/searchView.vue";
 import profileView from "../components/profileView.vue";
 import groupsView from "../components/groupsView.vue";
+import security_questions from "../components/securityQuestionsView.vue";
+
+// stylesheets
+import "/src/assets/stylesheets/forms.css";
 
 Vue.use(VueRouter);
 
@@ -33,6 +37,11 @@ const routes = [
     path: "/groups",
     name: "groups",
     component: groupsView,
+  },
+  {
+    path: "/security_questions",
+    name: "security_questions",
+    component: security_questions,
   },
   {
     path: "/",

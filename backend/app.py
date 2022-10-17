@@ -1,14 +1,29 @@
-from flask import Flask, redirect, url_for, jsonify
-from flask_cors import CORS
+from flask import Flask, redirect, url_for, jsonify, request
+from flask_cors import CORS, cross_origin
+#import mysql.connector
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-CORS(app, resources={r'/*':{'origins': 'http://localhost:8080', "allow_headers" : "Access-Control-Allow-Origin"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
-    return "This message is a test for backend."
+    if request.method == 'POST':
+        return "POST method test."
+    else:
+        return "This message is a test for backend."
+
+@app.route("/login", methods=['POST'])
+def login():
+    info = request.get_json(silent=True)
+    firstName = info['first']
+    lastName = info['last']
+    email = info['email']
+    password = info['password']
+
+    print(f"\nUser: {firstName} {lastName}\nEmail: {email}\nPassword: {password}\n")
+    return info
 
 @app.route("/")
 def default():
