@@ -1,14 +1,11 @@
 from flask import Flask, redirect, url_for, jsonify, request
 from flask_cors import CORS, cross_origin
-import mysql.connector
+#import mysql.connector
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-
-#conn = mysql.connector.connect(user='localhost', password='Resumaftif', host='ds13475.dreamservers.com', database='fitfamdb')
-#conn.close()
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
