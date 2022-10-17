@@ -1,7 +1,9 @@
 <template>
   <article>
-    <h2>John Doe<!--{{ post.userId }}--></h2>
+    <h2>{{ postItem.userId }}</h2>
     <p>
+      <!-- Formating Test text
+        
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris,
       sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis,
       fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae
@@ -9,15 +11,15 @@
       mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut
       justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan
       ex id porta. Proin elementum convallis tellus id malesuada. Morbi et
-      fermentum velit.
-      <!--{{ post.postText }}-->
+      fermentum velit.-->
+      {{ postItem.postText }}
     </p>
   </article>
 </template>
 
 <script>
 export default {
-  props: ["post"],
+  props: ["postItem"],
 };
 </script>
 

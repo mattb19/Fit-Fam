@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .addmargin {
   margin-top: 0.625em;
@@ -8,26 +9,6 @@
   background-color: #383c44;
 }
 </style>
-
-<!--
-<template>
-  <article>
-    <section v-for="(n, index) in pageOffset" :key="index">
-      <img :src="'https://picsum.photos/400/400?image='+index" alt="">
-      <p>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-        sed diam nonumy eirmod tempor invidunt ut labore et dolore 
-        magna aliquyam erat, sed diam voluptua. At vero eos et accusam 
-        et justo duo dolores et ea rebum.
-      </p>
-    </section>
-    <footer>
-      <div ref="infinitescrolltrigger" id="scoll-trigger"></div>
-      <div class="circle-loader" v-if="showloader"></div>
-    </footer>
-  </article>
-</template>
--->
 
 <template>
   <div class="searchView">
@@ -89,65 +70,28 @@
       <div class="card-footer text-muted">2 days ago</div>
     </div>
     Bootstrap Template from Site end-->
-    <Post />
+    <postViewObj
+      v-for="(postItem, i) in post_list"
+      :key="i"
+      :postItem="postItem"
+    />
     <p></p>
     <p>{{ backend }}</p>
   </div>
 </template>
-<!--
-<script>
-  export default {
-    data: () => {
-      return {
-        currentPage: 1,
-        maxPerPage: 2,
-        totalResults: 100,
-        showloader: false
-      }
-    },
-    computed: {
-      pageCount() {
-        return Math.ceil(this.totalResults/this.maxPerPage);
-      },
-      pageOffset() {
-        return this.maxPerPage * this.currentPage;
-      }
-    },
-    methods: {
-      scrollTrigger() {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if(entry.intersectionRatio > 0 && this.currentPage < this.pageCount) {
-              this.showloader = true;
-              setTimeout(() => {
-                this.currentPage += 1;
-                this.showloader = false;
-              }, 2000); // simulate Ajax-Call ;-)
-            }
-          });
-        });
 
-        observer.observe(this.$refs.infinitescrolltrigger);
-      }
-    },
-    mounted() {
-      this.scrollTrigger();
-    }
-  }
-</script>
--->
 <script>
 import axios from "axios";
-import Post from "./postView.vue";
+import postViewObj from "./postView.vue";
 
 export default {
   data() {
     return {
-      backend: "",
+      post_list: [],
     };
   },
   components: {
-    Post,
+    postViewObj,
   },
   methods: {
     getStats() {
@@ -161,64 +105,43 @@ export default {
           console.error(err);
         });
     },
+    getPost() {
+      /*bellow should be replaced with axios post api once a retrieval mothod is implimented*/
+      const post_userIds = [
+        "John Doe",
+        "Jane Doe",
+        "Joe Schmo",
+        "Thomas Tugman",
+        "Jackson Pot",
+        "Phil Smith",
+      ];
+
+      const postItem = [];
+
+      for (let i = 0; i < 10; i++) {
+        postItem.push({
+          userId: post_userIds[Math.floor(Math.random() * post_userIds.length)],
+          postText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna.",
+        });
+      }
+      return postItem;
+      /*End of substitute api*/
+    },
+    handleScroll() {
+      if (
+        window.scrollY + window.innerHeight >=
+        document.body.scrollHeight - 50
+      ) {
+        const new_postItem = this.getPost();
+
+        this.post_list = [...this.post_list, ...new_postItem];
+      }
+    },
   },
-  created() {
-    this.getStats();
+  mounted() {
+    this.post_list = this.getPost();
+    window.addEventListener("scroll", this.handleScroll);
   },
 };
 </script>
-<!--
-<style lang="scss" scoped>
-  article {
-    margin: 0 auto;
-    width: 400px;
-
-    section {
-      width: 400px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      background-color: #efefef;
-      color: #04525A;
-      overflow: hidden;
-
-      p {
-        margin: 0;
-        padding: 10px 20px;
-      }
-    }
-
-    footer {
-      position: relative;
-      width: 400px;
-      height: 100px;
-
-      #scroll-trigger {
-        height: 50px;
-      }
-
-      .circle-loader {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: 5px solid rgba(255, 255, 255, .2);
-        border-top: 5px solid #fff;
-        animation: animate 1.5s infinite linear;
-      }
-    }
-  }
-
-  @keyframes animate {
-    0% {
-      transform: translate(-50%,-50%) rotate(0deg);
-    }
-    100% {
-      transform: translate(-50%,-50%) rotate(360deg);
-    }
-  }
-</style>
-
--->
