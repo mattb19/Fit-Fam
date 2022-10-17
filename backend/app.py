@@ -4,7 +4,7 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-CORS(app, resources={r'/*':{'origins': 'http://localhost:8080', "allow_headers" : "Access-Control-Allow-Origin: *"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
@@ -15,9 +15,13 @@ def home():
 
 @app.route("/login", methods=['POST'])
 def login():
-    firstName = request.form
-    print(firstName)
-    return firstName
+    info = request.get_json(silent=True)
+    firstName = info['first']
+    lastName = info['last']
+    email = info['email']
+    password = info['password']
+    print(f"\nUser: {firstName} {lastName}\nEmail: {email}\nPassword: {password}\n")
+    return info
 
 @app.route("/")
 def default():

@@ -57,7 +57,7 @@ nav {
       </div>
     </nav>
     <h1 class="large centeralign">Create an Account</h1>
-    <form @submit="onSubmit">
+    <form @submit="submitInfo">
       <label>First name:</label>
       <input type="text" v-model="first" required />
 
@@ -71,9 +71,7 @@ nav {
       <input type="password" v-model="password" required />
 
       <div class="button">
-        <button class="submit" type="submit" v-on:click="getStats">
-          Submit
-        </button>
+        <button class="submit" type="submit">Submit</button>
       </div>
     </form>
     <!--
@@ -92,15 +90,15 @@ export default {
   data() {
     return {
       // in case you want to do something with these variables on the page
-      first: "Jacob",
-      last: "Jones",
-      email: "e@mail",
-      password: "pass1",
+      first: "",
+      last: "",
+      email: "",
+      password: "",
       backend: "",
     };
   },
   methods: {
-    getStats() {
+    submitInfo() {
       const path = "http://127.0.0.1:5000/login";
       axios
         .post(path, {
@@ -115,14 +113,9 @@ export default {
         .catch((err) => {
           console.error(err);
         });
-    },
-    onSubmit() {
       // redirect to security questions page after submitting
       this.$router.push({ name: "security_questions" });
     },
-  },
-  created() {
-    this.getStats();
   },
 };
 </script>
