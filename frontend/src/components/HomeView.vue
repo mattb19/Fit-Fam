@@ -74,6 +74,7 @@
     </div>
     Bootstrap Template from Site end-->
     <postViewObj
+      class="post"
       v-for="(postItem, i) in post_list"
       :key="i"
       :postItem="postItem"
