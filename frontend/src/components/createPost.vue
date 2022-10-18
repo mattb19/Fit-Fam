@@ -8,40 +8,31 @@
   background-color: #383c44;
 }
 
-.form-group {
-  margin: auto;
-  width: 50%;
-}
-
-.btn-group {
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
 .button {
   margin-top: 50px;
 }
 
-.imagelabel {
-  margin: auto;
-  margin-top: 50px;
-}
-
 .image {
-  margin-left: 160px;
+  margin: auto;
+  width: 50em;
 }
 
 .title {
-  margin-top: 25px;
-  width: auto;
+  margin: auto;
+  width: 50em;
 }
 
 .description {
-  margin-top: 25px;
+  margin: auto;
+  width: 50em;
 }
 
 .header {
   margin-top: 20px;
+}
+
+.btn {
+  width: 50em;
 }
 </style>
 
@@ -97,6 +88,7 @@
         <input
           name="title"
           type="text"
+          class="title"
           placeholder="Title"
           required
           size="80"
@@ -111,6 +103,7 @@
           name="description"
           placeholder="Description"
           required
+          class="description"
           id="description"
           rows="10"
           cols="80"
@@ -119,9 +112,6 @@
       </div>
     </div>
     <div>
-      <div class="imagelabel">
-        <label for="avatar">Want to post a picture?:</label>
-      </div>
       <input
         class="image"
         type="file"
@@ -134,6 +124,7 @@
     </div>
     <div class="button">
       <button
+        @submit="createPost"
         type="button"
         class="btn btn-dark"
         href="/"
@@ -191,6 +182,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+      this.$router.push({ name: "home" });
     },
   },
   created() {
