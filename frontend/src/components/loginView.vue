@@ -6,39 +6,6 @@
 .col-sm-12 {
   margin-right: 6.25em;
 }
-form {
-  max-width: 30%;
-  margin: 1% auto;
-  background: #fff;
-  text-align: left;
-  padding: 1.25em;
-  outline: 0.2em solid #488084;
-}
-label {
-  color: #488084;
-  display: inline-block;
-  margin: 1.5em 0em 0.9375em;
-  text-transform: uppercase;
-}
-input {
-  display: block;
-  padding: 0.625em 0.375em;
-  width: 100%;
-  box-sizing: border-box;
-  border-bottom: 0.07em solid #ddd;
-  color: #555;
-}
-button {
-  background: #488084;
-  border: 0;
-  padding: 0.625em 1.25em;
-  color: white;
-  border-radius: 1.25em;
-}
-.submit {
-  margin-top: 1.5em;
-  text-align: center;
-}
 nav {
   margin-bottom: 2em;
 }
@@ -46,7 +13,6 @@ nav {
   color: #488084;
 }
 </style>
-
 <template>
   <div class="searchView">
     <link
@@ -86,12 +52,15 @@ nav {
             <li class="nav-item">
               <a class="nav-link active" href="/login">Login</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/post">Post</a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
     <h1 class="large centeralign">Create an Account</h1>
-    <form @submit="onSubmit">
+    <form @submit="submitInfo">
       <label>First name:</label>
       <input type="text" v-model="first" required />
 
@@ -112,8 +81,8 @@ nav {
     <p>Name: {{ first }} {{ last }}</p>
     <p>Email: {{ email }}</p>
     <p>Password: {{ password }}</p>
-    <p>{{ backend }}</p>
     -->
+    <p>{{ backend }}</p>
   </div>
 </template>
 
@@ -132,24 +101,24 @@ export default {
     };
   },
   methods: {
-    getStats() {
-      const path = "http://127.0.0.1:5000/home";
+    submitInfo() {
+      const path = "http://127.0.0.1:5000/login";
       axios
-        .get(path)
+        .post(path, {
+          first: this.first,
+          last: this.last,
+          email: this.email,
+          password: this.password,
+        })
         .then((res) => {
           this.backend = res.data;
         })
         .catch((err) => {
           console.error(err);
         });
-    },
-    onSubmit() {
-      // rediredt to home page after submitting
+      // redirect to security questions page after submitting
       this.$router.push({ name: "security_questions" });
     },
-  },
-  created() {
-    this.getStats();
   },
 };
 </script>
