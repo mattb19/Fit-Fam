@@ -31,3 +31,7 @@ form {
     margin-top: 1.5em;
     text-align: center;
   }
+  .post {
+    width: 33%;
+    margin: auto;
+  }
