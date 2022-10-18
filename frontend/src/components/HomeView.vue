@@ -1,7 +1,8 @@
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .addmargin {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0.625em;
+  margin-bottom: 0.625em;
 }
 
 .home {
@@ -48,12 +49,36 @@
             <li class="nav-item">
               <a class="nav-link" href="/login">Login</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/post">Post</a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
-    <h3 class="large centeralign">WOOHOO GLOBAL FEED LETS GO!!!!</h3>
     <p></p>
+    <!--Bootstarp Template from Site
+    <div class="card mb-3">
+      <h3 class="card-header text-left">Profile Nickname</h3>
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.
+        </p>
+      </div>
+      <div class="card-footer text-muted">2 days ago</div>
+    </div>
+    Bootstrap Template from Site end-->
+    <postViewObj
+      class="post"
+      v-for="(postItem, i) in post_list"
+      :key="i"
+      :postItem="postItem"
+    />
     <p></p>
     <p>{{ backend }}</p>
   </div>
@@ -61,12 +86,16 @@
 
 <script>
 import axios from "axios";
+import postViewObj from "./postView.vue";
 
 export default {
   data() {
     return {
-      backend: "",
+      post_list: [],
     };
+  },
+  components: {
+    postViewObj,
   },
   methods: {
     getStats() {
@@ -80,9 +109,43 @@ export default {
           console.error(err);
         });
     },
+    getPost() {
+      /*bellow should be replaced with axios post api once a retrieval mothod is implimented*/
+      const post_userIds = [
+        "John Doe",
+        "Jane Doe",
+        "Joe Schmo",
+        "Thomas Tugman",
+        "Jackson Pot",
+        "Phil Smith",
+      ];
+
+      const postItem = [];
+
+      for (let i = 0; i < 10; i++) {
+        postItem.push({
+          userId: post_userIds[Math.floor(Math.random() * post_userIds.length)],
+          postText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna.",
+        });
+      }
+      return postItem;
+      /*End of substitute api*/
+    },
+    handleScroll() {
+      if (
+        window.scrollY + window.innerHeight >=
+        document.body.scrollHeight - 50
+      ) {
+        const new_postItem = this.getPost();
+
+        this.post_list = [...this.post_list, ...new_postItem];
+      }
+    },
   },
-  created() {
-    this.getStats();
+  mounted() {
+    this.post_list = this.getPost();
+    window.addEventListener("scroll", this.handleScroll);
   },
 };
 </script>

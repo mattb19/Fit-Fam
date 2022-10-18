@@ -43,19 +43,16 @@
               <a class="nav-link" href="/profile">Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/search">Search</a>
+              <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/post">Post</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <h3 class="large centeralign">WOOHOO SEARCH!!!!</h3>
+    <h3 class="large centeralign">Security Questions</h3>
     <p></p>
     <p></p>
     <p>{{ backend }}</p>
