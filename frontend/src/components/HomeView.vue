@@ -56,31 +56,14 @@
         </div>
       </div>
     </nav>
+    <p>{{ this.posts }}</p>
     <p></p>
-    <!--Bootstarp Template from Site
-    <div class="card mb-3">
-      <h3 class="card-header text-left">Profile Nickname</h3>
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-      </div>
-      <div class="card-body">
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
-      </div>
-      <div class="card-footer text-muted">2 days ago</div>
-    </div>
-    Bootstrap Template from Site end-->
     <postViewObj
       class="post"
       v-for="(postItem, i) in post_list"
       :key="i"
       :postItem="postItem"
     />
-    <p></p>
-    <p>{{ backend }}</p>
   </div>
 </template>
 
@@ -92,6 +75,7 @@ export default {
   data() {
     return {
       post_list: [],
+      posts: "",
     };
   },
   components: {
@@ -99,11 +83,11 @@ export default {
   },
   methods: {
     getStats() {
-      const path = "http://127.0.0.1:5000/home";
+      const path = "http://127.0.0.1:5000/posts";
       axios
         .get(path)
         .then((res) => {
-          this.backend = res.data;
+          this.posts = res.data;
         })
         .catch((err) => {
           console.error(err);
@@ -125,6 +109,7 @@ export default {
       for (let i = 0; i < 10; i++) {
         postItem.push({
           userId: post_userIds[Math.floor(Math.random() * post_userIds.length)],
+          title: "sample title",
           postText:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna.",
         });

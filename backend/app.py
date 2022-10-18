@@ -16,6 +16,10 @@ CORS(app, resources={r'/*':{'origins': '*'}})
 
 item2 = []
 
+@app.route("/posts", methods=['GET', 'POST'])
+def posts():
+    return item2
+
 @app.route("/home", methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
