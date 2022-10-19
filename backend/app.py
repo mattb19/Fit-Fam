@@ -1,8 +1,5 @@
 import json
 from xmlrpc.client import ResponseError
-from flask import Flask, redirect, url_for, jsonify
-from flask_cors import CORS
-from flask import request
 from flask import Flask, redirect, url_for, jsonify, request
 from flask_cors import CORS, cross_origin
 #import mysql.connector
