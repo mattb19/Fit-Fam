@@ -67,13 +67,16 @@ def logout():
 @app.route("/login", methods=['POST'])
 def login():
     info = request.get_json(silent=True)
-    firstName = info['first']
-    lastName = info['last']
+    first = info['first']
+    last = info['last']
     email = info['email']
     password = generate_password_hash(info['password'])
+    user = User(firstName=first, lastName=last, email=email, password=password)
+    db.session.add(user)
+    db.session.commit()
     # to verify password at login do "check_password_hash(<password in database>, <form inputted password>)" - returns Boolean
 
-    print(f"\nUser: {firstName} {lastName}\nEmail: {email}\nPassword: {password}\n")
+    print(f"\nUser: {first} {last}\nEmail: {email}\nPassword: {password}\n")
     return info    
 
 @app.route("/security_questions", methods=['POST'])
