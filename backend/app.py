@@ -64,8 +64,8 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/login", methods=['POST'])
-def login():
+@app.route("/signup", methods=['POST'])
+def signup():
     info = request.get_json(silent=True)
     first = info['first']
     last = info['last']

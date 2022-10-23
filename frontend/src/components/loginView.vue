@@ -50,7 +50,7 @@ nav {
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/login">Login</a>
+              <a class="nav-link active" href="/signup">Sign Up</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/post">Post</a>
@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     submitInfo() {
-      const path = "http://127.0.0.1:5000/login";
+      const path = "http://127.0.0.1:5000/signup";
       axios
         .post(path, {
           first: this.first,
