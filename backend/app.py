@@ -38,25 +38,24 @@ def home():
     else:
         return "This message is a test for backend."
 
-@app.route("/login1", methods=['POST'])
-def login1():
+@app.route("/login", methods=['POST'])
+def login():
     # if current_user.is_authenticated:
     #     return redirect(url_for('home'))
     info = request.get_json(silent=True)
     userEmail = info['email']
-    userPassword = generate_password_hash(info['password'])
+    userPassword = info['password']
     print('email:', userEmail, '\tpassword:', userPassword)
     user = User.query.filter_by(email = userEmail).first()
-    print(user)
     if user is None or not check_password_hash(user.password, userPassword):
+        '''
         flash('Invalid username or password')
         return redirect(url_for('login'))
-    login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
-    next_page = request.args.get('next')
-    if not next_page or url_parse(next_page).netloc != '':
-        next_page = url_for('home')
+        '''
+        print('wrong user/password or user doesn\'t exist')
+    #login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
     print('logged in----------------------------')
-    return redirect(url_for(next_page))
+    return str(user)
 
 @app.route("/logout")
 @login_required

@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     submitInfo() {
-      const path = "http://127.0.0.1:5000/signup";
+      const path = "http://127.0.0.1:5000/login";
       axios
         .post(path, {
           first: this.first,
@@ -117,7 +117,7 @@ export default {
           console.error(err);
         });
       // redirect to security questions page after submitting
-      this.$router.push({ name: "security_questions" });
+      this.$router.push({ name: "home" });
     },
   },
 };
