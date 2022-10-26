@@ -63,8 +63,10 @@
       :key="i"
       :postItem="postItem"
     />
+    <!--
     <p></p>
     <p>{{ backend }}</p>
+    -->
   </div>
 </template>
 
@@ -93,7 +95,7 @@ export default {
           console.error(err);
         });
     },
-    getPost() {
+    getPostFake() {
       /*bellow should be replaced with axios post api once a retrieval mothod is implimented*/
       const post_userIds = [
         "John Doe",
@@ -116,19 +118,33 @@ export default {
       return postItem;
       /*End of substitute api*/
     },
+    getPost() {
+      const path = "http://127.0.0.1:5000/feed";
+      const postItem = [];
+
+      axios
+        .get(path)
+        .then((res) => {
+          this.postListObj = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      return postItem;
+    },
     handleScroll() {
       if (
         window.scrollY + window.innerHeight >=
         document.body.scrollHeight - 50
       ) {
-        const new_postItem = this.getPost();
+        const new_postItem = this.getPostFake();
 
         this.post_list = [...this.post_list, ...new_postItem];
       }
     },
   },
   mounted() {
-    this.post_list = this.getPost();
+    this.post_list = this.getPostFake();
     window.addEventListener("scroll", this.handleScroll);
   },
 };
