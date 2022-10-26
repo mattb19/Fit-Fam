@@ -13,12 +13,18 @@ CORS(app, resources={r'/*':{'origins': '*'}})
 
 item2 = []
 
+feedPostList = []
+
 @app.route("/home", methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
         return "POST method test."
     else:
         return "This message is a test for backend."
+
+@app.route("/feed", methods=['GET', 'POST'])
+def posts():
+    return feedPostList
 
 @app.route("/login", methods=['POST'])
 def login():

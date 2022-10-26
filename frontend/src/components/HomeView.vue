@@ -57,22 +57,6 @@
       </div>
     </nav>
     <p></p>
-    <!--Bootstarp Template from Site
-    <div class="card mb-3">
-      <h3 class="card-header text-left">Profile Nickname</h3>
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-      </div>
-      <div class="card-body">
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
-      </div>
-      <div class="card-footer text-muted">2 days ago</div>
-    </div>
-    Bootstrap Template from Site end-->
     <postViewObj
       class="post"
       v-for="(postItem, i) in post_list"
