@@ -117,3 +117,19 @@ def post():
         }
     item2.append(item)
     return item
+
+
+
+@app.route("/groups", methods=['POST'])
+def createGroup():
+    info = request.get_json(silent=True)
+    userId = info['userId']
+    groupId = info['groupId']
+    groupName = info['groupName']
+    group = Groups(groupId=groupId, groupName=groupName, groupOwner=userId)
+    db.session.add(group)
+    db.session.commit()
+
+
+    print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
+    return info
