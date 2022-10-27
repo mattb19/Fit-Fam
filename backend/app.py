@@ -57,7 +57,6 @@ def login():
     #login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
     print('logged in----------------------------')
     return redirect(url_for('home'))
-    
 
 @app.route("/logout")
 @login_required
@@ -83,7 +82,7 @@ def signup():
 
     print(f"\nUser: {first} {last}\nEmail: {email}\nPassword: {password}\n")
     #return redirect(url_for('security_questions'))
-    return info   
+    return info
 
 
 

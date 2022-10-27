@@ -71,7 +71,8 @@ nav {
         <option value="Q6">What was the make of your first car?</option>
         <option value="Q7">What was your favorite food as a child?</option>
         <option value="Q8">Where did you meet your spouse?</option>
-        <option value="Q9">What year was your father (or mother) born?</option>
+        <option value="Q9">What year was your father born?</option>
+        <option value="Q10">What year was your mother born?</option>
       </select>
       <label for="answer1">Answer to Question1:</label>
       <input
@@ -92,7 +93,8 @@ nav {
         <option value="Q6">What was the make of your first car?</option>
         <option value="Q7">What was your favorite food as a child?</option>
         <option value="Q8">Where did you meet your spouse?</option>
-        <option value="Q9">What year was your father (or mother) born?</option>
+        <option value="Q9">What year was your father born?</option>
+        <option value="Q10">What year was your mother born?</option>
       </select>
       <label for="answer2">Answer to Question2:</label>
       <input
