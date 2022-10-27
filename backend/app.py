@@ -53,9 +53,11 @@ def login():
         return redirect(url_for('login'))
         '''
         print('wrong user/password or user doesn\'t exist')
+        return redirect(url_for('login'))
     #login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
     print('logged in----------------------------')
-    return str(user)
+    return redirect(url_for('home'))
+    
 
 @app.route("/logout")
 @login_required
@@ -70,13 +72,20 @@ def signup():
     last = info['last']
     email = info['email']
     password = generate_password_hash(info['password'])
-    user = User(firstName=first, lastName=last, email=email, password=password)
-    db.session.add(user)
-    db.session.commit()
-    # to verify password at login do "check_password_hash(<password in database>, <form inputted password>)" - returns Boolean
+    user = User.query.filter_by(email = email).first()
+    if user is None:
+        user = User(firstName=first, lastName=last, email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+    else:
+        print('Email already in use.')
+        #return redirect(url_for('signup'))
 
     print(f"\nUser: {first} {last}\nEmail: {email}\nPassword: {password}\n")
-    return info    
+    #return redirect(url_for('security_questions'))
+    return info   
+
+
 
 @app.route("/security_questions", methods=['POST'])
 def securityQuestions():
