@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
   <div class="card mb-3">
     <h3 class="card-header" style="text-align: left">
@@ -22,7 +23,7 @@
     <div class="card-body">
       <p class="card-text">{{ postItem.postText }}</p>
     </div>
-    <div class="conatiner">
+    <div class="container">
       <span class="badge bg-primary">Legs</span>
       <span class="badge bg-primary">Chest</span>
       <span class="badge bg-primary">Cardio</span>
@@ -30,13 +31,13 @@
     </div>
   </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 export default {
   props: ["postItem"],
 };
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style>
 article {
   background-color: #efefef;
