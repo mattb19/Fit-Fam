@@ -50,7 +50,7 @@ nav {
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/login">Login</a>
+              <a class="nav-link active" href="/signup">Sign Up</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/post">Post</a>
@@ -59,14 +59,8 @@ nav {
         </div>
       </div>
     </nav>
-    <h1 class="large centeralign">Create an Account</h1>
+    <h1 class="large centeralign">Login</h1>
     <form @submit="submitInfo">
-      <label>First name:</label>
-      <input type="text" v-model="first" required />
-
-      <label>Last name:</label>
-      <input type="text" v-model="last" required />
-
       <label>Email:</label>
       <input type="email" v-model="email" required />
 
@@ -78,7 +72,6 @@ nav {
       </div>
     </form>
     <!--
-    <p>Name: {{ first }} {{ last }}</p>
     <p>Email: {{ email }}</p>
     <p>Password: {{ password }}</p>
     -->
@@ -93,8 +86,6 @@ export default {
   data() {
     return {
       // in case you want to do something with these variables on the page
-      first: "",
-      last: "",
       email: "",
       password: "",
       backend: "",
@@ -105,8 +96,6 @@ export default {
       const path = "http://127.0.0.1:5000/login";
       axios
         .post(path, {
-          first: this.first,
-          last: this.last,
           email: this.email,
           password: this.password,
         })
@@ -117,7 +106,7 @@ export default {
           console.error(err);
         });
       // redirect to security questions page after submitting
-      this.$router.push({ name: "security_questions" });
+      this.$router.push({ name: "home" });
     },
   },
 };
