@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
-from models import User
+from models import User, SecurityQuestions
 #import mysql.connector
 
 def register_extensions(app):
@@ -93,6 +93,7 @@ def securityQuestions():
     answerStringA = info['answer1']
     questionStringB = info['secQuestion2']
     answerStringB = info['answer2']
+    print(f"{User.id()}")
     print(f"\nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
     return info
 

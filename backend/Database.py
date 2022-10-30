@@ -6,7 +6,7 @@ db = SQLAlchemy()
 class Database:
     def __init__(self, name):
         '''
-        Creates an instance of the database class, only one instance will be 
+        Creates an instance of the database class, only one instance will be
         open at any time
         :param name: string name of the database
         :return: an instance of the Database class
