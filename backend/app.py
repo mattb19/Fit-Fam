@@ -20,10 +20,6 @@ item2 = []
 def posts():
     return item2
 
-@app.route("/home", methods=['GET', 'POST'])
-def home():
-    print(item2)
-
 @app.route("/login", methods=['POST'])
 def login():
     info = request.get_json(silent=True)
