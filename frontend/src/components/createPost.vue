@@ -175,6 +175,7 @@ export default {
           title: this.title,
           image: formData,
           description: this.description,
+          userId: "John J Jacobson",
         })
         .then((res) => {
           console.log(res);

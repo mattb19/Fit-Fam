@@ -37,7 +37,7 @@ def login():
 
 @app.route("/")
 def default():
-    return redirect(url_for("home"))
+    return redirect(url_for("posts"))
 
 @app.route("/post", methods=['GET','POST'])
 def post():
@@ -49,7 +49,8 @@ def post():
     item = {
         'title': data.get('title'),
         'description': data.get('description'),
-        'image': data.get('image')
+        'image': data.get('image'),
+        'userId': data.get('userId')
         }
     item2.append(item)
     return item

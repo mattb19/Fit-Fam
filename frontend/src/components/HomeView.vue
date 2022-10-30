@@ -60,7 +60,7 @@
     <p></p>
     <postViewObj
       class="post"
-      v-for="(postItem, i) in post_list"
+      v-for="(postItem, i) in posts"
       :key="i"
       :postItem="postItem"
     />
@@ -133,6 +133,9 @@ export default {
   mounted() {
     this.post_list = this.getPost();
     window.addEventListener("scroll", this.handleScroll);
+  },
+  created() {
+    this.getStats();
   },
 };
 </script>
