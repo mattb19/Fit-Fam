@@ -30,6 +30,8 @@ login.login_view = 'login'
 
 item2 = []
 
+currentEmail = ""
+
 @app.route("/home", methods=['GET', 'POST'])
 @login_required
 def home():
@@ -70,6 +72,7 @@ def signup():
     first = info['first']
     last = info['last']
     email = info['email']
+    currentEmail = email
     password = generate_password_hash(info['password'])
     user = User.query.filter_by(email = email).first()
     if user is None:
@@ -85,16 +88,21 @@ def signup():
     return info
 
 
-
 @app.route("/security_questions", methods=['POST'])
 def securityQuestions():
+    #currentEmail = signup()
+    #print(currentEmail)
+    #user = User.query.filter_by(email = currentEmail).first()
     info = request.get_json(silent=True)
     questionStringA = info['secQuestion1']
     answerStringA = info['answer1']
     questionStringB = info['secQuestion2']
     answerStringB = info['answer2']
-    print(f"{User.id()}")
-    print(f"\nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
+    #print(user)
+    #securityquestions = SecurityQuestions(userId = user.id, Question1 = questionStringA, Answer1 = answerStringA, Question2 = questionStringB, Answer2 = answerStringB)
+    #db.session.add(securityquestions)
+    #db.session.commit()
+    print(f"\n{user.id} \nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
     return info
 
 @app.route("/")
