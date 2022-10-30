@@ -105,11 +105,13 @@ export default {
       ];
 
       const postItem = [];
+      const posts = JSON.stringify(this.posts);
+      console.log(posts);
 
       for (let i = 0; i < 10; i++) {
         postItem.push({
           userId: post_userIds[Math.floor(Math.random() * post_userIds.length)],
-          title: "sample title",
+          title: posts[0]["title"],
           postText:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna.",
         });

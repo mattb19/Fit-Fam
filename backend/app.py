@@ -22,10 +22,7 @@ def posts():
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
-    if request.method == 'POST':
-        return "POST method test."
-    else:
-        return "This message is a test for backend."
+    print(item2)
 
 @app.route("/login", methods=['POST'])
 def login():
