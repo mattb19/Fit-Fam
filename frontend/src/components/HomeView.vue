@@ -56,13 +56,16 @@
         </div>
       </div>
     </nav>
+    <p>{{ post_list }}</p>
     <p></p>
+    <!--
     <postViewObj
       class="post"
       v-for="(postItem, i) in post_list"
       :key="i"
       :postItem="postItem"
     />
+    -->
     <!--
     <p></p>
     <p>{{ backend }}</p>
@@ -72,7 +75,7 @@
 
 <script>
 import axios from "axios";
-import postViewObj from "./postView.vue";
+/*import postViewObj from "./postView.vue";*/
 
 export default {
   data() {
@@ -81,7 +84,7 @@ export default {
     };
   },
   components: {
-    postViewObj,
+    /*postViewObj,*/
   },
   methods: {
     getStats() {
@@ -120,16 +123,21 @@ export default {
     },
     getPost() {
       const path = "http://127.0.0.1:5000/feed";
-      const postItem = [];
+      var postItem = new Array();
+      var postListObj = new Array();
 
       axios
         .get(path)
         .then((res) => {
-          this.postListObj = res.data;
+          postListObj = res.data;
+          postItem.concat(postListObj);
+          console.log(res.data);
         })
         .catch((err) => {
           console.error(err);
         });
+
+      console.log(postItem[1]);
       return postItem;
     },
     handleScroll() {
@@ -137,14 +145,14 @@ export default {
         window.scrollY + window.innerHeight >=
         document.body.scrollHeight - 50
       ) {
-        const new_postItem = this.getPostFake();
+        const new_postItem = this.getPost();
 
         this.post_list = [...this.post_list, ...new_postItem];
       }
     },
   },
   mounted() {
-    this.post_list = this.getPostFake();
+    this.post_list = this.getPost();
     window.addEventListener("scroll", this.handleScroll);
   },
 };
