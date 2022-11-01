@@ -124,7 +124,7 @@ def post():
     print(item)
     print(item2)
     return item
-    
+
 
 @app.route("/groups", methods=['POST'])
 def createGroup():
@@ -133,6 +133,7 @@ def createGroup():
     groupId = info['groupId']
     groupName = info['groupName']
     group = Groups(groupId=groupId, groupName=groupName, groupOwner=userId)
+    print(group)
     db.session.add(group)
     db.session.commit()
 
