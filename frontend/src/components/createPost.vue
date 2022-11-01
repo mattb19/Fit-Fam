@@ -150,7 +150,7 @@ export default {
   },
   methods: {
     getStats() {
-      const path = "http://127.0.0.1:5000/home";
+      const path = "http://127.0.0.1:5000/posts";
       axios
         .get(path)
         .then((res) => {

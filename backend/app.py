@@ -32,6 +32,7 @@ item2 = []
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
+    print(item2)
     return item2
 
 @app.route("/home", methods=['GET', 'POST'])
@@ -107,7 +108,6 @@ def default():
     return redirect(url_for("posts"))
 
 @app.route("/post", methods=['GET','POST'])
-@login_required
 def post():
 
     # data is the post data put in jsonified format
@@ -121,4 +121,6 @@ def post():
         'userId': data.get('userId')
         }
     item2.append(item)
+    print(item)
+    print(item2)
     return item

@@ -56,7 +56,6 @@
         </div>
       </div>
     </nav>
-    <p>{{ this.posts }}</p>
     <p></p>
     <postViewObj
       class="post"
