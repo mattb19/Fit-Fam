@@ -117,7 +117,6 @@ type:
 - Vue Language
 - Python flask
 - flask-sqlalchemy
-- flask-alchemy
 - flask-migrate
 - flask-login
 - werkzeug
