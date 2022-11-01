@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request, flash
+from flask import Flask, redirect, url_for, request, flash, session
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -29,8 +29,6 @@ login = LoginManager(app)
 login.login_view = 'login'
 
 item2 = []
-
-currentEmail = ""
 
 @app.route("/home", methods=['GET', 'POST'])
 @login_required
@@ -72,8 +70,8 @@ def signup():
     first = info['first']
     last = info['last']
     email = info['email']
-    currentEmail = email
     password = generate_password_hash(info['password'])
+    session["email"] = email
     user = User.query.filter_by(email = email).first()
     if user is None:
         user = User(firstName=first, lastName=last, email=email, password=password)
@@ -84,14 +82,15 @@ def signup():
         #return redirect(url_for('signup'))
 
     print(f"\nUser: {first} {last}\nEmail: {email}\nPassword: {password}\n")
-    #return redirect(url_for('security_questions'))
+    #return redirect(url_for('securityQuestions'))
     return info
-
 
 @app.route("/security_questions", methods=['POST'])
 def securityQuestions():
     #currentEmail = signup()
-    #print(currentEmail)
+    #if "email" in session:
+    currentEmail = session["email"]
+    print(currentEmail)
     #user = User.query.filter_by(email = currentEmail).first()
     info = request.get_json(silent=True)
     questionStringA = info['secQuestion1']
@@ -102,7 +101,7 @@ def securityQuestions():
     #securityquestions = SecurityQuestions(userId = user.id, Question1 = questionStringA, Answer1 = answerStringA, Question2 = questionStringB, Answer2 = answerStringB)
     #db.session.add(securityquestions)
     #db.session.commit()
-    print(f"\n{user.id} \nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
+    print(f"\nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
     return info
 
 @app.route("/")

@@ -60,7 +60,7 @@ nav {
       </div>
     </nav>
     <h1 class="large centeralign">Create an Account</h1>
-    <form @submit="submitInfo">
+    <form @submit="submitInfo" method="post">
       <label>First name:</label>
       <input type="text" v-model="first" required />
 

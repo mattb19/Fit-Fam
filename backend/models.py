@@ -1,4 +1,5 @@
 from Database import db
+from flask_login import UserMixin, login_manager
 
 # REMINDER: IF NEED COLUMN IN CHRONOLOGICAL ORDER (SUCH AS POSTS TABLE) MAKE SURE index=TRUE FOR THE NECESSARY COLUMN
 
