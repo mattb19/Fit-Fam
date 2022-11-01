@@ -71,7 +71,7 @@ def signup():
     last = info['last']
     email = info['email']
     password = generate_password_hash(info['password'])
-    session["email"] = email
+    #session["email"] = email
     user = User.query.filter_by(email = email).first()
     if user is None:
         user = User(firstName=first, lastName=last, email=email, password=password)
@@ -89,8 +89,8 @@ def signup():
 def securityQuestions():
     #currentEmail = signup()
     #if "email" in session:
-    currentEmail = session["email"]
-    print(currentEmail)
+    #currentEmail = session["email"]
+    #print(currentEmail)
     #user = User.query.filter_by(email = currentEmail).first()
     info = request.get_json(silent=True)
     questionStringA = info['secQuestion1']
