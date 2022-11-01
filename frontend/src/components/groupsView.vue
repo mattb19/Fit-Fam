@@ -7,6 +7,19 @@
 .home {
   background-color: #383c44;
 }
+
+th,
+td {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 400px;
+  size: 20px;
+}
+
+button {
+  size: 15px;
+}
 </style>
 
 <template>
@@ -46,7 +59,7 @@
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+              <a class="nav-link" href="/signup">Sign Up</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/post">Post</a>
@@ -55,7 +68,12 @@
         </div>
       </div>
     </nav>
-    <h3 class="large centeralign">WOOHOO GROUPS JOIN UP!!!!</h3>
+    <div>
+      <th class="groupsDisplay" align="left">
+        Groups<button @click="createNewGroup">+</button>
+      </th>
+      <th>Group Info</th>
+    </div>
     <p></p>
     <p></p>
     <p>{{ backend }}</p>
@@ -82,6 +100,9 @@ export default {
         .catch((err) => {
           console.error(err);
         });
+    },
+    createNewGroup() {
+      alert("you wanted to create a new group");
     },
   },
   created() {

@@ -1,13 +1,14 @@
 class GroupRole():
     
-    def __init__(self, userId):
+    def __init__(self, userId, waiting):
         self.__userId = userId
+        self.__isWaiting = waiting
         self.__permissions = 0
 
     def getRole(userId):
         """
         :params: None
-        :returns the users permissions
+        :returns if the user has permissions (Boolean)
         """
         return userId.__permissions
 
@@ -18,3 +19,11 @@ class GroupRole():
         :returns: None
         """
         userId.__permissions = givePower
+
+    def isWaiting(userId):
+        """
+        Sets the status of a user as waiting to join a group
+        :params: userId
+        :returns: None
+        """
+        return userId.__isWaiting
