@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request, flash
+from flask import Flask, redirect, url_for, request, flash, session
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -7,7 +7,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
-from models import User
 #import mysql.connector
 
 def register_extensions(app):
@@ -22,11 +21,14 @@ def create_app(config):
 
 app = create_app(Config)
 migrate = Migrate(app, db)
+login = LoginManager(app)
 
 CORS(app, resources={r'/*':{'origins': '*'}})
 
 login = LoginManager(app)
 login.login_view = 'login'
+
+from models import *    # IMPORT THE MODELS
 
 item2 = []
 
@@ -45,8 +47,8 @@ def home():
 
 @app.route("/login", methods=['POST'])
 def login():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('home'))
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     info = request.get_json(silent=True)
     userEmail = info['email']
     userPassword = info['password']
@@ -60,9 +62,9 @@ def login():
         print('wrong user/password or user doesn\'t exist')
         return redirect(url_for('login'))
     #login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
+    login_user(user, remember=True)
     print('logged in----------------------------')
     return redirect(url_for('home'))
-    
 
 @app.route("/logout")
 @login_required
