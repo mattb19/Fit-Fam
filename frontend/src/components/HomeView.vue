@@ -47,7 +47,7 @@
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+              <a class="nav-link" href="/signup">Sign Up</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/post">Post</a>
@@ -59,15 +59,10 @@
     <p></p>
     <postViewObj
       class="post"
-      v-for="(postItem, i) in post_list"
+      v-for="(postItem, i) in posts"
       :key="i"
-      :postItem="JSON.parse(postItem)"
+      :postItem="postItem"
     />
-
-    <!--
-    <p></p>
-    <p>{{ backend }}</p>
-    -->
   </div>
 </template>
 
@@ -79,6 +74,7 @@ export default {
   data() {
     return {
       post_list: [],
+      posts: "",
     };
   },
   components: {
@@ -86,17 +82,17 @@ export default {
   },
   methods: {
     getStats() {
-      const path = "http://127.0.0.1:5000/home";
+      const path = "http://127.0.0.1:5000/posts";
       axios
         .get(path)
         .then((res) => {
-          this.backend = res.data;
+          this.posts = res.data;
         })
         .catch((err) => {
           console.error(err);
         });
     },
-    getPostFake() {
+    getPost() {
       /*bellow should be replaced with axios post api once a retrieval mothod is implimented*/
       const post_userIds = [
         "John Doe",
@@ -108,38 +104,19 @@ export default {
       ];
 
       const postItem = [];
+      const posts = JSON.stringify(this.posts);
+      console.log(posts);
 
       for (let i = 0; i < 10; i++) {
-        postItem.push(
-          JSON.stringify({
-            _Post__poster:
-              post_userIds[Math.floor(Math.random() * post_userIds.length)],
-            _Post__postText:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna.",
-          })
-        );
+        postItem.push({
+          userId: post_userIds[Math.floor(Math.random() * post_userIds.length)],
+          title: posts[0]["title"],
+          postText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna.",
+        });
       }
       return postItem;
       /*End of substitute api*/
-    },
-    getPost() {
-      const path = "http://127.0.0.1:5000/feed";
-      var postItem = [];
-
-      axios.get(path).then((res) => {
-        this.postListObj = res.data;
-        console.log(res.data);
-        for (let i = 0; i < 10 /*this.postListObj.length*/; i++) {
-          postItem.push(JSON.stringify(this.postListObj[i]));
-        }
-      });
-      /*
-        .catch((err) => {
-          console.error(err);
-        });
-        */
-      console.log(postItem);
-      return postItem;
     },
     handleScroll() {
       if (
@@ -155,6 +132,9 @@ export default {
   mounted() {
     this.post_list = this.getPost();
     window.addEventListener("scroll", this.handleScroll);
+  },
+  created() {
+    this.getStats();
   },
 };
 </script>

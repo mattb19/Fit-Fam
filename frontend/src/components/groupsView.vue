@@ -59,7 +59,7 @@ button {
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+              <a class="nav-link" href="/signup">Sign Up</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/post">Post</a>

@@ -14,9 +14,3 @@ class Post:
     self.__postLikesCount = 0
     self.__postLikesTracker = []
     pass
-
-def getDates(main) :
-    dates = []
-    for i in main:
-        dates.push(main[i].Date)
-    return dates

@@ -1,43 +1,33 @@
-<!-- eslint-disable prettier/prettier -->
 <template>
   <div class="card mb-3">
     <h3 class="card-header" style="text-align: left">
-      {{ postItem["_Post__poster"] }}
-      <span style="float: right"> {{ postItem["_Post__postDateTime"] }} </span>
+      {{ postItem.userId }}
+      <span style="float: right"> 2 Days Ago </span>
     </h3>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="d-block user-select-none"
-      width="100%"
-      height="200"
-      aria-label="Placeholder: Image cap"
-      focusable="false"
-      role="img"
-      preserveAspectRatio="xMidYMid slice"
-      viewBox="0 0 318 180"
-      style="font-size: 1.125rem; text-anchor: middle"
-    >
-      <rect width="100%" height="100%" fill="#868e96"></rect>
-      <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-    </svg>
+    <h5 class="card-title">{{ postItem.title }}</h5>
+    <div>{{ postItem.image }}</div>
+    <rect width="100%" height="100%" fill="#868e96"></rect>
+    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
     <div class="card-body">
-      <p class="card-text">{{ postItem["_Post__postText"] }}</p>
+      <p class="card-text">{{ postItem.description }}</p>
     </div>
-    <div class="container">
+    <div class="conatiner">
       <span class="badge bg-primary">Legs</span>
-      <span class="badge bg-primary">Chest</span>
-      <span class="badge bg-primary">Cardio</span>
-      <span class="badge bg-primary">Tricepts</span>
+    </div>
+    <div>
+      <button class="like" float:left>
+        <img src="../assets/like.jpg" alt="Image" height="42" />
+      </button>
     </div>
   </div>
 </template>
-<!-- eslint-disable prettier/prettier -->
+
 <script>
 export default {
   props: ["postItem"],
 };
 </script>
-<!-- eslint-disable prettier/prettier -->
+
 <style>
 article {
   background-color: #efefef;
@@ -59,5 +49,9 @@ article h2 {
 #HASH {
   display: flex;
   justify-content: space-between;
+}
+
+.card-title {
+  margin-top: 15px;
 }
 </style>

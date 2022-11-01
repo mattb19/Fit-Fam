@@ -1,14 +1,18 @@
 <style scoped>
 .addmargin {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0.625em;
+  margin-bottom: 0.625em;
 }
-
-.home {
-  background-color: #383c44;
+.col-sm-12 {
+  margin-right: 6.25em;
+}
+nav {
+  margin-bottom: 2em;
+}
+.large {
+  color: #488084;
 }
 </style>
-
 <template>
   <div class="searchView">
     <link
@@ -40,13 +44,13 @@
               <a class="nav-link" href="/groups">Groups</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/profile">Profile</a>
+              <a class="nav-link" href="/profile">Profile</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/signup">Sign Up</a>
+              <a class="nav-link active" href="/signup">Sign Up</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/post">Post</a>
@@ -55,9 +59,29 @@
         </div>
       </div>
     </nav>
-    <h3 class="large centeralign">WOOHOO PROFILES OH YEAH!!!!</h3>
-    <p></p>
-    <p></p>
+    <h1 class="large centeralign">Create an Account</h1>
+    <form @submit="submitInfo">
+      <label>First name:</label>
+      <input type="text" v-model="first" required />
+
+      <label>Last name:</label>
+      <input type="text" v-model="last" required />
+
+      <label>Email:</label>
+      <input type="email" v-model="email" required />
+
+      <label>Password:</label>
+      <input type="password" v-model="password" required />
+
+      <div class="button">
+        <button class="submit" type="submit">Submit</button>
+      </div>
+    </form>
+    <!--
+    <p>Name: {{ first }} {{ last }}</p>
+    <p>Email: {{ email }}</p>
+    <p>Password: {{ password }}</p>
+    -->
     <p>{{ backend }}</p>
   </div>
 </template>
@@ -68,24 +92,33 @@ import axios from "axios";
 export default {
   data() {
     return {
+      // in case you want to do something with these variables on the page
+      first: "",
+      last: "",
+      email: "",
+      password: "",
       backend: "",
     };
   },
   methods: {
-    getStats() {
-      const path = "http://127.0.0.1:5000/home";
+    submitInfo() {
+      const path = "http://127.0.0.1:5000/signup";
       axios
-        .get(path)
+        .post(path, {
+          first: this.first,
+          last: this.last,
+          email: this.email,
+          password: this.password,
+        })
         .then((res) => {
           this.backend = res.data;
         })
         .catch((err) => {
           console.error(err);
         });
+      // redirect to security questions page after submitting
+      this.$router.push({ name: "security_questions" });
     },
-  },
-  created() {
-    this.getStats();
   },
 };
 </script>
