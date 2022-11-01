@@ -128,6 +128,7 @@ export default {
 
       axios.get(path).then((res) => {
         this.postListObj = res.data;
+        console.log(res.data);
         for (let i = 0; i < 10 /*this.postListObj.length*/; i++) {
           postItem.push(JSON.stringify(this.postListObj[i]));
         }
@@ -137,6 +138,7 @@ export default {
           console.error(err);
         });
         */
+      console.log(postItem);
       return postItem;
     },
     handleScroll() {
