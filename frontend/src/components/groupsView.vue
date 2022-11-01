@@ -87,9 +87,9 @@ export default {
   data() {
     return {
       backend: "",
-      userId: "1",
-      groupId: "2",
-      groupName: "Trenything is possible"
+      userId: 1,
+      groupId: 2,
+      groupName: "Trenything is possible",
     };
   },
   methods: {

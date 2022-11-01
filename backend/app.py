@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
-from models import User
+from models import *
 #import mysql.connector
 
 def register_extensions(app):
@@ -126,17 +126,16 @@ def post():
     return item
 
 
-@app.route("/groups", methods=['POST'])
+@app.route("/groups", methods=['GET', 'POST'])
 def createGroup():
     info = request.get_json(silent=True)
-    userId = info['userId']
-    groupId = info['groupId']
-    groupName = info['groupName']
+    userId = 1
+    groupId = 2
+    groupName = "Trenything is possible"
     group = Groups(groupId=groupId, groupName=groupName, groupOwner=userId)
-    print(group)
     db.session.add(group)
     db.session.commit()
 
 
     print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
-    return info
+    return group
