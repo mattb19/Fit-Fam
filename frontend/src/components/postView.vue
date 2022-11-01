@@ -2,8 +2,8 @@
 <template>
   <div class="card mb-3">
     <h3 class="card-header" style="text-align: left">
-      {{ postItem.userId }}
-      <span style="float: right"> 2 Days Ago </span>
+      {{ postItem["_Post__poster"] }}
+      <span style="float: right"> {{ postItem["_Post__postDateTime"] }} </span>
     </h3>
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@
       <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
     </svg>
     <div class="card-body">
-      <p class="card-text">{{ postItem.postText }}</p>
+      <p class="card-text">{{ postItem["_Post__postText"] }}</p>
     </div>
     <div class="container">
       <span class="badge bg-primary">Legs</span>

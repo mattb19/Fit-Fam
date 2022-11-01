@@ -56,16 +56,14 @@
         </div>
       </div>
     </nav>
-    <p>{{ post_list }}</p>
     <p></p>
-    <!--
     <postViewObj
       class="post"
       v-for="(postItem, i) in post_list"
       :key="i"
-      :postItem="postItem"
+      :postItem="JSON.parse(postItem)"
     />
-    -->
+
     <!--
     <p></p>
     <p>{{ backend }}</p>
@@ -75,7 +73,7 @@
 
 <script>
 import axios from "axios";
-/*import postViewObj from "./postView.vue";*/
+import postViewObj from "./postView.vue";
 
 export default {
   data() {
@@ -84,7 +82,7 @@ export default {
     };
   },
   components: {
-    /*postViewObj,*/
+    postViewObj,
   },
   methods: {
     getStats() {
@@ -112,32 +110,33 @@ export default {
       const postItem = [];
 
       for (let i = 0; i < 10; i++) {
-        postItem.push({
-          userId: post_userIds[Math.floor(Math.random() * post_userIds.length)],
-          postText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna.",
-        });
+        postItem.push(
+          JSON.stringify({
+            _Post__poster:
+              post_userIds[Math.floor(Math.random() * post_userIds.length)],
+            _Post__postText:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna.",
+          })
+        );
       }
       return postItem;
       /*End of substitute api*/
     },
     getPost() {
       const path = "http://127.0.0.1:5000/feed";
-      var postItem = new Array();
-      var postListObj = new Array();
+      var postItem = [];
 
-      axios
-        .get(path)
-        .then((res) => {
-          postListObj = res.data;
-          postItem.concat(postListObj);
-          console.log(res.data);
-        })
+      axios.get(path).then((res) => {
+        this.postListObj = res.data;
+        for (let i = 0; i < 10 /*this.postListObj.length*/; i++) {
+          postItem.push(JSON.stringify(this.postListObj[i]));
+        }
+      });
+      /*
         .catch((err) => {
           console.error(err);
         });
-
-      console.log(postItem[1]);
+        */
       return postItem;
     },
     handleScroll() {

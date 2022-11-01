@@ -28,34 +28,18 @@ tmp = ["John Doe","Jane Doe","Joe Schmo","Thomas Tugman","Jackson Pot","Phil Smi
 
 @app.route("/feed", methods=['GET', 'POST'])
 def posts():
-    if request.method == 'POST':
-        tmpFeedPostList = []
+    tmpFeedPostList = []
 
-        for i in range(10):
-            postItem = PostFile.Post(1,0,"timeHere","","Bicepts:Curls:Weights",0)
-            #postItem.postText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna."
-            postItem.postText = "Lorem ipsum"
-            tmpFeedPostList.append(postItem)
-        #Above block is psudo data generation loop
+    for i in range(10):
+        postItem = PostFile.Post(1,0,"timeHere","","Bicepts:Curls:Weights",0)
+        postItem._Post__postText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna."
+        tmpFeedPostList.append(postItem)
+    #Above block is psudo data generation loop
 
-        for i in tmpFeedPostList:
-            feedPostList.append(i.__dict__)
+    for i in tmpFeedPostList:
+        feedPostList.append(i.__dict__)
 
-        return feedPostList
-    else:
-        tmpFeedPostList = []
-
-        for i in range(10):
-            postItem = PostFile.Post(1,0,"timeHere","","Bicepts:Curls:Weights",0)
-            #postItem.postText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna."
-            postItem.postText = "Lorem ipsum"
-            tmpFeedPostList.append(postItem)
-        #Above block is psudo data generation loop
-
-        for i in tmpFeedPostList:
-            feedPostList.append(i.__dict__)
-            
-        return jsonify(feedPostList)
+    return feedPostList
 
 @app.route("/login", methods=['POST'])
 def login():
