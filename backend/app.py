@@ -10,7 +10,7 @@ from Database import db
 #import mysql.connector
 
 def register_extensions(app):
-    # this and the next function are to resolve a curcular import issue
+    # this and the next function are to resolve a circular import issue
     db.init_app(app)
 
 def create_app(config):
@@ -64,6 +64,7 @@ def login():
     #login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
     login_user(user, remember=True)
     print('logged in----------------------------')
+    print('User:', current_user)
     return redirect(url_for('home'))
 
 @app.route("/logout")
@@ -84,6 +85,7 @@ def signup():
         user = User(firstName=first, lastName=last, email=email, password=password)
         db.session.add(user)
         db.session.commit()
+        login_user(user, remember=True)
     else:
         print('Email already in use.')
         #return redirect(url_for('signup'))
@@ -93,9 +95,9 @@ def signup():
     return info   
 
 
-
 @app.route("/security_questions", methods=['POST'])
 def securityQuestions():
+    print('User:', current_user)
     info = request.get_json(silent=True)
     questionStringA = info['secQuestion1']
     answerStringA = info['answer1']

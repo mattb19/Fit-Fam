@@ -6,7 +6,7 @@ from app import login
 
 @login.user_loader
 def load_user(id):
-    return User.query.get(int(id))
+    return User.query.get(id)
 
 class User(UserMixin, db.Model):
     __tablename__ = 'User'
@@ -18,7 +18,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
-        return f'<User {self.firstName} {self.lastName}>'
+        return f'<User {self.email}>'
 
 
 class SecurityQuestions(db.Model):
