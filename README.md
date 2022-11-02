@@ -13,6 +13,8 @@ CSC 450 - 2 Team Project
 ### 2. Running:
 - MAC
 - WINDOWS
+### 3. Testing:
+- Flask
         
 ## FIRST TIME INSTALLATION MAC:
 1. Install Vue.js 2.7.10, Python 3.10.7 and Visual Studio Code
@@ -133,7 +135,8 @@ type:
 - flask-login
 - werkzeug
 
-
+## TESTING:
+- [Flask](https://flask.palletsprojects.com/en/2.2.x/testing/)
 
 
 
