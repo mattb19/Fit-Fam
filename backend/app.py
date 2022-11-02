@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from config import Config
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
 #from flask_session import Session
 from data import Data
@@ -36,6 +36,8 @@ from models import *    # IMPORT THE MODELS
 
 CORS(app, resources={r'/*':{'origins': '*'}})
 
+from models import *    # IMPORT THE MODELS
+
 item2 = []
 
 @app.route("/posts", methods=['GET', 'POST'])
@@ -58,8 +60,8 @@ def home():
 
 @app.route("/login", methods=['POST'])
 def login():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('home'))
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     info = request.get_json(silent=True)
     userEmail = info['email']
     userPassword = info['password']
@@ -93,6 +95,7 @@ def signup():
     last = info['last']
     email = info['email']
     password = generate_password_hash(info['password'])
+    #session["email"] = email
     user = User.query.filter_by(email = email).first()
     if user is None:
         user = User(firstName=first, lastName=last, email=email, password=password)
@@ -104,7 +107,7 @@ def signup():
         return redirect(url_for('signup'))
 
     print(f"\nUser: {first} {last}\nEmail: {email}\nPassword: {password}\n")
-    #return redirect(url_for('security_questions'))
+    #return redirect(url_for('securityQuestions'))
     return info
 
 
