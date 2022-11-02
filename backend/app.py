@@ -58,28 +58,27 @@ def home():
 #     user = User.query.filter_by(email = id).first()
 #     return user
 
-@app.route("/login", methods=['POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    info = request.get_json(silent=True)
-    userEmail = info['email']
-    userPassword = info['password']
-    print('email:', userEmail, '\tpassword:', userPassword)
-    user = User.query.filter_by(email = userEmail).first()
-    if user is None or not check_password_hash(user.password, userPassword):
-        '''
-        flash('Invalid username or password')
-        return redirect(url_for('login'))
-        '''
-        print('wrong user/password or user doesn\'t exist')
-        return redirect(url_for('login'))
-    #login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
-    # login_user(user, remember=True)
-    # session['usr'] = userEmail
-    print('logged in----------------------------')
-    # print('User:', current_user)
-    return redirect(url_for('home'))
+    if request.method == 'POST':
+        info = request.get_json(silent=True)
+        userEmail = info['email']
+        userPassword = info['password']
+        print('email:', userEmail, '\tpassword:', userPassword)
+        user = User.query.filter_by(email = userEmail).first()
+        if user is None or not check_password_hash(user.password, userPassword):
+            '''
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+            '''
+            print('wrong user/password or user doesn\'t exist')
+            return 'login'
+        #login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
+        # login_user(user, remember=True)
+        # session['usr'] = userEmail
+        print('logged in----------------------------')
+        # print('User:', current_user)
+        return 'home'
 
 @app.route("/logout")
 def logout():

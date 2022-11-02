@@ -75,7 +75,7 @@ nav {
     <p>Email: {{ email }}</p>
     <p>Password: {{ password }}</p>
     -->
-    <p>{{ backend }}</p>
+    <p>backend: {{ backend }}</p>
   </div>
 </template>
 
@@ -105,7 +105,7 @@ export default {
         .catch((err) => {
           console.error(err);
         });
-      // redirect to security questions page after submitting
+      // redirect to home after submitting
       this.$router.push({ name: "home" });
     },
   },
