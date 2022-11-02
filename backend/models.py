@@ -1,10 +1,6 @@
 from Database import db
-<<<<<<< HEAD
-from flask_login import UserMixin, login_manager
-=======
 from flask_login import UserMixin
 from app import login
->>>>>>> sign-up
 
 # REMINDER: IF NEED COLUMN IN CHRONOLOGICAL ORDER (SUCH AS POSTS TABLE) MAKE SURE index=TRUE FOR THE NECESSARY COLUMN
 

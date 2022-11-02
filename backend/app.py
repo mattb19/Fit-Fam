@@ -7,11 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
-<<<<<<< HEAD
-from models import User, SecurityQuestions
 from data import Data
-=======
->>>>>>> sign-up
 #import mysql.connector
 
 def register_extensions(app):
