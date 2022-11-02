@@ -28,12 +28,40 @@ CORS(app, resources={r'/*':{'origins': '*'}})
 login = LoginManager(app)
 login.login_view = 'login'
 
-item2 = []
+def db_connection():
+    conn = None
+    try:
+        conn = sqlite3.connect("app.db")
+    except sqlite3.error as e:
+        print(e)
+    return conn
+
+
+postObjList = []
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
+    conn = db_connection()
+    cursor = conn.cursor()
+    cursor = conn.execute("SELECT * FROM Posts")
 
-    return item2
+    postObjList = [
+        dict(
+            postId=row[0],
+            postDateTime=row[1],
+            poster=row[2],
+            groupAssociation=row[3],
+            description=row[4],
+            postTags=row[5],
+            postImage=row[6],
+            postLikes=row[7]#,
+            # postLikeAssociation,
+            # postNickName
+        )
+        for row in cursor.fetchall()
+    ]
+
+    return postObjList
 
 @app.route("/home", methods=['GET', 'POST'])
 @login_required
