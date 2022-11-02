@@ -82,7 +82,6 @@ nav {
     <p>Email: {{ email }}</p>
     <p>Password: {{ password }}</p>
     -->
-    //<securityQuestionsView :userEmail="email" />
     <p>{{ backend }}</p>
   </div>
 </template>
