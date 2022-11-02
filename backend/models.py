@@ -1,14 +1,9 @@
 from Database import db
-from flask_login import UserMixin
-from app import login
+# from flask_login import UserMixin
 
 # REMINDER: IF NEED COLUMN IN CHRONOLOGICAL ORDER (SUCH AS POSTS TABLE) MAKE SURE index=TRUE FOR THE NECESSARY COLUMN
 
-@login.user_loader
-def load_user(id):
-    return User.query.get(id)
-
-class User(UserMixin, db.Model):
+class User(db.Model):
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     firstName = db.Column(db.String(50), nullable=False)
