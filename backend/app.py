@@ -132,10 +132,10 @@ def createGroup():
     userId = 1
     groupId = 2
     groupName = "Trenything is possible"
-    group = Groups(groupId=groupId, groupName=groupName, groupOwner=userId)
+    group = Groups(groupName=groupName, groupOwner=userId)
     db.session.add(group)
     db.session.commit()
 
 
     print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
-    return group
+    return "works"

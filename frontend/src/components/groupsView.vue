@@ -106,7 +106,7 @@ export default {
     },
   },
   created() {
-    this.getStats();
+    this.createNewGroup();
   },
 };
 </script>
