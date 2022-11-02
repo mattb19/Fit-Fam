@@ -1,6 +1,8 @@
 from Database import db
+# from flask_login import UserMixin
 
 # REMINDER: IF NEED COLUMN IN CHRONOLOGICAL ORDER (SUCH AS POSTS TABLE) MAKE SURE index=TRUE FOR THE NECESSARY COLUMN
+
 
 class User(db.Model):
     __tablename__ = 'User'
@@ -12,7 +14,9 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
-        return f'<User {self.firstName} {self.lastName}>'
+        return f'<User {self.email}>'
+
+
 
 class SecurityQuestions(db.Model):
     __tablename__ = 'SecurityQuestions'
