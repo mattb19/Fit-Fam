@@ -8,10 +8,10 @@ from werkzeug.urls import url_parse
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
 from models import *
-#import mysql.connector
+import sqlite3
 
 def register_extensions(app):
-    # this and the next function are to resolve a curcular import issue
+    # qwthis and the next function are to resolve a curcular import issue
     db.init_app(app)
 
 def create_app(config):
@@ -32,7 +32,7 @@ item2 = []
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
-    print(item2)
+
     return item2
 
 @app.route("/home", methods=['GET', 'POST'])
