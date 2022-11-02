@@ -162,4 +162,4 @@ def createGroup():
 
 
     print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
-    return "works"
+    return "group feed will display here"
