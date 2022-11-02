@@ -37,7 +37,7 @@ def db_connection():
     return conn
 
 
-postObjList = []
+Item2 = []
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
@@ -148,7 +148,6 @@ def post():
         'image': data.get('image'),
         'userId': data.get('userId')
         }
-    item2.append(item)
+    Item2.append(item)
     print(item)
-    print(item2)
     return item
