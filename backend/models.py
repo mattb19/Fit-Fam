@@ -1,9 +1,18 @@
 from Database import db
+<<<<<<< HEAD
 from flask_login import UserMixin, login_manager
+=======
+from flask_login import UserMixin
+from app import login
+>>>>>>> sign-up
 
 # REMINDER: IF NEED COLUMN IN CHRONOLOGICAL ORDER (SUCH AS POSTS TABLE) MAKE SURE index=TRUE FOR THE NECESSARY COLUMN
 
-class User(db.Model):
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+class User(UserMixin, db.Model):
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     firstName = db.Column(db.String(50), nullable=False)
@@ -14,6 +23,7 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User {self.firstName} {self.lastName}>'
+
 
 class SecurityQuestions(db.Model):
     __tablename__ = 'SecurityQuestions'

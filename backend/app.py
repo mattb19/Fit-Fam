@@ -7,8 +7,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
+<<<<<<< HEAD
 from models import User, SecurityQuestions
 from data import Data
+=======
+>>>>>>> sign-up
 #import mysql.connector
 
 def register_extensions(app):
@@ -23,13 +26,21 @@ def create_app(config):
 
 app = create_app(Config)
 migrate = Migrate(app, db)
+login = LoginManager(app)
 
 CORS(app, resources={r'/*':{'origins': '*'}})
 
 login = LoginManager(app)
 login.login_view = 'login'
 
+from models import *    # IMPORT THE MODELS
+
 item2 = []
+
+@app.route("/posts", methods=['GET', 'POST'])
+def posts():
+    print(item2)
+    return item2
 
 @app.route("/home", methods=['GET', 'POST'])
 @login_required
@@ -41,8 +52,8 @@ def home():
 
 @app.route("/login", methods=['POST'])
 def login():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('home'))
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     info = request.get_json(silent=True)
     userEmail = info['email']
     userPassword = info['password']
@@ -56,6 +67,7 @@ def login():
         print('wrong user/password or user doesn\'t exist')
         return redirect(url_for('login'))
     #login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
+    login_user(user, remember=True)
     print('logged in----------------------------')
     return redirect(url_for('home'))
 
@@ -111,10 +123,9 @@ def securityQuestions():
 @app.route("/")
 @login_required
 def default():
-    return redirect(url_for("home"))
+    return redirect(url_for("posts"))
 
 @app.route("/post", methods=['GET','POST'])
-@login_required
 def post():
 
     # data is the post data put in jsonified format
@@ -124,7 +135,10 @@ def post():
     item = {
         'title': data.get('title'),
         'description': data.get('description'),
-        'image': data.get('image')
+        'image': data.get('image'),
+        'userId': data.get('userId')
         }
     item2.append(item)
+    print(item)
+    print(item2)
     return item
