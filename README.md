@@ -77,13 +77,8 @@ using:
 2. After that, in a terminal navigate to the backend folder
 3. Type these commands and hit enter after each one:
 
-<<<<<<< HEAD
-        pip install flask-sqlalchemy
-        pip install flask-alchemy
-=======
         pip install sqlalchemy
         pip install flask-sqlalchemy
->>>>>>> main
         pip install flask-migrate
         pip install flask-login
         pip install werkzeug
