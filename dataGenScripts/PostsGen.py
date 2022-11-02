@@ -2,7 +2,6 @@
 #Clear the fake data from the SQL data base using 'Delete from Posts'
 
 from Database import db
-from models import *
 from datetime import date
 import random
 import sqlite3
@@ -15,7 +14,7 @@ groupAssociation = 0
 tagsList = ["Legs","Arms","Cardio","Core","Weights","Low Intensity","High Intensity"]
 
 timeIncr = date.today()
-for i in range(13):
+for i in range(100):
     tagCombo = tagsList[random.randint(0,len(tagsList)-1)]
     for i in range(random.randint(0,3)):
         tagCombo = tagCombo + "," + tagsList[random.randint(0,len(tagsList)-1)]

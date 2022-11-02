@@ -70,6 +70,24 @@ using:
 
 ---
 
+## INSTALLING THE REMAINING PLUGINS:
+1. Install sqlite3
+2. After that, in a terminal navigate to the backend folder
+3. Type these commands and hit enter after each one:
+
+<<<<<<< HEAD
+        pip install flask-sqlalchemy
+        pip install flask-alchemy
+=======
+        pip install sqlalchemy
+        pip install flask-sqlalchemy
+>>>>>>> main
+        pip install flask-migrate
+        pip install flask-login
+        pip install werkzeug
+        
+---
+
 ## RUNNING ON MAC:
 1. Open a new terminal instance
 2. Navigate to the backend folder and
@@ -103,6 +121,17 @@ type:
 - Intellisense (Pylance)
 - Vue 3 Snippets
 - Vue Language
+- Python flask
+<<<<<<< HEAD
+- flask-sqlalchemy
+- flask-alchemy
+=======
+- SQLAlchemy
+- flask-sqlalchemy
+>>>>>>> main
+- flask-migrate
+- flask-login
+- werkzeug
 
 
 
