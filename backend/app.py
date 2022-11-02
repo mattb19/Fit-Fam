@@ -8,6 +8,7 @@ from werkzeug.urls import url_parse
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
 from models import User, SecurityQuestions
+from data import Data
 #import mysql.connector
 
 def register_extensions(app):
@@ -66,6 +67,7 @@ def logout():
 
 @app.route("/signup", methods=['POST'])
 def signup():
+    data = Data()
     info = request.get_json(silent=True)
     first = info['first']
     last = info['last']
@@ -77,6 +79,7 @@ def signup():
         user = User(firstName=first, lastName=last, email=email, password=password)
         db.session.add(user)
         db.session.commit()
+        data.setEmail(email)
     else:
         print('Email already in use.')
         #return redirect(url_for('signup'))
@@ -87,21 +90,22 @@ def signup():
 
 @app.route("/security_questions", methods=['POST'])
 def securityQuestions():
+    data = Data()
     #currentEmail = signup()
     #if "email" in session:
-    #currentEmail = session["email"]
     #print(currentEmail)
-    #user = User.query.filter_by(email = currentEmail).first()
     info = request.get_json(silent=True)
+    userEmail = data.getEmail()
     questionStringA = info['secQuestion1']
     answerStringA = info['answer1']
     questionStringB = info['secQuestion2']
     answerStringB = info['answer2']
-    #print(user)
-    #securityquestions = SecurityQuestions(userId = user.id, Question1 = questionStringA, Answer1 = answerStringA, Question2 = questionStringB, Answer2 = answerStringB)
-    #db.session.add(securityquestions)
-    #db.session.commit()
-    print(f"\nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
+    #print(userEmail)
+    user = User.query.filter_by(email = userEmail).first()
+    securityQuestions = SecurityQuestions(userId = user.id, Question1 = questionStringA, Answer1 = answerStringA, Question2 = questionStringB, Answer2 = answerStringB)
+    db.session.add(securityQuestions)
+    db.session.commit()
+    print(f"\nuser Email: {userEmail} \nUser Id: {user.id} \nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
     return info
 
 @app.route("/")

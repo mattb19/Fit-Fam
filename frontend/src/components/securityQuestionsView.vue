@@ -117,8 +117,10 @@ nav {
 import axios from "axios";
 
 export default {
+  // props: ["userEmail"],
   data() {
     return {
+      //userEmail: "",
       secQuestion1: "",
       answer1: "",
       secQuestion2: "",
@@ -131,6 +133,7 @@ export default {
       const path = "http://127.0.0.1:5000//security_questions";
       axios
         .post(path, {
+          //  userEmail: this.userEmail,
           secQuestion1: this.secQuestion1,
           answer1: this.answer1,
           secQuestion2: this.secQuestion2,

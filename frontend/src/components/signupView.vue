@@ -82,14 +82,20 @@ nav {
     <p>Email: {{ email }}</p>
     <p>Password: {{ password }}</p>
     -->
+    //<securityQuestionsView :userEmail="email" />
     <p>{{ backend }}</p>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+//import securityQuestionsView from "./securityQuestionsView.vue";
 
 export default {
+  //name: "signupView",
+  //components: {
+  //  securityQuestionsView,
+  //},
   data() {
     return {
       // in case you want to do something with these variables on the page
