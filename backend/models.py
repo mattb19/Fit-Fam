@@ -39,12 +39,16 @@ class GroupMembers(db.Model):
 
 class Posts(db.Model):
     __tablename__ = 'Posts'
-    title = db.Column(db.Text(255), db.ForeignKey('User.id'))
     postId = db.Column(db.Integer, primary_key=True, autoincrement=True)
     postDateTime = db.Column(db.String(255), nullable=False)
+    poster = db.Column(db.Integer, db.ForeignKey('User.id'))
     groupAssociation = db.Column(db.Integer, default=0)
     description = db.Column(db.Text(4096), nullable=False)
     postTags = db.Column(db.String(255))
     postImage = db.Column(db.String(255))
     postLikes = db.Column(db.Integer)
 
+class PostLikes(db.Model):
+    __tablename__ = 'PostLikes'
+    postId = db.Column(db.Integer, db.ForeignKey('Posts.postId'), primary_key=True)
+    userId = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
