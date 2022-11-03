@@ -66,6 +66,8 @@ def posts():
             postLikes=row[7]#,
             # postLikeAssociation,
             # postNickName
+
+            #this data needs to be pulled from key relations in other tables
         )
         for row in cursor.fetchall()
     ]
