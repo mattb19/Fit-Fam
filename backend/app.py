@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request, flash, session
+from flask import Flask, redirect, url_for, request, flash
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -9,10 +9,12 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 from Database import db
 from models import User
 from models import Groups
+from data import Data
 #import mysql.connector
+import sqlite3
 
 def register_extensions(app):
-    # this and the next function are to resolve a circular import issue
+    # this and the next function are to resolve a curcular import issue
     db.init_app(app)
 
 def create_app(config):
@@ -33,17 +35,44 @@ migrate = Migrate(app, db)
 
 from models import *    # IMPORT THE MODELS
 
-
 CORS(app, resources={r'/*':{'origins': '*'}})
 
-from models import *    # IMPORT THE MODELS
+def db_connection():
+    conn = None
+    try:
+        conn = sqlite3.connect("app.db")
+    except sqlite3.error as e:
+        print(e)
+    return conn
 
-item2 = []
+
+Item2 = []
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
-    print(item2)
-    return item2
+    conn = db_connection()
+    cursor = conn.cursor()
+    cursor = conn.execute("SELECT * FROM Posts")
+
+    postObjList = [
+        dict(
+            postId=row[0],
+            postDateTime=row[1],
+            poster=row[2],
+            groupAssociation=row[3],
+            description=row[4],
+            postTags=row[5],
+            postImage=row[6],
+            postLikes=row[7]#,
+            # postLikeAssociation,
+            # postNickName
+
+            #this data needs to be pulled from key relations in other tables
+        )
+        for row in cursor.fetchall()
+    ]
+
+    return postObjList
 
 @app.route("/home", methods=['GET', 'POST'])
 # @login_required
@@ -144,9 +173,8 @@ def post():
         'image': data.get('image'),
         'userId': data.get('userId')
         }
-    item2.append(item)
+    Item2.append(item)
     print(item)
-    print(item2)
     return item
 
 

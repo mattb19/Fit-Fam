@@ -16,8 +16,6 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.email}>'
 
-
-
 class SecurityQuestions(db.Model):
     __tablename__ = 'SecurityQuestions'
     userId = db.Column(db.Integer, db.ForeignKey('User.id'), primary_key=True)
@@ -39,3 +37,19 @@ class GroupMembers(db.Model):
     __tablename__ = 'GroupMembers'
     group = db.Column(db.Integer, db.ForeignKey('Groups.groupId'), nullable=False)
     member = db.Column(db.Integer, db.ForeignKey('User.id'), primary_key=True)
+
+class Posts(db.Model):
+    __tablename__ = 'Posts'
+    postId = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    postDateTime = db.Column(db.String(255), nullable=False)
+    poster = db.Column(db.Integer, db.ForeignKey('User.id'))
+    groupAssociation = db.Column(db.Integer, default=0)
+    description = db.Column(db.Text(4096), nullable=False)
+    postTags = db.Column(db.String(255))
+    postImage = db.Column(db.String(255))
+    postLikes = db.Column(db.Integer)
+
+class PostLikes(db.Model):
+    __tablename__ = 'PostLikes'
+    postId = db.Column(db.Integer, db.ForeignKey('Posts.postId'), primary_key=True)
+    userId = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
