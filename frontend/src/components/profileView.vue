@@ -55,7 +55,7 @@
         </div>
       </div>
     </nav>
-    <h3 class="large centeralign">WOOHOO PROFILES OH YEAH!!!!</h3>
+    <h3 class="d-flex justify-content-start">PROFILE</h3>
     <p></p>
     <p></p>
     <p>{{ backend }}</p>
