@@ -171,10 +171,25 @@ def post():
         'title': data.get('title'),
         'description': data.get('description'),
         'image': data.get('image'),
-        'userId': data.get('userId')
+        'userId': data.get('userId'),
+        'likeCount': 0
         }
     Item2.append(item)
     print(item)
+    return item
+
+@app.route("/like", methods=['GET','POST'])
+def like():
+
+    # data is the post data put in jsonified format
+    data = request.get_json(force=True)
+
+    # making dict object for post data
+    item = {
+        'like': data.get('like')
+        }
+    if item['like'] == 'yes':
+        print(item)
     return item
 
 

@@ -36,8 +36,22 @@ form {
     margin: auto;
   }
   .like {
-    margin-right: 90%;
     background: none;
+    width: 15px;
+    height: 15px;
+    margin-bottom: 2%;
+    display:flex;
+    max-width: 100%;
+  }
+  .like-button {
+    background: none;
+    width: 20px;
+    height: 20px;
+    float: left;
+  }
+  .numLikes {
+    float:left;
+    padding-left: 2px;
   }
   .float{
     position:fixed;
@@ -45,7 +59,7 @@ form {
     height:60px;
     bottom:40px;
     right:40px;
-    background-color:rgb(0, 156, 204);
+    background-color:#488084;
     color:#FFF;
     border-radius:50px;
     text-align:center;

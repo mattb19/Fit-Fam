@@ -57,7 +57,7 @@
       </div>
     </nav>
     <a href="/post" class="float">
-      <i class="fa fa-plus my-float">+</i>
+      <img src="../assets/post-button.png" alt="Image" height="60" />
     </a>
     <p></p>
     <postViewObj
@@ -94,6 +94,24 @@ export default {
         .catch((err) => {
           console.error(err);
         });
+    },
+    like() {
+      const path = "http://127.0.0.1:5000/like";
+      const formData = new FormData();
+      formData.append("file", this.file);
+
+      axios
+        .post(path, {
+          like: "yes",
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.$router.push({ name: "home" });
+      this.getStats();
     },
     getPost() {
       /*bellow should be replaced with axios post api once a retrieval mothod is implimented*/
