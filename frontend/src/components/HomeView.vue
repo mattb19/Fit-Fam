@@ -56,6 +56,9 @@
         </div>
       </div>
     </nav>
+    <a href="/post" class="float">
+      <i class="fa fa-plus my-float">+</i>
+    </a>
     <p></p>
     <postViewObj
       class="post"
