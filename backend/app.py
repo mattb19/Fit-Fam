@@ -48,13 +48,30 @@ def db_connection():
 
 Item2 = []
 
+postObjList = []
+feedPosition = 50
+retrievalStepSize = 10
+
+@app.route("/feedmeta", methods=['GET', 'POST'])
+# @login_required
+def feedMeta():
+    global feedPosition
+    conn = db_connection()
+    feedPosition = conn.execute("SELECT COUNT(*) FROM TableName")
+    print(feedPosition)
+    return
+
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
+    global feedPosition
+    feedPosition -= retrievalStepSize
     conn = db_connection()
     cursor = conn.cursor()
-    cursor = conn.execute("SELECT * FROM Posts")
+    cursor = conn.execute("SELECT * FROM Posts LIMIT "+str(feedPosition)+", "+str(retrievalStepSize))
+    
 
-    postObjList = [
+    global postObjList
+    postObjList = postObjList + ([
         dict(
             postId=row[0],
             postDateTime=row[1],
@@ -70,7 +87,7 @@ def posts():
             #this data needs to be pulled from key relations in other tables
         )
         for row in cursor.fetchall()
-    ]
+    ])
 
     return postObjList
 
