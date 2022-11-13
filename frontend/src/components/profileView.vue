@@ -55,10 +55,22 @@
         </div>
       </div>
     </nav>
-    <h3 class="d-flex justify-content-start">PROFILE</h3>
     <p></p>
     <p></p>
-    <p>{{ backend }}</p>
+    <v-container class="profile">
+      <v-layout justify-end>
+        <v-flex xs12 sm6 md4 lg3>
+          <v-card>
+            <v-responsive class="pt-4"> image goes here </v-responsive>
+            <v-card-text>
+              <h3>{{ backend.nickName }}</h3>
+              <h3>{{ backend.realName }}</h3>
+              <h3>{{ backend.var }}</h3>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -73,7 +85,7 @@ export default {
   },
   methods: {
     getStats() {
-      const path = "http://127.0.0.1:5000/home";
+      const path = "http://127.0.0.1:5000/profile";
       axios
         .get(path)
         .then((res) => {

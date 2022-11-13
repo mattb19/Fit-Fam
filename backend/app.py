@@ -39,15 +39,31 @@ def posts():
     return item2
 
 @app.route("/home", methods=['GET', 'POST'])
-@login_required
+#@login_required
 def home():
     if request.method == 'POST':
         return "POST method test."
     else:
         return "This message is a test for backend."
 
+@app.route("/profile" , methods=['GET', 'POST'])
+#@login_required
+def profile():
+    data = Data()
+    userEmail = data.getEmail()
+    user = User.query.filter_by(email = userEmail).first()
+    nickName = user.nickname
+    if nickName == '':
+        nickName = "Nickname not set yet"
+    firstName = user.firstName
+    lastName = user.lastName
+    x = "test"
+    backend = {'nickName': nickName, 'realName' : firstName + ' ' + lastName, 'var': x}
+    return backend
+
 @app.route("/login", methods=['POST'])
 def login():
+    data = Data()
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     info = request.get_json(silent=True)
@@ -63,12 +79,13 @@ def login():
         print('wrong user/password or user doesn\'t exist')
         return redirect(url_for('login'))
     #login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
+    data.setEmail(userEmail)
     login_user(user, remember=True)
     print('logged in----------------------------')
     return redirect(url_for('home'))
 
 @app.route("/logout")
-@login_required
+#@login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
@@ -117,7 +134,7 @@ def securityQuestions():
     return info
 
 @app.route("/")
-@login_required
+#@login_required
 def default():
     return redirect(url_for("posts"))
 
