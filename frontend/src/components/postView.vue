@@ -5,20 +5,27 @@
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
     <!--<h5 class="card-title">{{ postItem.title }}</h5>-->
-    <div>{{ postItem.postImage }}</div>
     <rect width="100%" height="100%" fill="#868e96"></rect>
     <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
     <div class="card-body">
+      <h1>{{ postItem.postTitle }}</h1>
+      <p></p>
+      <img src="../assets/post-button.png" alt="Image" height="60" />
+      <p></p>
       <p class="card-text">{{ postItem.description }}</p>
     </div>
     <div class="conatiner">
       <span class="badge bg-primary">{{ postItem.postTags }}</span>
     </div>
     <div class="like">
-      <a class="like-button" href="#" v-on:click="like">
-        <img src="../assets/like.jpg" alt="Image" height="20" />
+      <a
+        class="like-button"
+        href="#"
+        v-on:click="like(postItem.postId, postItem.postLikes)"
+      >
+        <img src="../assets/like.png" alt="Image" height="20" />
       </a>
-      <p class="numLikes">{{ postItem.likes }}</p>
+      <p class="numLikes">{{ postItem.postLikes }}</p>
     </div>
   </div>
 </template>
@@ -46,14 +53,17 @@ export default {
           console.error(err);
         });
     },
-    like() {
+    like(postId, postLikes) {
       const path = "http://127.0.0.1:5000/like";
       const formData = new FormData();
       formData.append("file", this.file);
+      const id = postId;
+      const likes = postLikes;
 
       axios
         .post(path, {
-          like: "yes",
+          postId: id,
+          postLikes: likes,
         })
         .then((res) => {
           console.log(res);

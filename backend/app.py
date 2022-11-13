@@ -10,6 +10,7 @@ from Database import db
 from models import User
 from models import Groups
 from data import Data
+from datetime import datetime
 #import mysql.connector
 import sqlite3
 
@@ -52,7 +53,7 @@ Item2 = []
 def posts():
     conn = db_connection()
     cursor = conn.cursor()
-    cursor = conn.execute("SELECT * FROM Posts")
+    cursor = conn.execute("SELECT * FROM Posts ORDER BY postId DESC")
 
     postObjList = [
         dict(
@@ -63,7 +64,8 @@ def posts():
             description=row[4],
             postTags=row[5],
             postImage=row[6],
-            postLikes=row[7]#,
+            postLikes=row[7],
+            postTitle=row[8]#,
             # postLikeAssociation,
             # postNickName
 
@@ -167,16 +169,19 @@ def post():
     data = request.get_json(force=True)
 
     # making dict object for post data
-    item = {
-        'title': data.get('title'),
-        'description': data.get('description'),
-        'image': data.get('image'),
-        'userId': data.get('userId'),
-        'likeCount': 0
-        }
-    Item2.append(item)
-    print(item)
-    return item
+    postTitle = data['title']
+    print(postTitle)
+    description = data['description']
+    postImage = data.get('image')
+    poster = data.get('userId')
+    postLikes = 0
+    postTags = data.get('tags')
+
+    post = Posts(postTitle=postTitle, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
+    db.session.add(post)
+    db.session.commit()
+
+    return "All Good"
 
 @app.route("/like", methods=['GET','POST'])
 def like():
@@ -186,10 +191,16 @@ def like():
 
     # making dict object for post data
     item = {
-        'like': data.get('like')
-        }
-    if item['like'] == 'yes':
-        print(item)
+        'postId': data.get('postId'),
+        'postLikes': data.get('postLikes')
+    }
+    postId = item['postId']
+    post = Posts.query.filter_by(postId = postId).first()
+    post.postLikes += 1
+    db.session.add(post)
+    db.session.commit()
+
+    print(item)
     return item
 
 

@@ -173,9 +173,10 @@ export default {
       axios
         .post(path, {
           title: this.title,
-          image: formData,
+          image: "../assets/post-button.png",
           description: this.description,
           userId: "John J Jacobson",
+          tags: "Legs, Arms",
         })
         .then((res) => {
           console.log(res);

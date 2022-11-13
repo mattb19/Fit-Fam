@@ -52,6 +52,8 @@ form {
   .numLikes {
     float:left;
     padding-left: 2px;
+    font-size: medium;
+    font-weight: bold;
   }
   .float{
     position:fixed;
