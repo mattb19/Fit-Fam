@@ -74,8 +74,11 @@ db.sqlite3-journal
 # Flask stuff:
 instance/
 
+# Session stuff:
+flask_session/
+
 # SQLite stuff:
-# app.db
+app.db
 
 # Scrapy stuff:
 .scrapy

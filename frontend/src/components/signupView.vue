@@ -77,47 +77,48 @@ nav {
         <button class="submit" type="submit">Submit</button>
       </div>
     </form>
-    <!--
-    <p>Name: {{ first }} {{ last }}</p>
-    <p>Email: {{ email }}</p>
-    <p>Password: {{ password }}</p>
-    <securityQuestionsView :userEmail="email" />
-    -->
-    <p>{{ backend }}</p>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-//import securityQuestionsView from "./securityQuestionsView.vue";
 
 export default {
-  //name: "signupView",
-  //components: {
-  //  securityQuestionsView,
-  //},
   data() {
     return {
-      // in case you want to do something with these variables on the page
       first: "",
       last: "",
       email: "",
       password: "",
-      backend: "",
     };
   },
   methods: {
     submitInfo() {
       const path = "http://127.0.0.1:5000/signup";
       axios
-        .post(path, {
-          first: this.first,
-          last: this.last,
-          email: this.email,
-          password: this.password,
-        })
+        .post(
+          path,
+          {
+            first: this.first,
+            last: this.last,
+            email: this.email,
+            password: this.password,
+          }
+          //{ withCredentials: true }
+        )
         .then((res) => {
           this.backend = res.data;
+          console.log("Token:", res.data);
+          console.log("Status:", res.status);
+          console.log("StatusText:", res.statusText);
+          console.log("Headers:", res.headers);
+          console.log(res.config);
+          //localStorage.setItem("access_token", res.data["access_token"]);
+          localStorage.setItem("email", this.email);
+          axios.defaults.headers.common = {
+            Authorization: `Bearer ${res.data["access_token"]}`,
+          };
+          // console.log("DATA:", res.data["access_token"]);
         })
         .catch((err) => {
           console.error(err);
