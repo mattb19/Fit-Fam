@@ -49,11 +49,13 @@ def db_connection():
 Item2 = []
 
 postObjList = []
-retrievalStepSize = 11
+retrievalStepSize = 10
 feedPosition = retrievalStepSize
 
 @app.route("/feedmeta", methods=['GET', 'POST'])
 def feedMeta():
+    global postObjList
+    postObjList = []
     global feedPosition
     conn = db_connection()
     cursor = conn.cursor()
@@ -61,38 +63,39 @@ def feedMeta():
     feedPosition = len(cursor.fetchall())
     if feedPosition is None:
         feedPosition = 0
-        print("empty feed")
-    print("feed position set to "+str(feedPosition))
+    else:
+        feedPosition -= retrievalStepSize
     return "Feed position set"
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
     global feedPosition
-    feedPosition -= retrievalStepSize
-    print ("current feed postion " + str(feedPosition))
     conn = db_connection()
     cursor = conn.cursor()
     global postObjList
-    # if feedPosition > 0:
-    cursor = conn.execute("SELECT * FROM Posts LIMIT "+str(feedPosition)+", "+str(retrievalStepSize))
-    
-    postObjList = postObjList + ([
-        dict(
-            postId=row[0],
-            postDateTime=row[1],
-            poster=row[2],
-            groupAssociation=row[3],
-            description=row[4],
-            postTags=row[5],
-            postImage=row[6],
-            postLikes=row[7]#,
-            # postLikeAssociation,
-            # postNickName
+    if feedPosition > 0:
+        cursor = conn.execute("SELECT * FROM Posts LIMIT "+str(feedPosition)+", "+str(retrievalStepSize))
+        
+        tmpPostObjList = ([
+            dict(
+                postId=row[0],
+                postDateTime=row[1],
+                poster=row[2],
+                groupAssociation=row[3],
+                description=row[4],
+                postTags=row[5],
+                postImage=row[6],
+                postLikes=row[7]#,
+                # postLikeAssociation,
+                # postNickName
 
-            #this data needs to be pulled from key relations in other tables
-        )
-        for row in cursor.fetchall()
-    ])
+                #this data needs to be pulled from key relations in other tables
+            )
+            for row in cursor.fetchall()
+        ])
+        tmpPostObjList.reverse()
+        postObjList = postObjList + tmpPostObjList
+        feedPosition -= retrievalStepSize
     return postObjList
 
 @app.route("/home", methods=['GET', 'POST'])

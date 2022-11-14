@@ -75,6 +75,7 @@ export default {
     return {
       post_list: [],
       posts: "",
+      createdLog: null,
     };
   },
   components: {
@@ -129,7 +130,8 @@ export default {
     this.getStats();
     this.getFeedMeta();
   },
-  mounted() {
+  async mounted() {
+    await this.createdLog;
     this.post_list = this.getPost();
     window.addEventListener("scroll", this.handleScroll);
   },
