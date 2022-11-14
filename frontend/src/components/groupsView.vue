@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     createNewGroup() {
-      const path = "http://127.0.0.1:5000/groups";
+      const path = "http://127.0.0.1:5000/groupCreation";
       axios
         .get(path)
         .then((res) => {

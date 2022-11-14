@@ -150,7 +150,7 @@ def post():
     return item
 
 
-@app.route("/groups", methods=['GET', 'POST'])
+@app.route("/groupCreation", methods=['GET', 'POST'])
 def createGroup():
     info = request.get_json(silent=True)
     userId = 1
