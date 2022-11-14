@@ -45,12 +45,15 @@ def db_connection():
         print(e)
     return conn
 
-
 Item2 = []
-
 postObjList = []
 retrievalStepSize = 10
-feedPosition = retrievalStepSize
+feedPosition = 0
+targetGroup = 0
+targetPersonsStr = ""
+
+#target persons assignment will be
+#" AND poster = targetPersons"
 
 @app.route("/feedmeta", methods=['GET', 'POST'])
 def feedMeta():
@@ -59,7 +62,9 @@ def feedMeta():
     global feedPosition
     conn = db_connection()
     cursor = conn.cursor()
-    cursor = conn.execute('SELECT postId FROM Posts')
+    cursor = conn.execute(
+        'SELECT postId FROM Posts'
+    )
     feedPosition = len(cursor.fetchall())
     if feedPosition is None:
         feedPosition = 0
@@ -74,7 +79,9 @@ def posts():
     cursor = conn.cursor()
     global postObjList
     if feedPosition > 0:
-        cursor = conn.execute("SELECT * FROM Posts LIMIT "+str(feedPosition)+", "+str(retrievalStepSize))
+        cursor = conn.execute(
+            "WITH Posts_Numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY _ROWID_) RowNum FROM Posts) SELECT Posts_Numbered.*, User.firstName, User.lastName, User.nickname FROM Posts_Numbered LEFT JOIN User ON Posts_Numbered.poster = User.id WHERE RowNum > " + str(feedPosition) + " AND RowNum <= " + str(feedPosition+retrievalStepSize) + " AND groupAssociation = " + str(targetGroup) + targetPersonsStr
+        )
         
         tmpPostObjList = ([
             dict(
@@ -85,9 +92,12 @@ def posts():
                 description=row[4],
                 postTags=row[5],
                 postImage=row[6],
-                postLikes=row[7]#,
-                # postLikeAssociation,
-                # postNickName
+                postLikes=row[7],
+                #feedRow=row[8],
+                #postLikeAssociation,
+                postFirstName=row[9],
+                postLastName=row[10],
+                postNickname=row[11]
 
                 #this data needs to be pulled from key relations in other tables
             )
@@ -96,6 +106,7 @@ def posts():
         tmpPostObjList.reverse()
         postObjList = postObjList + tmpPostObjList
         feedPosition -= retrievalStepSize
+    #print(postObjList[0])
     return postObjList
 
 @app.route("/home", methods=['GET', 'POST'])

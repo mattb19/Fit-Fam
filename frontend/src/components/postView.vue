@@ -1,7 +1,25 @@
 <template>
   <div class="card mb-3">
-    <h3 class="card-header" style="text-align: left">
-      {{ postItem.poster }}
+    <h3
+      v-if="postItem.postNickname != null"
+      class="card-header"
+      style="text-align: left"
+    >
+      {{ postItem.postNickname }}
+      <span style="float: right"> {{ postItem.postDateTime }} </span>
+    </h3>
+    <h3
+      v-else-if="
+        postItem.postFirstName != null && postItem.postLastName != null
+      "
+      class="card-header"
+      style="text-align: left"
+    >
+      {{ postItem.postFirstName }} {{ postItem.postLastName }}
+      <span style="float: right"> {{ postItem.postDateTime }} </span>
+    </h3>
+    <h3 v-else class="card-header" style="text-align: left">
+      Account Removed
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
     <!--<h5 class="card-title">{{ postItem.title }}</h5>-->
