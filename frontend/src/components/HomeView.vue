@@ -127,7 +127,7 @@ export default {
   },
   created() {
     this.getStats();
-    this.feedMeta();
+    this.getFeedMeta();
   },
   mounted() {
     this.post_list = this.getPost();

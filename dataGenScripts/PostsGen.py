@@ -14,12 +14,12 @@ groupAssociation = 0
 tagsList = ["Legs","Arms","Cardio","Core","Weights","Low Intensity","High Intensity"]
 
 timeIncr = date.today()
-for i in range(100):
+for i in range(5):
     tagCombo = tagsList[random.randint(0,len(tagsList)-1)]
     for i in range(random.randint(0,3)):
         tagCombo = tagCombo + "," + tagsList[random.randint(0,len(tagsList)-1)]
 
-    post = [timeIncr,random.randint(1,7),groupAssociation,"Lorem Ipsum",tagCombo,"",0]
+    post = [timeIncr,random.randint(1,7),groupAssociation,"Lorem Ipsum, new",tagCombo,"",0]
 
     cursor.execute("INSERT INTO Posts (postDateTime, poster, groupAssociation, description, postTags, postImage, postLikes) VALUES (?,?,?,?,?,?,?)",(post))
     conn.commit()

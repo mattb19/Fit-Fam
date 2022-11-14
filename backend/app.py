@@ -49,28 +49,33 @@ def db_connection():
 Item2 = []
 
 postObjList = []
-feedPosition = 50
-retrievalStepSize = 10
+retrievalStepSize = 11
+feedPosition = retrievalStepSize
 
 @app.route("/feedmeta", methods=['GET', 'POST'])
-# @login_required
 def feedMeta():
     global feedPosition
     conn = db_connection()
-    feedPosition = conn.execute("SELECT COUNT(*) FROM TableName")
-    print(feedPosition)
-    return
+    cursor = conn.cursor()
+    cursor = conn.execute('SELECT postId FROM Posts')
+    feedPosition = len(cursor.fetchall())
+    if feedPosition is None:
+        feedPosition = 0
+        print("empty feed")
+    print("feed position set to "+str(feedPosition))
+    return "Feed position set"
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
     global feedPosition
     feedPosition -= retrievalStepSize
+    print ("current feed postion " + str(feedPosition))
     conn = db_connection()
     cursor = conn.cursor()
+    global postObjList
+    # if feedPosition > 0:
     cursor = conn.execute("SELECT * FROM Posts LIMIT "+str(feedPosition)+", "+str(retrievalStepSize))
     
-
-    global postObjList
     postObjList = postObjList + ([
         dict(
             postId=row[0],
@@ -88,7 +93,6 @@ def posts():
         )
         for row in cursor.fetchall()
     ])
-
     return postObjList
 
 @app.route("/home", methods=['GET', 'POST'])
