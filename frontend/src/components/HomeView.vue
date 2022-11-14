@@ -93,6 +93,23 @@ export default {
           console.error(err);
         });
     },
+    postFeedMeta() {
+      const path = "http://127.0.0.1:5000/feedmeta";
+      axios
+        .post(path, {
+          targetGroupTmp: "0",
+          targetPersonsTmp: "",
+          /*Configure these strings to add targeting 
+          target persons assignment will be " AND poster = " + str(targetPersons)
+          target group assignment will be str(groupId)*/
+        })
+        .then((res) => {
+          this.dataPassLog = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     getFeedMeta() {
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
@@ -128,6 +145,7 @@ export default {
   },
   created() {
     this.getStats();
+    this.postFeedMeta();
     this.getFeedMeta();
   },
   async mounted() {

@@ -31,8 +31,9 @@
     </div>
     <div class="conatiner">
       <span class="badge bg-primary">{{ postItem.postTags }}</span>
-    </div>
-    <div>
+      <!-- </div>
+    <li v-for="(tag, j) in tagListObj" :key="tag.id">{{ j }}.{{ tag }}</li>
+    <div> -->
       <button class="like" float:left>
         <img src="../assets/like.jpg" alt="Image" height="42" />
       </button>
@@ -43,6 +44,11 @@
 <script>
 export default {
   props: ["postItem"],
+  // data() {
+  //   return {
+  //     tagListObj: [postItem.postTags],
+  //   };
+  // },
 };
 </script>
 
