@@ -20,6 +20,10 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<User {self.firstName} {self.lastName}>'
 
+class Profile(db.Model):
+    __tablename__ = 'Profile'
+    userId = db.Column(db.Integer, db.ForeignKey('User.id'), primary_key=True)
+    AboutMe = db.Column(db.String(255), nullable=False)
 
 class SecurityQuestions(db.Model):
     __tablename__ = 'SecurityQuestions'

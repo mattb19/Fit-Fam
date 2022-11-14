@@ -52,13 +52,19 @@ def profile():
     data = Data()
     userEmail = data.getEmail()
     user = User.query.filter_by(email = userEmail).first()
+    profile = Profile.query.filter_by(userId = user.id).first()
+    if profile is None:
+        initAboutMe = "You have nothing in your about me select edit to tell people about yourself"
+        profile = Profile(userId = user.id, AboutMe = initAboutMe)
+        db.session.add(profile)
+        db.session.commit()
     nickName = user.nickname
-    if nickName == '':
+    if nickName == None:
         nickName = "Nickname not set yet"
     firstName = user.firstName
     lastName = user.lastName
-    x = "test"
-    backend = {'nickName': nickName, 'realName' : firstName + ' ' + lastName, 'var': x}
+    aboutMe = profile.AboutMe
+    backend = {'nickName': nickName, 'realName' : firstName + ' ' + lastName, 'aboutMe': aboutMe}
     return backend
 
 @app.route("/login", methods=['POST'])

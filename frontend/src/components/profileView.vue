@@ -7,6 +7,13 @@
 .home {
   background-color: #383c44;
 }
+
+.example {
+  width: 20%;
+  height: 50%;
+  max-height: 100%;
+  border: 2px solid #488084;
+}
 </style>
 
 <template>
@@ -57,20 +64,10 @@
     </nav>
     <p></p>
     <p></p>
-    <v-container class="profile">
-      <v-layout justify-end>
-        <v-flex xs12 sm6 md4 lg3>
-          <v-card>
-            <v-responsive class="pt-4"> image goes here </v-responsive>
-            <v-card-text>
-              <h3>{{ backend.nickName }}</h3>
-              <h3>{{ backend.realName }}</h3>
-              <h3>{{ backend.var }}</h3>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <section class="example">
+      <h1>{{ backend.nickName }}</h1>
+      <h1>{{ backend.aboutMe }}</h1>
+    </section>
   </div>
 </template>
 
