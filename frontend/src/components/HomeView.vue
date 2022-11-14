@@ -75,6 +75,7 @@ export default {
     return {
       post_list: [],
       posts: "",
+      createdLog: null,
     };
   },
   components: {
@@ -82,6 +83,28 @@ export default {
   },
   methods: {
     getStats() {
+      const path = "http://127.0.0.1:5000/home";
+      axios
+        .get(path)
+        .then((res) => {
+          this.backend = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    getFeedMeta() {
+      const path = "http://127.0.0.1:5000/feedmeta";
+      axios
+        .get(path)
+        .then((res) => {
+          this.createdLog = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    getPost() {
       const path = "http://127.0.0.1:5000/posts";
       axios
         .get(path)
@@ -91,32 +114,6 @@ export default {
         .catch((err) => {
           console.error(err);
         });
-    },
-    getPost() {
-      /*bellow should be replaced with axios post api once a retrieval mothod is implimented*/
-      const post_userIds = [
-        "John Doe",
-        "Jane Doe",
-        "Joe Schmo",
-        "Thomas Tugman",
-        "Jackson Pot",
-        "Phil Smith",
-      ];
-
-      const postItem = [];
-      const posts = JSON.stringify(this.posts);
-      console.log(posts);
-
-      for (let i = 0; i < 10; i++) {
-        postItem.push({
-          userId: post_userIds[Math.floor(Math.random() * post_userIds.length)],
-          title: posts[0]["title"],
-          postText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna.",
-        });
-      }
-      return postItem;
-      /*End of substitute api*/
     },
     handleScroll() {
       if (
@@ -129,12 +126,14 @@ export default {
       }
     },
   },
-  mounted() {
-    this.post_list = this.getPost();
-    window.addEventListener("scroll", this.handleScroll);
-  },
   created() {
     this.getStats();
+    this.getFeedMeta();
+  },
+  async mounted() {
+    await this.createdLog;
+    this.post_list = this.getPost();
+    window.addEventListener("scroll", this.handleScroll);
   },
 };
 </script>
