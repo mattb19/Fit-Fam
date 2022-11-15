@@ -46,10 +46,7 @@
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/signup">Sign Up</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/post">Post</a>
+              <button @click="logout">Logout</button>
             </li>
           </ul>
         </div>
@@ -82,6 +79,10 @@ export default {
         .catch((err) => {
           console.error(err);
         });
+    },
+    logout() {
+      localStorage.clear();
+      this.$router.push({ name: "login" });
     },
   },
   created() {

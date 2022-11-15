@@ -79,6 +79,7 @@ flask_session/
 
 # SQLite stuff:
 app.db
+migrations/
 
 # Scrapy stuff:
 .scrapy

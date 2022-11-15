@@ -23,7 +23,7 @@ nav {
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/signup">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -38,22 +38,10 @@ nav {
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/">Global</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/groups">Groups</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/search">Search</a>
+              <a class="nav-link" href="/login">Login</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/signup">Sign Up</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/post">Post</a>
             </li>
           </ul>
         </div>
@@ -96,31 +84,18 @@ export default {
     submitInfo() {
       const path = "http://127.0.0.1:5000/signup";
       axios
-        .post(
-          path,
-          {
-            first: this.first,
-            last: this.last,
-            email: this.email,
-            password: this.password,
-          }
-          //{ withCredentials: true }
-        )
+        .post(path, {
+          first: this.first,
+          last: this.last,
+          email: this.email,
+          password: this.password,
+        })
         .then((res) => {
           this.backend = res.data;
-          console.log("Token:", res.data);
-          console.log("Status:", res.status);
-          console.log("StatusText:", res.statusText);
-          console.log("Headers:", res.headers);
-          console.log(res.config);
-          //localStorage.setItem("access_token", res.data["access_token"]);
           localStorage.setItem("email", this.email);
-          axios.defaults.headers.common = {
-            Authorization: `Bearer ${res.data["access_token"]}`,
-          };
-          // console.log("DATA:", res.data["access_token"]);
         })
         .catch((err) => {
+          this.$router.push({ name: "signup" });
           console.error(err);
         });
       // redirect to security questions page after submitting
