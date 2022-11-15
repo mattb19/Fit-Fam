@@ -101,9 +101,6 @@ export default {
           console.error(err);
         });
     },
-    createNewGroup() {
-      alert("you wanted to create a new group");
-    },
     logout() {
       localStorage.clear();
       this.$router.push({ name: "login" });
