@@ -9,8 +9,7 @@
     <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
     <div class="card-body">
       <h1>{{ postItem.postTitle }}</h1>
-      <p></p>
-      <img :src="require('../assets/logo.png')" width="270px" height="200px" />
+      <img :src="postItem.postImage" width="270px" height="200px" />
       <p></p>
       <p class="card-text">{{ postItem.description }}</p>
     </div>
@@ -53,9 +52,11 @@ export default {
           console.error(err);
         });
     },
-    blobImg() {
-      
-    }
+    blobToImg(image) {
+      var img = new Image(img);
+      img.src = image;
+      return img;
+    },
     like(postId, postLikes) {
       const path = "http://127.0.0.1:5000/like";
       const formData = new FormData();
