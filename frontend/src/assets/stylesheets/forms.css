@@ -35,3 +35,7 @@ form {
     width: 33%;
     margin: auto;
   }
+  .like {
+    margin-right: 90%;
+    background: none;
+  }

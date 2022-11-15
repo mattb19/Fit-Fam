@@ -16,8 +16,6 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.email}>'
 
-
-
 class SecurityQuestions(db.Model):
     __tablename__ = 'SecurityQuestions'
     userId = db.Column(db.Integer, db.ForeignKey('User.id'), primary_key=True)

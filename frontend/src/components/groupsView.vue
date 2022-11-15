@@ -84,11 +84,14 @@ export default {
   data() {
     return {
       backend: "",
+      userId: 1,
+      groupId: 2,
+      groupName: "Trenything is possible",
     };
   },
   methods: {
-    getStats() {
-      const path = "http://127.0.0.1:5000/home";
+    createNewGroup() {
+      const path = "http://127.0.0.1:5000/groups";
       axios
         .get(path)
         .then((res) => {
@@ -107,7 +110,7 @@ export default {
     },
   },
   created() {
-    this.getStats();
+    this.createNewGroup();
   },
 };
 </script>
