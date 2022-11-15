@@ -150,8 +150,10 @@ export default {
   },
   mounted() {
     this.getFeedMeta();
-    this.post_list = this.getPost();
-    window.addEventListener("scroll", this.handleScroll);
+    setTimeout(() => {
+      this.post_list = this.getPost();
+      window.addEventListener("scroll", this.handleScroll);
+    }, 100);
   },
 };
 </script>
