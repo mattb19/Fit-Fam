@@ -81,7 +81,7 @@ def feedMeta():
             feedPosition = 0
         else:
             feedPosition -= retrievalStepSize
-        print("Feed position set")
+        #print("Feed position set")
         return "Feed position set"
 
 @app.route("/posts", methods=['GET', 'POST'])
@@ -91,11 +91,11 @@ def posts():
     cursor = conn.cursor()
     global postObjList
     if feedPosition > 0:
-        print("calls made here")
+        #print("calls made here")
         cursor = conn.execute(
             "WITH Posts_Numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY _ROWID_) RowNum FROM Posts) SELECT Posts_Numbered.*, User.firstName, User.lastName, User.nickname FROM Posts_Numbered LEFT JOIN User ON Posts_Numbered.poster = User.id WHERE RowNum > " + str(feedPosition) + " AND RowNum <= " + str(feedPosition+retrievalStepSize) + " AND groupAssociation = " + targetGroupStr + targetPersonsStr
         )
-        print("call is finished")
+        #print("call is finished")
         tmpPostObjList = ([
             dict(
                 postId=row[0],

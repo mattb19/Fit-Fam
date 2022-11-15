@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/require-v-for-key -->
 <template>
   <div class="card mb-3">
     <h3
@@ -33,10 +34,11 @@
       <p class="card-text">{{ postItem.description }}</p>
     </div>
     <div class="conatiner">
-      <span class="badge bg-primary">{{ postItem.postTags }}</span>
-      <!-- </div>
-    <li v-for="(tag, j) in tagListObj" :key="tag.id">{{ j }}.{{ tag }}</li>
-    <div class="like"> -->
+      <span class="badge bg-primary" v-for="tag in postItem.postTags">{{
+        tag
+      }}</span>
+    </div>
+    <div class="like">
       <a
         class="like-button"
         href="#"

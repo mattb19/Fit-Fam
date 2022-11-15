@@ -75,7 +75,6 @@ export default {
     return {
       post_list: [],
       posts: "",
-      createdLog: null,
     };
   },
   components: {
@@ -128,6 +127,10 @@ export default {
         .get(path)
         .then((res) => {
           this.posts = res.data;
+          for (let i = 0; i < this.posts.length; i++) {
+            let tempTagList = JSON.parse(this.posts[i].tagList);
+            this.posts[i].tagList = tempTagList;
+          }
         })
         .catch((err) => {
           console.error(err);
@@ -153,7 +156,7 @@ export default {
     setTimeout(() => {
       this.post_list = this.getPost();
       window.addEventListener("scroll", this.handleScroll);
-    }, 100);
+    }, 20);
   },
 };
 </script>
