@@ -1,4 +1,5 @@
 from Database import db
+from datetime import datetime
 # from flask_login import UserMixin
 
 # REMINDER: IF NEED COLUMN IN CHRONOLOGICAL ORDER (SUCH AS POSTS TABLE) MAKE SURE index=TRUE FOR THE NECESSARY COLUMN
@@ -48,6 +49,7 @@ class Posts(db.Model):
     postTags = db.Column(db.String(255))
     postImage = db.Column(db.String(255))
     postLikes = db.Column(db.Integer)
+    postTitle = db.Column(db.String(255))
 
 class PostLikes(db.Model):
     __tablename__ = 'PostLikes'

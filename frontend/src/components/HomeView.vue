@@ -49,13 +49,13 @@
             <li class="nav-item">
               <a class="nav-link" href="/signup">Sign Up</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/post">Post</a>
-            </li>
           </ul>
         </div>
       </div>
     </nav>
+    <a href="/post" class="float">
+      <img src="../assets/post-button.png" alt="Image" height="60" />
+    </a>
     <p></p>
     <postViewObj
       class="post"
@@ -116,6 +116,7 @@ export default {
         .get(path)
         .then((res) => {
           this.createdLog = res.data;
+          return "OK";
         })
         .catch((err) => {
           console.error(err);
@@ -146,10 +147,9 @@ export default {
   created() {
     this.getStats();
     this.postFeedMeta();
-    this.getFeedMeta();
   },
-  async mounted() {
-    await this.createdLog;
+  mounted() {
+    this.getFeedMeta();
     this.post_list = this.getPost();
     window.addEventListener("scroll", this.handleScroll);
   },

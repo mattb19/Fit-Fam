@@ -61,9 +61,6 @@ button {
             <li class="nav-item">
               <a class="nav-link" href="/signup">Sign Up</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/post">Post</a>
-            </li>
           </ul>
         </div>
       </div>

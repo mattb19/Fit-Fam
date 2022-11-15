@@ -75,9 +75,6 @@
             <li class="nav-item">
               <a class="nav-link" href="/signup">Sign Up</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/post">Post</a>
-            </li>
           </ul>
         </div>
       </div>
@@ -173,9 +170,10 @@ export default {
       axios
         .post(path, {
           title: this.title,
-          image: formData,
+          image: "../assets/post-button.png",
           description: this.description,
           userId: "John J Jacobson",
+          tags: "Legs, Arms",
         })
         .then((res) => {
           console.log(res);

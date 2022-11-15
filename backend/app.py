@@ -10,6 +10,7 @@ from Database import db
 from models import User
 from models import Groups
 from data import Data
+from datetime import datetime
 #import mysql.connector
 import sqlite3
 
@@ -80,6 +81,7 @@ def feedMeta():
             feedPosition = 0
         else:
             feedPosition -= retrievalStepSize
+        print("Feed position set")
         return "Feed position set"
 
 @app.route("/posts", methods=['GET', 'POST'])
@@ -89,11 +91,11 @@ def posts():
     cursor = conn.cursor()
     global postObjList
     if feedPosition > 0:
-        #print("calls made here")
+        print("calls made here")
         cursor = conn.execute(
             "WITH Posts_Numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY _ROWID_) RowNum FROM Posts) SELECT Posts_Numbered.*, User.firstName, User.lastName, User.nickname FROM Posts_Numbered LEFT JOIN User ON Posts_Numbered.poster = User.id WHERE RowNum > " + str(feedPosition) + " AND RowNum <= " + str(feedPosition+retrievalStepSize) + " AND groupAssociation = " + targetGroupStr + targetPersonsStr
         )
-        
+        print("call is finished")
         tmpPostObjList = ([
             dict(
                 postId=row[0],
@@ -106,9 +108,10 @@ def posts():
                 postLikes=row[7],
                 #feedRow=row[8],
                 #postLikeAssociation,
-                postFirstName=row[9],
-                postLastName=row[10],
-                postNickname=row[11]
+                postTitle=row[9],
+                postFirstName=row[10],
+                postLastName=row[11],
+                postNickname=row[12]
 
                 #this data needs to be pulled from key relations in other tables
             )
@@ -213,13 +216,37 @@ def post():
     data = request.get_json(force=True)
 
     # making dict object for post data
+    postTitle = data['title']
+    print(postTitle)
+    description = data['description']
+    postImage = data.get('image')
+    poster = data.get('userId')
+    postLikes = 0
+    postTags = data.get('tags')
+
+    post = Posts(postTitle=postTitle, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
+    db.session.add(post)
+    db.session.commit()
+
+    return "All Good"
+
+@app.route("/like", methods=['GET','POST'])
+def like():
+
+    # data is the post data put in jsonified format
+    data = request.get_json(force=True)
+
+    # making dict object for post data
     item = {
-        'title': data.get('title'),
-        'description': data.get('description'),
-        'image': data.get('image'),
-        'userId': data.get('userId')
-        }
-    Item2.append(item)
+        'postId': data.get('postId'),
+        'postLikes': data.get('postLikes')
+    }
+    postId = item['postId']
+    post = Posts.query.filter_by(postId = postId).first()
+    post.postLikes += 1
+    db.session.add(post)
+    db.session.commit()
+
     print(item)
     return item
 
