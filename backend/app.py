@@ -11,6 +11,8 @@ from models import User
 from models import Groups
 from data import Data
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import os
 #import mysql.connector
 import sqlite3
 
@@ -168,14 +170,17 @@ def post():
     # data is the post data put in jsonified format
     data = request.get_json(force=True)
 
-    # making dict object for post data
     postTitle = data['title']
     print(postTitle)
     description = data['description']
-    postImage = data.get('image')
+    postImage = data.get('imagePath')
     poster = data.get('userId')
     postLikes = 0
     postTags = data.get('tags')
+    image = data.get("image")
+
+    print(postImage)
+    print(image)
 
     post = Posts(postTitle=postTitle, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
     db.session.add(post)

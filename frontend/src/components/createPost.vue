@@ -34,6 +34,16 @@
 .btn {
   width: 50em;
 }
+
+.types {
+  margin: auto;
+  width: 50em;
+  text-align: left;
+}
+
+.form-check {
+  margin: auto;
+}
 </style>
 
 <template>
@@ -114,11 +124,12 @@
         type="file"
         id="avatar"
         name="avatar"
-        accept="image/png, image/jpeg"
+        accept="image/png, image/jpeg, image/jpg"
         ref="image"
-        @change="selectFile"
+        @change="blobIt"
       />
     </div>
+    <p class="types">Image must be jpg, jpeg, or png</p>
     <div class="button">
       <button
         @submit="createPost"
@@ -157,23 +168,32 @@ export default {
           console.error(err);
         });
     },
-    selectFile() {
-      this.image = this.$refs.image.files[0];
+    blobIt() {
+      let file = this.$refs.image.files[0];
+      let reader = new FileReader();
+      reader.onloadend = function () {
+        document.write(reader.result);
+      };
+      this.image = reader.readAsDataURL(file);
+      console.log(this.image);
     },
     createPost() {
-      console.log({
-        title: this.title,
-      });
       const path = "http://127.0.0.1:5000/post";
       const formData = new FormData();
-      formData.append("file", this.file);
+      formData.append("file", this.image);
+      console.log(this.image);
+      const fileInput = document.querySelector("input[type=file]");
+      const path1 = fileInput.value;
+      const fileName = path1.split(/(\\|\/)/g).pop();
+
       axios
         .post(path, {
           title: this.title,
-          image: "../assets/post-button.png",
+          imagePath: fileName,
           description: this.description,
           userId: "John J Jacobson",
           tags: "Legs, Arms",
+          image: this.image,
         })
         .then((res) => {
           console.log(res);
