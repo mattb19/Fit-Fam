@@ -53,6 +53,9 @@ export default {
           console.error(err);
         });
     },
+    blobImg() {
+      
+    }
     like(postId, postLikes) {
       const path = "http://127.0.0.1:5000/like";
       const formData = new FormData();

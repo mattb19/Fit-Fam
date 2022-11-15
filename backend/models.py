@@ -47,9 +47,9 @@ class Posts(db.Model):
     groupAssociation = db.Column(db.Integer, default=0)
     description = db.Column(db.Text(4096), nullable=False)
     postTags = db.Column(db.String(255))
-    postImage = db.Column(db.String(255))
+    postImage = db.Column(db.bl)
     postLikes = db.Column(db.Integer)
-    postTitle = db.Column(db.String(255))
+    postTitle = db.Column(db.Text(50000))
 
 class PostLikes(db.Model):
     __tablename__ = 'PostLikes'

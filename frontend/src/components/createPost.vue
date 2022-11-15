@@ -169,31 +169,39 @@ export default {
         });
     },
     blobIt() {
-      let file = this.$refs.image.files[0];
-      let reader = new FileReader();
-      reader.onloadend = function () {
-        document.write(reader.result);
-      };
-      this.image = reader.readAsDataURL(file);
-      console.log(this.image);
+      this.image = this.$refs.image.files[0];
+      // let reader = new FileReader();
+      // reader.readAsDataURL(file);
+      // reader.onload = function () {
+      //   var rawLog = reader.result;
+      //   console.log(rawLog);
+      // };
+      // console.log(this.image);
     },
-    createPost() {
+    yup(img) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = () => {
+          resolve(reader.result);
+        };
+        reader.readAsDataURL(img);
+      });
+    },
+    async createPost() {
       const path = "http://127.0.0.1:5000/post";
       const formData = new FormData();
       formData.append("file", this.image);
-      console.log(this.image);
-      const fileInput = document.querySelector("input[type=file]");
-      const path1 = fileInput.value;
-      const fileName = path1.split(/(\\|\/)/g).pop();
+      let blob = await this.yup(this.image);
+      console.log(blob);
 
       axios
         .post(path, {
           title: this.title,
-          imagePath: fileName,
           description: this.description,
           userId: "John J Jacobson",
           tags: "Legs, Arms",
-          image: this.image,
+          image: blob,
         })
         .then((res) => {
           console.log(res);

@@ -171,16 +171,14 @@ def post():
     data = request.get_json(force=True)
 
     postTitle = data['title']
-    print(postTitle)
     description = data['description']
     postImage = data.get('imagePath')
     poster = data.get('userId')
     postLikes = 0
     postTags = data.get('tags')
-    image = data.get("image")
+    postImage = data.get('image')
 
     print(postImage)
-    print(image)
 
     post = Posts(postTitle=postTitle, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
     db.session.add(post)

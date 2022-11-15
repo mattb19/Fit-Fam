@@ -105,7 +105,6 @@ export default {
 
       const postItem = [];
       const posts = JSON.stringify(this.posts);
-      console.log(posts);
 
       for (let i = 0; i < 10; i++) {
         postItem.push({
@@ -135,7 +134,6 @@ export default {
   },
   created() {
     this.getStats();
-    console.log(this.posts);
   },
 };
 </script>
