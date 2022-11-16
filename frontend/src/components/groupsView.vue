@@ -84,6 +84,9 @@ export default {
   data() {
     return {
       backend: "",
+      userId: 1,
+      groupId: 2,
+      groupName: "Trenything is possible",
     };
   },
   methods: {
@@ -92,8 +95,8 @@ export default {
         this.$router.push({ name: "login" });
       }
     },
-    getStats() {
-      const path = "http://127.0.0.1:5000/home";
+    createNewGroup() {
+      const path = "http://127.0.0.1:5000/groups";
       axios
         .get(path)
         .then((res) => {
@@ -103,16 +106,13 @@ export default {
           console.error(err);
         });
     },
-    createNewGroup() {
-      alert("you wanted to create a new group");
-    },
     logout() {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
   },
   created() {
-    this.getStats();
+    this.createNewGroup();
     setTimeout(() => {
       this.checkLoggedIn();
     }, 300);
