@@ -9,6 +9,7 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 from Database import db
 from models import User
 from models import Groups
+from models import GroupMembers
 #import mysql.connector
 
 def register_extensions(app):
@@ -150,16 +151,32 @@ def post():
     return item
 
 
-@app.route("/groupCreation", methods=['GET', 'POST'])
+@app.route("/create_group", methods=['GET', 'POST'])
 def createGroup():
     info = request.get_json(silent=True)
     userId = 1
-    groupId = 2
     groupName = "Trenything is possible"
     group = Groups(groupName=groupName, groupOwner=userId)
+    # conn = db_connection()
+    # cursor = conn.cursor()
+    # cursor = conn.execute(
+    #     'SELECT groupId FROM Groups WHERE groupName={groupName} AND groupOwner={userId}'
+    # )
+    # groupMem = GroupMembers(member=userId)
     db.session.add(group)
     db.session.commit()
 
 
     print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
     return "group feed will display here"
+
+@app.route("/group_post", methods=['GET', 'POST'])
+def groupPost():
+    info = request.get_json(silent=True)
+    userId=1
+    groupId=info.get('groupId')
+    desc=info.get('description')
+    img=info.get('image')
+    newPost = Post(groupAssociation=groupId, poster=userId, description=desc, postImage=img, postLikes=0)
+    db.session.add(newPost)
+    db.session.commit(newPost)

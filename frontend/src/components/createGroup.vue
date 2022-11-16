@@ -1,25 +1,12 @@
 <!-- eslint-disable prettier/prettier -->
 <style scoped>
 .addmargin {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0.625em;
+  margin-bottom: 0.625em;
 }
 
 .home {
   background-color: #383c44;
-}
-
-th,
-td {
-  padding-top: 10px;
-  padding-bottom: 20px;
-  padding-left: 30px;
-  padding-right: 400px;
-  size: 20px;
-}
-
-button {
-  size: 15px;
 }
 </style>
 
@@ -48,10 +35,10 @@ button {
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/">Global</a>
+              <a class="nav-link active" href="/">Global</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/groups">Groups</a>
+              <a class="nav-link" href="/groups">Groups</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/profile">Profile</a>
@@ -69,42 +56,49 @@ button {
         </div>
       </div>
     </nav>
-    <div>
-      <th class="groupsDisplay" align="left">
-        Groups<button @click="createNewGroup">+</button>
-      </th>
-      <th>Group Info</th>
+    <div class="form-group">
+      <div class="groupName">
+        <input
+          name="groupName"
+          type="text"
+          class="groupName"
+          placeholder="Enter Group Name"
+          required
+          size="80"
+          id="groupName"
+          v-model="groupName"
+        />
+      </div>
     </div>
     <p></p>
-    <p></p>
-    <p>{{ backend }}</p>
   </div>
 </template>
 
 <script>
-//import axios from "axios";
+import axios from "axios";
 
 export default {
   data() {
     return {
-      test: "",
+      groupName: "Legalize Tren",
+      userId: 1,
     };
   },
   methods: {
-    createNewGroup() {
-      //const path = "http://127.0.0.1:5000/groups";
-      // axios
-      //   .post(path, {
-      //     test: this.test,
-      //   })
-      //   .then((res) => {
-      //     this.backend = res.data;
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //   });
-      // redirect to group after submitting
-      this.$router.push({ name: "create_group" });
+    getStats() {
+      const path = "http://127.0.0.1:5000//create_group";
+      axios
+        .post(path, {
+          userId: this.userId,
+          groupName: this.groupName,
+        })
+        .then((res) => {
+          this.backend = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      this.$router.push({ name: "groups" });
     },
   },
 };
