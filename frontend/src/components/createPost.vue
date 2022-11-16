@@ -34,6 +34,26 @@
 .btn {
   width: 50em;
 }
+
+.types {
+  margin: auto;
+  width: 50em;
+  text-align: left;
+}
+
+.form-check {
+  margin: auto;
+}
+
+.tags {
+  margin: auto;
+  margin-right: 10px;
+}
+
+.tag {
+  text-align: center;
+  width: 100px;
+}
 </style>
 
 <template>
@@ -75,9 +95,6 @@
             <li class="nav-item">
               <a class="nav-link" href="/signup">Sign Up</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/post">Post</a>
-            </li>
           </ul>
         </div>
       </div>
@@ -111,17 +128,28 @@
         />
       </div>
     </div>
+    <label for="tags" class="tags">Choose a tag:</label>
+    <select name="tags" id="tags" class="tag" v-model="tags">
+      <option value="Back" class="tag">Back</option>
+      <option value="Chest" class="tag">Chest</option>
+      <option value="Arms" class="tag">Arms</option>
+      <option value="Legs" class="tag">Legs</option>
+      <option value="Back/Bicep" class="tag">Back/Bicep</option>
+      <option value="Chest/Tricep" class="tag">Chest/Tricep</option>
+      <option value="Full Body" class="tag">Full Body</option>
+    </select>
     <div>
       <input
         class="image"
         type="file"
         id="avatar"
         name="avatar"
-        accept="image/png, image/jpeg"
+        accept="image/png, image/jpeg, image/jpg"
         ref="image"
-        @change="selectFile"
+        @change="blobIt"
       />
     </div>
+    <p class="types">Image must be jpg, jpeg, or png</p>
     <div class="button">
       <button
         @submit="createPost"
@@ -146,6 +174,7 @@ export default {
       title: "",
       description: "",
       image: "",
+      tags: "",
     };
   },
   methods: {
@@ -165,22 +194,36 @@ export default {
           console.error(err);
         });
     },
-    selectFile() {
+    blobIt() {
       this.image = this.$refs.image.files[0];
     },
-    createPost() {
-      console.log({
-        title: this.title,
+    yup(img) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = () => {
+          resolve(reader.result);
+        };
+        reader.readAsDataURL(img);
       });
+    },
+    async createPost() {
       const path = "http://127.0.0.1:5000/post";
       const formData = new FormData();
-      formData.append("file", this.file);
+      formData.append("file", this.image);
+      let blob;
+      if (this.image != "") {
+        blob = await this.yup(this.image);
+        console.log(blob);
+      }
+
       axios
         .post(path, {
           title: this.title,
-          image: formData,
           description: this.description,
-          userId: "John J Jacobson",
+          userId: "1" /*this should be a number no a name*/,
+          tags: this.tags,
+          image: blob,
         })
         .then((res) => {
           console.log(res);

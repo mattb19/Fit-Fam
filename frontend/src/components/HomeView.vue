@@ -53,6 +53,10 @@
         </div>
       </div>
     </nav>
+    <!-- start of feed html -->
+    <a href="/post" class="float">
+      <img src="../assets/post-button.png" alt="Image" height="60" />
+    </a>
     <p></p>
     <postViewObj
       class="post"
@@ -84,42 +88,65 @@ export default {
       }
     },
     getStats() {
-      const path = "http://127.0.0.1:5000/posts";
+      // default stat path call
+      const path = "http://127.0.0.1:5000/home";
       axios
         .get(path)
         .then((res) => {
-          this.posts = res.data;
+          this.backend = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    postFeedMeta() {
+      // used to set the backend variables to what searches to look for
+      const path = "http://127.0.0.1:5000/feedmeta";
+      axios
+        .post(path, {
+          targetGroupTmp: "0",
+          targetPersonsTmp: "",
+          /*Configure these strings to add targeting 
+          target persons assignment will be " AND poster = " + str(targetPersons)
+          target group assignment will be str(groupId)*/
+        })
+        .then((res) => {
+          this.dataPassLog = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    getFeedMeta() {
+      // used to set the position in the feed on page load
+      const path = "http://127.0.0.1:5000/feedmeta";
+      axios
+        .get(path)
+        .then((res) => {
+          this.createdLog = res.data;
+          return "OK";
         })
         .catch((err) => {
           console.error(err);
         });
     },
     getPost() {
-      /*below should be replaced with axios post api once a retrieval mothod is implimented*/
-      const post_userIds = [
-        "John Doe",
-        "Jane Doe",
-        "Joe Schmo",
-        "Thomas Tugman",
-        "Jackson Pot",
-        "Phil Smith",
-      ];
-
-      const postItem = [];
-      const posts = JSON.stringify(this.posts);
-      console.log(posts);
-
-      for (let i = 0; i < 10; i++) {
-        postItem.push({
-          userId: post_userIds[Math.floor(Math.random() * post_userIds.length)],
-          title: posts[0]["title"],
-          postText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, sollicitudin ac consequat a, pretium non mauris. Nullam elit turpis, fringilla efficitur pellentesque sed, fermentum sed nulla. Donec vitae elit nec nisl luctus sodales nec porta turpis. Nunc pulvinar a mi at mattis. Nunc quis mi in arcu lobortis pellentesque non in dui. Mauris ut justo maximus, dignissim diam a, dignissim felis. Fusce efficitur accumsan ex id porta. Proin elementum convallis tellus id malesuada. Morbi et fermentum velit. In massa orci, iaculis tincidunt erat sed, rhoncus mattis erat. Aenean at tristique urna.",
+      // used to retrieve posts dict list from backend
+      const path = "http://127.0.0.1:5000/posts";
+      axios
+        .get(path)
+        .then((res) => {
+          this.posts = res.data;
+          for (let i = 0; i < this.posts.length; i++) {
+            let tempTagList = JSON.parse(this.posts[i].tagList);
+            this.posts[i].tagList = tempTagList;
+          }
+        })
+        .catch((err) => {
+          console.error(err);
         });
-      }
-      return postItem;
-      /*End of substitute api*/
     },
+    // scroll window listener
     handleScroll() {
       if (
         window.scrollY + window.innerHeight >=
@@ -135,15 +162,20 @@ export default {
       this.$router.push({ name: "login" });
     },
   },
-  mounted() {
-    this.post_list = this.getPost();
-    window.addEventListener("scroll", this.handleScroll);
-  },
   created() {
     this.getStats();
+    this.postFeedMeta();
     setTimeout(() => {
       this.checkLoggedIn();
     }, 200);
+  },
+  mounted() {
+    this.getFeedMeta();
+    setTimeout(() => {
+      this.post_list = this.getPost();
+      window.addEventListener("scroll", this.handleScroll);
+    }, 50);
+    // if newest posts are not appearing at the top of the feed, increase the above value
   },
 };
 </script>
