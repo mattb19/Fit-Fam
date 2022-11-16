@@ -178,6 +178,11 @@ export default {
     };
   },
   methods: {
+    checkLoggedIn() {
+      if (localStorage.getItem("email") === null) {
+        this.$router.push({ name: "login" });
+      }
+    },
     getStats() {
       const path = "http://127.0.0.1:5000/posts";
       axios
@@ -231,6 +236,9 @@ export default {
   },
   created() {
     this.getStats();
+    setTimeout(() => {
+      this.checkLoggedIn();
+    }, 1);
   },
 };
 </script>

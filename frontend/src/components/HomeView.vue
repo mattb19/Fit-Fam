@@ -20,7 +20,7 @@
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -35,7 +35,7 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="/">Global</a>
+              <a class="nav-link active" href="/home">Global</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/groups">Groups</a>
@@ -82,6 +82,11 @@ export default {
     postViewObj,
   },
   methods: {
+    checkLoggedIn() {
+      if (localStorage.getItem("email") === null) {
+        this.$router.push({ name: "login" });
+      }
+    },
     getStats() {
       // default stat path call
       const path = "http://127.0.0.1:5000/home";
@@ -160,6 +165,9 @@ export default {
   created() {
     this.getStats();
     this.postFeedMeta();
+    setTimeout(() => {
+      this.checkLoggedIn();
+    }, 200);
   },
   mounted() {
     this.getFeedMeta();
