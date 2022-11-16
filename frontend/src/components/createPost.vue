@@ -44,6 +44,16 @@
 .form-check {
   margin: auto;
 }
+
+.tags {
+  margin: auto;
+  margin-right: 10px;
+}
+
+.tag {
+  text-align: center;
+  width: 100px;
+}
 </style>
 
 <template>
@@ -118,6 +128,16 @@
         />
       </div>
     </div>
+    <label for="tags" class="tags">Choose a tag:</label>
+    <select name="tags" id="tags" class="tag" v-model="tags">
+      <option value="Back" class="tag">Back</option>
+      <option value="Chest" class="tag">Chest</option>
+      <option value="Arms" class="tag">Arms</option>
+      <option value="Legs" class="tag">Legs</option>
+      <option value="Back/Bicep" class="tag">Back/Bicep</option>
+      <option value="Chest/Tricep" class="tag">Chest/Tricep</option>
+      <option value="Full Body" class="tag">Full Body</option>
+    </select>
     <div>
       <input
         class="image"
@@ -154,6 +174,7 @@ export default {
       title: "",
       description: "",
       image: "",
+      tags: "",
     };
   },
   methods: {
@@ -170,13 +191,6 @@ export default {
     },
     blobIt() {
       this.image = this.$refs.image.files[0];
-      // let reader = new FileReader();
-      // reader.readAsDataURL(file);
-      // reader.onload = function () {
-      //   var rawLog = reader.result;
-      //   console.log(rawLog);
-      // };
-      // console.log(this.image);
     },
     yup(img) {
       return new Promise((resolve, reject) => {
@@ -192,15 +206,18 @@ export default {
       const path = "http://127.0.0.1:5000/post";
       const formData = new FormData();
       formData.append("file", this.image);
-      let blob = await this.yup(this.image);
-      console.log(blob);
+      let blob;
+      if (this.image != "") {
+        blob = await this.yup(this.image);
+        console.log(blob);
+      }
 
       axios
         .post(path, {
           title: this.title,
           description: this.description,
           userId: "John J Jacobson",
-          tags: "Legs, Arms",
+          tags: this.tags,
           image: blob,
         })
         .then((res) => {
