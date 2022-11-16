@@ -74,12 +74,8 @@ db.sqlite3-journal
 # Flask stuff:
 instance/
 
-# Session stuff:
-flask_session/
-
 # SQLite stuff:
-app.db
-migrations/
+# app.db
 
 # Scrapy stuff:
 .scrapy

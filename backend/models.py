@@ -20,10 +20,10 @@ class User(db.Model):
 class SecurityQuestions(db.Model):
     __tablename__ = 'SecurityQuestions'
     userId = db.Column(db.Integer, db.ForeignKey('User.id'), primary_key=True)
-    Question1 = db.Column(db.String(20))
-    Answer1 = db.Column(db.String(255))
-    Question2 = db.Column(db.String(20))
-    Answer2 = db.Column(db.String(255))
+    Question1 = db.Column(db.String(20), nullable=False)
+    Answer1 = db.Column(db.String(255), nullable=False)
+    Question2 = db.Column(db.String(20), nullable=False)
+    Answer2 = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
         return f'<{self.Question1}: {self.Answer1}, {self.Question2}: {self.Answer2}>'

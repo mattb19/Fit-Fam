@@ -23,7 +23,7 @@ nav {
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/login">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -38,10 +38,22 @@ nav {
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="/login">Login</a>
+              <a class="nav-link" href="/">Global</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/signup">Sign Up</a>
+              <a class="nav-link" href="/groups">Groups</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/search">Search</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/signup">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/post">Post</a>
             </li>
           </ul>
         </div>
@@ -59,6 +71,11 @@ nav {
         <button class="submit" type="submit">Submit</button>
       </div>
     </form>
+    <!--
+    <p>Email: {{ email }}</p>
+    <p>Password: {{ password }}</p>
+    -->
+    <p>backend: {{ backend }}</p>
   </div>
 </template>
 
@@ -68,6 +85,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      // in case you want to do something with these variables on the page
       email: "",
       password: "",
       backend: "",
@@ -83,13 +101,11 @@ export default {
         })
         .then((res) => {
           this.backend = res.data;
-          console.log("LOGIN STATUS:", res.data);
-          localStorage.setItem("email", this.email);
         })
         .catch((err) => {
-          this.$router.push({ name: "login" });
           console.error(err);
         });
+      // redirect to home after submitting
       this.$router.push({ name: "home" });
     },
   },

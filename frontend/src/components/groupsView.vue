@@ -59,7 +59,7 @@ button {
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <button @click="logout">Logout</button>
+              <a class="nav-link" href="/signup">Sign Up</a>
             </li>
           </ul>
         </div>
@@ -100,10 +100,6 @@ export default {
         .catch((err) => {
           console.error(err);
         });
-    },
-    logout() {
-      localStorage.clear();
-      this.$router.push({ name: "login" });
     },
   },
   created() {
