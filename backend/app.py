@@ -7,12 +7,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
-<<<<<<< HEAD
-from models import User
-from models import Groups
-from models import GroupMembers
-=======
->>>>>>> main
 #import mysql.connector
 import sqlite3
 
@@ -218,6 +212,20 @@ def like():
     print(item)
     return item
 
+
+@app.route("/groups", methods=['GET', 'POST'])
+def createGroup():
+    info = request.get_json(silent=True)
+    userId = 1
+    groupId = 2
+    groupName = "Trenything is possible"
+    group = Groups(groupName=groupName, groupOwner=userId)
+    db.session.add(group)
+    db.session.commit()
+
+
+    print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
+    return "group feed will display here"
 
 @app.route("/create_group", methods=['GET', 'POST'])
 def createGroup():
