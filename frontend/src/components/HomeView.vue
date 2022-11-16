@@ -53,6 +53,7 @@
         </div>
       </div>
     </nav>
+    <!-- start of feed html -->
     <a href="/post" class="float">
       <img src="../assets/post-button.png" alt="Image" height="60" />
     </a>
@@ -82,6 +83,7 @@ export default {
   },
   methods: {
     getStats() {
+      // default stat path call
       const path = "http://127.0.0.1:5000/home";
       axios
         .get(path)
@@ -93,6 +95,7 @@ export default {
         });
     },
     postFeedMeta() {
+      // used to set the backend variables to what searches to look for
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
         .post(path, {
@@ -110,6 +113,7 @@ export default {
         });
     },
     getFeedMeta() {
+      // used to set the position in the feed on page load
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
         .get(path)
@@ -122,6 +126,7 @@ export default {
         });
     },
     getPost() {
+      // used to retrieve posts dict list from backend
       const path = "http://127.0.0.1:5000/posts";
       axios
         .get(path)
@@ -136,6 +141,7 @@ export default {
           console.error(err);
         });
     },
+    // scroll window listener
     handleScroll() {
       if (
         window.scrollY + window.innerHeight >=
@@ -161,6 +167,7 @@ export default {
       this.post_list = this.getPost();
       window.addEventListener("scroll", this.handleScroll);
     }, 50);
+    // if newest posts are not appearing at the top of the feed, increase the above value
   },
 };
 </script>
