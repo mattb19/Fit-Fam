@@ -216,7 +216,7 @@ export default {
         .post(path, {
           title: this.title,
           description: this.description,
-          userId: "John J Jacobson",
+          userId: "1" /*this should be a number no a name*/,
           tags: this.tags,
           image: blob,
         })

@@ -48,34 +48,82 @@ def db_connection():
         print(e)
     return conn
 
-
 Item2 = []
+postObjList = []
+retrievalStepSize = 10
+feedPosition = 0
+targetGroupStr = 0
+targetPersonsStr = ""
+
+#target persons assignment will be
+#" AND poster = targetPersons"
+
+@app.route("/feedmeta", methods=['GET', 'POST'])
+def feedMeta():
+    if request.method == 'POST':
+        global targetGroupStr
+        global targetPersonsStr
+        info = request.get_json(silent=True)
+        targetGroupStr = info['targetGroupTmp']
+        #print("target group is " + targetGroupStr)
+        targetPersonsStr = info['targetPersonsTmp']
+        #print("targetPersonsStr is '" + targetPersonsStr + "'")
+        return "Feed targets set"
+    else:
+        global postObjList
+        global feedPosition
+        postObjList = []
+        conn = db_connection()
+        cursor = conn.cursor()
+        cursor = conn.execute(
+            'SELECT postId FROM Posts'
+        )
+        feedPosition = len(cursor.fetchall())
+        if feedPosition is None:
+            feedPosition = 0
+        else:
+            feedPosition -= retrievalStepSize
+        #print("Feed position set")
+        return "Feed position set"
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
+    global feedPosition
     conn = db_connection()
     cursor = conn.cursor()
-    cursor = conn.execute("SELECT * FROM Posts ORDER BY postId DESC")
-
-    postObjList = [
-        dict(
-            postId=row[0],
-            postDateTime=row[1],
-            poster=row[2],
-            groupAssociation=row[3],
-            description=row[4],
-            postTags=row[5],
-            postImage=row[6],
-            postLikes=row[7],
-            postTitle=row[8]#,
-            # postLikeAssociation,
-            # postNickName
-
-            #this data needs to be pulled from key relations in other tables
+    global postObjList
+    if feedPosition > 0:
+        #print("calls made here")
+        cursor = conn.execute(
+            "WITH Posts_Numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY _ROWID_) RowNum FROM Posts) SELECT Posts_Numbered.*, User.firstName, User.lastName, User.nickname FROM Posts_Numbered LEFT JOIN User ON Posts_Numbered.poster = User.id WHERE RowNum > " + str(feedPosition) + " AND RowNum <= " + str(feedPosition+retrievalStepSize) + " AND groupAssociation = " + targetGroupStr + targetPersonsStr
         )
-        for row in cursor.fetchall()
-    ]
+        #print("call is finished")
+        tmpPostObjList = ([
+            dict(
+                postId=row[0],
+                postDateTime=row[1],
+                poster=row[2],
+                groupAssociation=row[3],
+                description=row[4],
+                postTags=(row[5].split(',')),
+                postImage=row[6],
+                postLikes=row[7],
+                #feedRow=row[9],
+                #postLikeAssociation,
+                postTitle=row[8],
+                postRow=row[9],
+                postFirstName=row[10],
+                postLastName=row[11],
+                postNickname=row[12]
 
+                #this data needs to be pulled from key relations in other tables
+            )
+            for row in cursor.fetchall()
+        ])
+        tmpPostObjList.reverse()
+        postObjList = postObjList + tmpPostObjList
+        feedPosition -= retrievalStepSize
+    #print(postObjList[0])
     return postObjList
 
 @app.route("/home", methods=['GET', 'POST'])
