@@ -1,20 +1,16 @@
 <style scoped>
 .addmargin {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0.625em;
+  margin-bottom: 0.625em;
 }
-
-.home {
-  background-color: #383c44;
+.col-sm-12 {
+  margin-right: 6.25em;
 }
-
-.example {
-  width: 20%;
-  height: 50%;
-  max-height: 100%;
-  border: 2px solid #488084;
-  margin-left: 2%;
-  padding-bottom: 1%;
+nav {
+  margin-bottom: 2em;
+}
+.large {
+  color: #488084;
 }
 </style>
 
@@ -49,28 +45,45 @@
               <a class="nav-link" href="/groups">Groups</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/profile">Profile</a>
+              <a class="nav-link" href="/profile">Profile</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <button @click="logout">Logout</button>
+              <a class="nav-link" href="/signup">Sign Up</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <p></p>
-    <p></p>
-    <section class="profile">
-      <h1>this is the profile for: {{ backend.realName }}</h1>
-      <h1>{{ backend.nickName }}</h1>
-      <h1>{{ backend.aboutMe }}</h1>
-      <button @click="edit">Edit</button>
-      <button @click="changePassword">Reset Password</button>
-      <button @click="changeSec">Change Security Questions</button>
-    </section>
+    <h1 class="large centeralign">Security Questions</h1>
+
+    <form @submit="getStats">
+      <label for="answer1">Answer to Question1:</label>
+      <input
+        type="text"
+        id="answer1"
+        name="answer1"
+        required
+        v-model="answer1"
+      /><br /><br required />
+
+      <label for="answer2">Answer to Question2:</label>
+      <input
+        type="text"
+        id="answer2"
+        name="answer2"
+        required
+        v-model="answer2"
+      /><br /><br />
+      <input type="submit" value="Submit" />
+    </form>
+    <p>{{ user }}</p>
+    <p>secQuestion1 {{ secQuestion1 }}</p>
+    <p>answer1 {{ answer1 }}</p>
+    <p>secQuestion2 {{ secQuestion2 }}</p>
+    <p>answer2 {{ answer2 }}</p>
   </div>
 </template>
 
@@ -78,39 +91,35 @@
 import axios from "axios";
 
 export default {
+  // props: ["userEmail"],
   data() {
     return {
+      //userEmail: "",
+      secQuestion1: "",
+      answer1: "",
+      secQuestion2: "",
+      answer2: "",
       backend: "",
+      user: "",
     };
   },
   methods: {
     getStats() {
-      const path = "http://127.0.0.1:5000/profile";
+      const path = "http://127.0.0.1:5000/securityQuestionCheck";
       axios
         .post(path, {
           userEmail: localStorage.getItem("email"),
+          answer1: this.answer1,
+          answer2: this.answer2,
         })
         .then((res) => {
           this.backend = res.data;
         })
-        .catch(() => {});
+        .catch((err) => {
+          console.error(err);
+        });
+      this.$router.push({ name: "home" });
     },
-    logout() {
-      localStorage.clear();
-      this.$router.push({ name: "login" });
-    },
-    edit() {
-      this.$router.push({ name: "profileEdit" });
-    },
-    changeSec() {
-      this.$router.push({ name: "security_questions" });
-    },
-    changePassword() {
-      this.$router.push({ name: "securityQuestionCheck" });
-    },
-  },
-  created() {
-    this.getStats();
   },
 };
 </script>

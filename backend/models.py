@@ -19,7 +19,7 @@ class User(db.Model):
 class Profile(db.Model):
     __tablename__ = 'Profile'
     userId = db.Column(db.Integer, db.ForeignKey('User.id'), primary_key=True)
-    AboutMe = db.Column(db.String(255), nullable=False)
+    AboutMe = db.Column(db.String(255))
 
 class SecurityQuestions(db.Model):
     __tablename__ = 'SecurityQuestions'
