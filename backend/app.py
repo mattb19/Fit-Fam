@@ -106,9 +106,10 @@ def posts():
                 postTags=(row[5].split(',')),
                 postImage=row[6],
                 postLikes=row[7],
-                #feedRow=row[8],
+                #feedRow=row[9],
                 #postLikeAssociation,
-                postTitle=row[9],
+                postTitle=row[8],
+                postRow=row[9],
                 postFirstName=row[10],
                 postLastName=row[11],
                 postNickname=row[12]

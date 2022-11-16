@@ -156,7 +156,7 @@ export default {
     setTimeout(() => {
       this.post_list = this.getPost();
       window.addEventListener("scroll", this.handleScroll);
-    }, 20);
+    }, 50);
   },
 };
 </script>

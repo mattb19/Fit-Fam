@@ -10,43 +10,52 @@
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
     <h3
-      v-else-if="
-        postItem.postFirstName != null && postItem.postLastName != null
-      "
+      v-else-if="postItem.postFirstName != null"
       class="card-header"
       style="text-align: left"
     >
       {{ postItem.postFirstName }} {{ postItem.postLastName }}
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
-    <h3 v-else class="card-header" style="text-align: left">
-      Account Removed
-      <span style="float: right"> {{ postItem.postDateTime }} </span>
-    </h3>
+    <h3 v-else class="card-header" style="text-align: left">Invalid Account</h3>
     <!--<h5 class="card-title">{{ postItem.title }}</h5>-->
     <rect width="100%" height="100%" fill="#868e96"></rect>
     <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-    <div class="card-body">
-      <h1>{{ postItem.postTitle }}</h1>
-      <p></p>
-      <img src="../assets/post-button.png" alt="Image" height="60" />
-      <p></p>
-      <p class="card-text">{{ postItem.description }}</p>
+    <div v-if="postItem.postNickname == null && postItem.postFirstName == null">
+      <div class="card-body">
+        <p></p>
+        <!-- <li>
+          {{ postItem.poster }} {{ postItem.postFirstName }}
+          {{ postItem.postLastName }}
+        </li> -->
+        <!-- to test failure cases -->
+        <img src="../assets/removed.png" alt="Image" height="120" />
+        <p></p>
+      </div>
     </div>
-    <div class="conatiner">
-      <span class="badge bg-primary" v-for="tag in postItem.postTags">{{
-        tag
-      }}</span>
-    </div>
-    <div class="like">
-      <a
-        class="like-button"
-        href="#"
-        v-on:click="like(postItem.postId, postItem.postLikes)"
-      >
-        <img src="../assets/like.png" alt="Image" height="20" />
-      </a>
-      <p class="numLikes">{{ postItem.postLikes }}</p>
+    <div v-else>
+      <div class="card-body">
+        <h1>{{ postItem.postTitle }}</h1>
+        <p></p>
+        <img src="../assets/post-button.png" alt="Image" height="60" />
+        <p></p>
+        <p class="card-text">{{ postItem.description }}</p>
+      </div>
+      <div class="conatiner">
+        <span class="badge bg-primary" v-for="tag in postItem.postTags">{{
+          tag
+        }}</span>
+      </div>
+      <div class="like">
+        <a
+          class="like-button"
+          href="#"
+          v-on:click="like(postItem.postId, postItem.postLikes)"
+        >
+          <img src="../assets/like.png" alt="Image" height="20" />
+        </a>
+        <p class="numLikes">{{ postItem.postLikes }}</p>
+      </div>
     </div>
   </div>
 </template>

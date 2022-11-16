@@ -172,7 +172,7 @@ export default {
           title: this.title,
           image: "../assets/post-button.png",
           description: this.description,
-          userId: "John J Jacobson",
+          userId: "1" /*this should be a number no a name*/,
           tags: "Legs, Arms",
         })
         .then((res) => {
