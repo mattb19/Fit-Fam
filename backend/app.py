@@ -1,14 +1,14 @@
-from flask import Flask, redirect, url_for, request, flash, session
-from flask_cors import CORS
+from flask import Flask, redirect, url_for, request, session, jsonify
+from flask_cors import CORS, cross_origin
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
 from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.urls import url_parse
-from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
 from data import Data
 #import mysql.connector
+import sqlite3
+
 
 def register_extensions(app):
     # this and the next function are to resolve a curcular import issue
@@ -22,24 +22,50 @@ def create_app(config):
 
 app = create_app(Config)
 migrate = Migrate(app, db)
-login = LoginManager(app)
 
-CORS(app, resources={r'/*':{'origins': '*'}})
-
-login = LoginManager(app)
-login.login_view = 'login'
 
 from models import *    # IMPORT THE MODELS
 
-item2 = []
+CORS(app, resources={r'/*':{'origins': '*'}})
+
+def db_connection():
+    conn = None
+    try:
+        conn = sqlite3.connect("app.db")
+    except sqlite3.error as e:
+        print(e)
+    return conn
+
+
+Item2 = []
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
-    print(item2)
-    return item2
+    conn = db_connection()
+    cursor = conn.cursor()
+    cursor = conn.execute("SELECT * FROM Posts")
+
+    postObjList = [
+        dict(
+            postId=row[0],
+            postDateTime=row[1],
+            poster=row[2],
+            groupAssociation=row[3],
+            description=row[4],
+            postTags=row[5],
+            postImage=row[6],
+            postLikes=row[7]#,
+            # postLikeAssociation,
+            # postNickName
+
+            #this data needs to be pulled from key relations in other tables
+        )
+        for row in cursor.fetchall()
+    ]
+
+    return postObjList
 
 @app.route("/home", methods=['GET', 'POST'])
-#@login_required
 def home():
     if request.method == 'POST':
         return "POST method test."
@@ -47,10 +73,9 @@ def home():
         return "This message is a test for backend."
 
 @app.route("/profile" , methods=['GET', 'POST'])
-#@login_required
 def profile():
-    data = Data()
-    userEmail = data.getEmail()
+    info = request.get_json(silent=True)
+    userEmail = info['userEmail']
     user = User.query.filter_by(email = userEmail).first()
     profile = Profile.query.filter_by(userId = user.id).first()
     if profile is None:
@@ -67,82 +92,56 @@ def profile():
     backend = {'nickName': nickName, 'realName' : firstName + ' ' + lastName, 'aboutMe': aboutMe}
     return backend
 
-@app.route("/login", methods=['POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
-    data = Data()
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    info = request.get_json(silent=True)
-    userEmail = info['email']
-    userPassword = info['password']
-    print('email:', userEmail, '\tpassword:', userPassword)
-    user = User.query.filter_by(email = userEmail).first()
-    if user is None or not check_password_hash(user.password, userPassword):
-        '''
-        flash('Invalid username or password')
-        return redirect(url_for('login'))
-        '''
-        print('wrong user/password or user doesn\'t exist')
-        return redirect(url_for('login'))
-    #login_user(user) # this is where you can add cookie using remember parameter of the login_user() function
-    data.setEmail(userEmail)
-    login_user(user, remember=True)
-    print('logged in----------------------------')
-    return redirect(url_for('home'))
+    if request.method == 'POST':
+        info = request.get_json(silent=True)
+        userEmail = info['email']
+        userPassword = info['password']
+        user = User.query.filter_by(email = userEmail).first()
+        if user is None or not check_password_hash(user.password, userPassword):
+            return jsonify("invalid"), 401
+        return jsonify("valid"), 200
 
-@app.route("/logout")
-#@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
 
-@app.route("/signup", methods=['POST'])
+@app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    data = Data()
-    info = request.get_json(silent=True)
-    first = info['first']
-    last = info['last']
-    email = info['email']
-    password = generate_password_hash(info['password'])
-    #session["email"] = email
-    user = User.query.filter_by(email = email).first()
-    if user is None:
-        user = User(firstName=first, lastName=last, email=email, password=password)
-        db.session.add(user)
-        db.session.commit()
-        data.setEmail(email)
-    else:
-        print('Email already in use.')
-        #return redirect(url_for('signup'))
+    if request.method == 'POST':
+        info = request.get_json(silent=True)
+        first = info['first']
+        last = info['last']
+        email = info['email']
+        password = generate_password_hash(info['password'])
+        user = User.query.filter_by(email = email).first()
+        if user is None:
+            user = User(firstName=first, lastName=last, email=email, password=password)
+            securityQuestions = SecurityQuestions(userId = user.id, Question1 = None, Answer1 = None, Question2 = None, Answer2 = None)
+            db.session.add(user)
+            db.session.add(securityQuestions)
+            db.session.commit()
+        else:
+            return jsonify("invalid"), 401
+        return jsonify("valid"), 200
 
-    print(f"\nUser: {first} {last}\nEmail: {email}\nPassword: {password}\n")
-    #return redirect(url_for('securityQuestions'))
-    return info
 
 @app.route("/security_questions", methods=['POST'])
 def securityQuestions():
-    data = Data()
-    #currentEmail = signup()
-    #if "email" in session:
-    #print(currentEmail)
     info = request.get_json(silent=True)
-    userEmail = data.getEmail()
     questionStringA = info['secQuestion1']
     answerStringA = info['answer1']
     questionStringB = info['secQuestion2']
     answerStringB = info['answer2']
-    #print(userEmail)
+    userEmail = info['userEmail']
     user = User.query.filter_by(email = userEmail).first()
     securityQuestions = SecurityQuestions(userId = user.id, Question1 = questionStringA, Answer1 = answerStringA, Question2 = questionStringB, Answer2 = answerStringB)
     db.session.add(securityQuestions)
     db.session.commit()
-    print(f"\nuser Email: {userEmail} \nUser Id: {user.id} \nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
+    print(f"\nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
     return info
 
 @app.route("/")
-#@login_required
 def default():
-    return redirect(url_for("posts"))
+    return redirect(url_for("login"))
 
 @app.route("/post", methods=['GET','POST'])
 def post():
@@ -157,7 +156,21 @@ def post():
         'image': data.get('image'),
         'userId': data.get('userId')
         }
-    item2.append(item)
+    Item2.append(item)
     print(item)
-    print(item2)
     return item
+
+
+@app.route("/groups", methods=['GET', 'POST'])
+def createGroup():
+    info = request.get_json(silent=True)
+    userId = 1
+    groupId = 2
+    groupName = "Trenything is possible"
+    group = Groups(groupName=groupName, groupOwner=userId)
+    db.session.add(group)
+    db.session.commit()
+
+
+    print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
+    return "group feed will display here"

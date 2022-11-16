@@ -23,7 +23,7 @@ nav {
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/signup">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -38,22 +38,10 @@ nav {
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/">Global</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/groups">Groups</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/search">Search</a>
+              <a class="nav-link" href="/login">Login</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/signup">Sign Up</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/post">Post</a>
             </li>
           </ul>
         </div>
@@ -77,32 +65,19 @@ nav {
         <button class="submit" type="submit">Submit</button>
       </div>
     </form>
-    <!--
-    <p>Name: {{ first }} {{ last }}</p>
-    <p>Email: {{ email }}</p>
-    <p>Password: {{ password }}</p>
-    -->
-    <p>{{ backend }}</p>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-//import securityQuestionsView from "./securityQuestionsView.vue";
 
 export default {
-  //name: "signupView",
-  //components: {
-  //  securityQuestionsView,
-  //},
   data() {
     return {
-      // in case you want to do something with these variables on the page
       first: "",
       last: "",
       email: "",
       password: "",
-      backend: "",
     };
   },
   methods: {
@@ -117,8 +92,10 @@ export default {
         })
         .then((res) => {
           this.backend = res.data;
+          localStorage.setItem("email", this.email);
         })
         .catch((err) => {
+          this.$router.push({ name: "signup" });
           console.error(err);
         });
       // redirect to security questions page after submitting

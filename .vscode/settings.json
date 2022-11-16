@@ -2,5 +2,8 @@
     "cSpell.words": [
         "sqlalchemy",
         "werkzeug"
+    ],
+    "python.analysis.extraPaths": [
+        "./backend"
     ]
 }

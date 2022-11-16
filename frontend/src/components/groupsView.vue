@@ -59,10 +59,7 @@ button {
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/signup">Sign Up</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/post">Post</a>
+              <button @click="logout">Logout</button>
             </li>
           </ul>
         </div>
@@ -87,11 +84,14 @@ export default {
   data() {
     return {
       backend: "",
+      userId: 1,
+      groupId: 2,
+      groupName: "Trenything is possible",
     };
   },
   methods: {
-    getStats() {
-      const path = "http://127.0.0.1:5000/home";
+    createNewGroup() {
+      const path = "http://127.0.0.1:5000/groups";
       axios
         .get(path)
         .then((res) => {
@@ -101,12 +101,13 @@ export default {
           console.error(err);
         });
     },
-    createNewGroup() {
-      alert("you wanted to create a new group");
+    logout() {
+      localStorage.clear();
+      this.$router.push({ name: "login" });
     },
   },
   created() {
-    this.getStats();
+    this.createNewGroup();
   },
 };
 </script>
