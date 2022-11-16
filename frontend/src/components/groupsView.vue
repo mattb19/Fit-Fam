@@ -79,7 +79,7 @@ button {
 </template>
 
 <script>
-//import axios from "axios";
+import axios from "axios";
 
 export default {
   data() {
@@ -100,9 +100,20 @@ export default {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
+    getStats() {
+      const path = "http://127.0.0.1:5000/groups";
+      axios
+        .get(path)
+        .then((res) => {
+          this.backend = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
   },
   created() {
-    this.createNewGroup();
+    this.getStats();
     setTimeout(() => {
       this.checkLoggedIn();
     }, 300);

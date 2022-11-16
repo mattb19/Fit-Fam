@@ -214,7 +214,7 @@ def like():
 
 
 @app.route("/groups", methods=['GET', 'POST'])
-def createGroup():
+def groupPage():
     info = request.get_json(silent=True)
     userId = 1
     groupId = 2
