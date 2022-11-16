@@ -82,6 +82,9 @@ export default {
       const path = "http://127.0.0.1:5000/profile";
       axios
         .get(path)
+         .post(path, {
+          userEmail: localStorage.getItem("email"),
+        })
         .then((res) => {
           this.backend = res.data;
         })
