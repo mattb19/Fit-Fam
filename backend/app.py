@@ -1,17 +1,15 @@
-from flask import Flask, redirect, url_for, request, session, jsonify
-from flask_cors import CORS, cross_origin
+from flask import Flask, redirect, url_for, request, jsonify
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
 from werkzeug.security import generate_password_hash, check_password_hash
 from Database import db
-from data import Data
 #import mysql.connector
 import sqlite3
 
 
 def register_extensions(app):
-    # this and the next function are to resolve a curcular import issue
     db.init_app(app)
 
 def create_app(config):
