@@ -13,8 +13,11 @@
   height: 50%;
   max-height: 100%;
   border: 2px solid #488084;
-  margin-left: 2%;
-  padding-bottom: 1%;
+}
+
+input {
+  width: 100%;
+  height: 10px;
 }
 </style>
 
@@ -28,7 +31,7 @@
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -43,7 +46,7 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/home">Global</a>
+              <a class="nav-link" href="/">Global</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/groups">Groups</a>
@@ -63,14 +66,29 @@
     </nav>
     <p></p>
     <p></p>
-    <section class="profile">
+    <form @submit="save" class="profile">
       <h1>this is the profile for: {{ backend.realName }}</h1>
-      <h1>{{ backend.nickName }}</h1>
-      <h1>{{ backend.aboutMe }}</h1>
-      <button @click="edit">Edit</button>
-      <button @click="changePassword">Reset Password</button>
-      <button @click="changeSec">Change Security Questions</button>
-    </section>
+      <label for="nickName">What do you want your nickname to be</label>
+      <input
+        type="text"
+        id="nickName"
+        name="nickName"
+        required
+        v-model="nickName"
+      />
+      <label for="aboutMe">What do you want in your about me</label>
+      <input
+        type="text"
+        id="aboutMe"
+        name="aboutMe"
+        required
+        v-model="aboutMe"
+      />
+      <div class="button">
+        <button class="submit" type="submit">Save</button>
+        <button @click="cancel">Cancel</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -81,16 +99,13 @@ export default {
   data() {
     return {
       backend: "",
+      nickName: "",
+      aboutMe: "",
     };
   },
   methods: {
-    checkLoggedIn() {
-      if (localStorage.getItem("email") === null) {
-        this.$router.push({ name: "login" });
-      }
-    },
     getStats() {
-      const path = "http://127.0.0.1:5000/profile";
+      const path = "http://127.0.0.1:5000/profileEdit";
       axios
         .post(path, {
           userEmail: localStorage.getItem("email"),
@@ -98,27 +113,34 @@ export default {
         .then((res) => {
           this.backend = res.data;
         })
-        .catch(() => {});
+        .catch((err) => {
+          console.error(err);
+        });
     },
     logout() {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
-    edit() {
-      this.$router.push({ name: "profileEdit" });
+    save() {
+      const path = "http://127.0.0.1:5000/profileEdit";
+      axios
+        .post(path, {
+          userEmail: localStorage.getItem("email"),
+          nickName: this.nickName,
+          aboutMe: this.aboutMe,
+        })
+        .then((res) => {
+          this.backend = res.data;
+        })
+        .catch(() => {});
+      this.$router.push({ name: "profile" });
     },
-    changeSec() {
-      this.$router.push({ name: "security_questions" });
-    },
-    changePassword() {
-      this.$router.push({ name: "securityQuestionCheck" });
+    cancel() {
+      this.$router.push({ name: "profile" });
     },
   },
   created() {
     this.getStats();
-    setTimeout(() => {
-      this.checkLoggedIn();
-    }, 300);
   },
 };
 </script>
