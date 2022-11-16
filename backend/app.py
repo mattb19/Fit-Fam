@@ -124,6 +124,79 @@ def home():
     else:
         return "This message is a test for backend."
 
+@app.route("/profile" , methods=['GET', 'POST'])
+def profile():
+    info = request.get_json(silent=True)
+    userEmail = info['userEmail']
+    user = User.query.filter_by(email = userEmail).first()
+    profile = Profile.query.filter_by(userId = user.id).first()
+    nickName = user.nickname
+    aboutMe = profile.AboutMe
+    if aboutMe == None:
+        aboutMe = "You have nothing in your about me"
+    if nickName == None:
+        nickName = "Nickname not set yet"
+    firstName = user.firstName
+    lastName = user.lastName
+    backend = {'nickName': nickName, 'realName' : firstName + ' ' + lastName, 'aboutMe': aboutMe}
+    return backend
+
+@app.route("/profileEdit" , methods=['GET', 'POST'])
+def profileEdit():
+    info = request.get_json(silent=True)
+    userEmail = info['userEmail']
+    user = User.query.filter_by(email = userEmail).first()
+    profile = Profile.query.filter_by(userId = user.id).first()
+    if request.method == 'POST':
+        nickName = info['nickName']
+        aboutMe = info['aboutMe']
+        user.nickname = nickName
+        profile.AboutMe = aboutMe
+        db.session.commit()
+        return info
+    else:
+        nickName = user.nickname
+        aboutMe = profile.AboutMe
+        if aboutMe == None:
+            aboutMe = "You have nothing in your about me"
+        if nickName == None:
+            nickName = "Nickname not set yet"
+        firstName = user.firstName
+        lastName = user.lastName
+        backend = {'nickName': nickName, 'realName' : firstName + ' ' + lastName, 'aboutMe': aboutMe}
+        return backend
+    return jsonify("valid"), 200
+
+@app.route("/securityQuestionCheck", methods=['Get','POST'])
+def securityQuestionCheck():
+    info = request.get_json(silent=True)
+    userEmail = info['userEmail']
+    answerStringA = info['answer1']
+    answerStringB = info['answer2']
+    user = User.query.filter_by(email = userEmail).first()
+    securityQuestions = SecurityQuestions.query.filter_by(userId = user.id).first()
+    backend = {'secQuestion1': securityQuestions.Question1, 'secQuestion2': securityQuestions.Question2}
+    if request.method == 'POST':
+        if securityQuestions.Answer1 == answerStringA and securityQuestions.Answer2 == answerStringB:
+            return jsonify("valid"), 200
+        else:
+            return jsonify("invalid"), 401
+    return backend
+
+@app.route("/resetPassword", methods=['GET','POST'])
+def resetPassword():
+    info = request.get_json(silent=True)
+    userEmail = info['userEmail']
+    passwordInput1 = info['passwordInput1']
+    passwordInput2 = info['passwordInput2']
+    user = User.query.filter_by(email = userEmail).first()
+    if user is not None and passwordInput1 == passwordInput2:
+        password = generate_password_hash(passwordInput1)
+        user.password = password
+        db.session.commit()
+        return jsonify("valid"), 200
+    else:
+        return jsonify("invalid"), 401
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -150,6 +223,12 @@ def signup():
             user = User(firstName=first, lastName=last, email=email, password=password)
             db.session.add(user)
             db.session.commit()
+            user = User.query.filter_by(email = email).first()
+            securityQuestions = SecurityQuestions(userId = user.id)
+            profile = Profile(userId = user.id)
+            db.session.add(securityQuestions)
+            db.session.add(profile)
+            db.session.commit()
         else:
             return jsonify("invalid"), 401
         return jsonify("valid"), 200
@@ -164,8 +243,15 @@ def securityQuestions():
     answerStringB = info['answer2']
     userEmail = info['userEmail']
     user = User.query.filter_by(email = userEmail).first()
-    securityQuestions = SecurityQuestions(userId = user.id, Question1 = questionStringA, Answer1 = answerStringA, Question2 = questionStringB, Answer2 = answerStringB)
-    db.session.add(securityQuestions)
+    securityQuestions = SecurityQuestions.query.filter_by(userId = user.id).first()
+    #securityQuestions.Question1 = questionStringA
+    setattr(securityQuestions,'Question1',questionStringA)
+    #securityQuestions.Answer1 = answerStringA
+    setattr(securityQuestions,'Answer1',answerStringA)
+    #securityQuestions.Question2 = questionStringB
+    setattr(securityQuestions,'Question2',questionStringB)
+    #securityQuestions.Answer2 = answerStringB
+    setattr(securityQuestions,'Answer2',answerStringB)
     db.session.commit()
     print(f"\nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
     return info
