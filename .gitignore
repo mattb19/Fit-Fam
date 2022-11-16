@@ -288,3 +288,4 @@ yarn-error.log
 backend/app.db
 *.icloud
 images/.ProfileManager.jpg.icloud
+*.icloud
