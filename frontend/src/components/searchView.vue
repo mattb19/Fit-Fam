@@ -19,7 +19,7 @@
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -34,7 +34,7 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/">Global</a>
+              <a class="nav-link" href="/home">Global</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/groups">Groups</a>
@@ -46,10 +46,7 @@
               <a class="nav-link active" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/signup">Sign Up</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/post">Post</a>
+              <button @click="logout">Logout</button>
             </li>
           </ul>
         </div>
@@ -72,6 +69,11 @@ export default {
     };
   },
   methods: {
+    checkLoggedIn() {
+      if (localStorage.getItem("email") === null) {
+        this.$router.push({ name: "login" });
+      }
+    },
     getStats() {
       const path = "http://127.0.0.1:5000/home";
       axios
@@ -83,9 +85,16 @@ export default {
           console.error(err);
         });
     },
+    logout() {
+      localStorage.clear();
+      this.$router.push({ name: "login" });
+    },
   },
   created() {
     this.getStats();
+    setTimeout(() => {
+      this.checkLoggedIn();
+    }, 300);
   },
 };
 </script>

@@ -13,6 +13,8 @@ CSC 450 - 2 Team Project
 ### 2. Running:
 - MAC
 - WINDOWS
+### 3. Testing:
+- Flask
         
 ## FIRST TIME INSTALLATION MAC:
 1. Install Vue.js 2.7.10, Python 3.10.7 and Visual Studio Code
@@ -75,16 +77,19 @@ using:
 2. After that, in a terminal navigate to the backend folder
 3. Type these commands and hit enter after each one:
 
-<<<<<<< HEAD
-        pip install flask-sqlalchemy
-        pip install flask-alchemy
-=======
         pip install sqlalchemy
         pip install flask-sqlalchemy
->>>>>>> main
         pip install flask-migrate
         pip install flask-login
         pip install werkzeug
+        
+## INITIALIZE THE DATABASE:
+1. In the terminal, navigate to backend
+2. Type these commands and hit enter after each one:
+
+        flask db init
+        flask db migrate
+        flask db upgrade
         
 ---
 
@@ -122,18 +127,16 @@ type:
 - Vue 3 Snippets
 - Vue Language
 - Python flask
-<<<<<<< HEAD
-- flask-sqlalchemy
-- flask-alchemy
-=======
 - SQLAlchemy
 - flask-sqlalchemy
->>>>>>> main
 - flask-migrate
 - flask-login
 - werkzeug
 
+---
 
+## TESTING:
+- [Flask](https://flask.palletsprojects.com/en/2.2.x/testing/)
 
 
 
