@@ -215,23 +215,23 @@ def like():
 
 @app.route("/groups", methods=['GET', 'POST'])
 def groupPage():
-    info = request.get_json(silent=True)
-    userId = 1
-    groupId = 2
-    groupName = "Trenything is possible"
-    group = Groups(groupName=groupName, groupOwner=userId)
-    db.session.add(group)
-    db.session.commit()
+    # info = request.get_json(silent=True)
+    # userId = 1
+    # groupId = 2
+    # groupName = "Trenything is possible"
+    # group = Groups(groupName=groupName, groupOwner=userId)
+    # db.session.add(group)
+    # db.session.commit()
 
 
-    print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
+    #print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
     return "group feed will display here"
 
 @app.route("/create_group", methods=['GET', 'POST'])
 def createGroup():
     info = request.get_json(silent=True)
     userId = 1
-    groupName = "Trenything is possible"
+    groupName = info['groupName']
     group = Groups(groupName=groupName, groupOwner=userId)
     # conn = db_connection()
     # cursor = conn.cursor()
@@ -243,7 +243,7 @@ def createGroup():
     db.session.commit()
 
 
-    print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
+    print(f"\nGroup: {groupName}\nCreator: {userId}")
     return "group feed will display here"
 
 @app.route("/group_post", methods=['GET', 'POST'])

@@ -70,6 +70,17 @@
         />
       </div>
     </div>
+    <div class="button">
+      <button
+        @submit="passGroupInfo"
+        type="button"
+        class="btn btn-dark"
+        href="/"
+        v-on:click="passGroupInfo"
+      >
+        Create Group
+      </button>
+    </div>
     <p></p>
   </div>
 </template>
@@ -80,12 +91,21 @@ import axios from "axios";
 export default {
   data() {
     return {
-      groupName: "Legalize Tren",
+      groupName: "",
       userId: 1,
     };
   },
   methods: {
-    getStats() {
+    checkLoggedIn() {
+      if (localStorage.getItem("email") === null) {
+        this.$router.push({ name: "login" });
+      }
+    },
+    logout() {
+      localStorage.clear();
+      this.$router.push({ name: "login" });
+    },
+    passGroupInfo() {
       const path = "http://127.0.0.1:5000//create_group";
       axios
         .post(path, {
@@ -100,6 +120,23 @@ export default {
         });
       this.$router.push({ name: "groups" });
     },
+    getStats() {
+      const path = "http://127.0.0.1:5000/create_group";
+      axios
+        .get(path)
+        .then((res) => {
+          this.backend = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+  },
+  created() {
+    this.getStats();
+    setTimeout(() => {
+      this.checkLoggedIn();
+    }, 300);
   },
 };
 </script>
