@@ -10,6 +10,7 @@ import createPost from "../components/createPost.vue";
 import security_questions from "../components/securityQuestionsView.vue";
 import profileEdit from "../components/profileEdit.vue";
 import securityQuestionCheck from "../components/securityQuestionCheck.vue";
+import resetPassword from "../components/resetPassword.vue";
 
 // stylesheets
 import "/src/assets/stylesheets/forms.css";
@@ -72,6 +73,11 @@ const routes = [
     path: "/securityQuestionCheck",
     name: "securityQuestionCheck",
     component: securityQuestionCheck,
+  },
+  {
+    path: "/resetPassword",
+    name: "resetPassword",
+    component: resetPassword,
   },
 ];
 

@@ -57,23 +57,24 @@ nav {
         </div>
       </div>
     </nav>
-    <h1 class="large centeralign">Security Question Check</h1>
+    <h1 class="large centeralign">Reset Password</h1>
+
     <form @submit="getStats">
-      <label for="answer1">Answer to Question1:</label>
+      <label for="passwordInput1">Please enter your new password</label>
       <input
         type="text"
-        id="answer1"
-        name="answer1"
+        id="passwordInput1"
+        name="passwordInput1"
         required
-        v-model="answer1"
+        v-model="passwordInput1"
       /><br /><br required />
-      <label for="answer2">Answer to Question2:</label>
+      <label for="passwordInput2">Re-enter your new password</label>
       <input
         type="text"
-        id="answer2"
-        name="answer2"
+        id="passwordInput2"
+        name="passwordInput2"
         required
-        v-model="answer2"
+        v-model="passwordInput2"
       /><br /><br />
       <input type="submit" value="Submit" />
     </form>
@@ -88,31 +89,25 @@ export default {
   data() {
     return {
       //userEmail: "",
-      secQuestion1: "",
-      answer1: "",
-      secQuestion2: "",
-      answer2: "",
-      backend: "",
-      user: "",
     };
   },
   methods: {
     getStats() {
-      const path = "http://127.0.0.1:5000/securityQuestionCheck";
+      const path = "http://127.0.0.1:5000/resetPassword";
       axios
         .post(path, {
           userEmail: localStorage.getItem("email"),
-          answer1: this.answer1,
-          answer2: this.answer2,
+          passwordInput1: this.passwordInput1,
+          passwordInput2: this.passwordInput2,
         })
         .then((res) => {
           this.backend = res.data;
         })
         .catch((err) => {
-          this.$router.push({ name: "securityQuestionCheck" });
+          this.$router.push({ name: "resetPassword" });
           console.error(err);
         });
-      this.$router.push({ name: "resetPassword" });
+      this.$router.push({ name: "profile" });
     },
   },
 };

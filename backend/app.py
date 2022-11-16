@@ -115,19 +115,36 @@ def profileEdit():
         return backend
     return jsonify("valid"), 200
 
-# @app.route("/securityQuestionCheck", methods=['POST'])
-# def securityQuestionCheck():
-#     info = request.get_json(silent=True)
-#     userEmail = info['userEmail']
-#     answerStringA = info['answer1']
-#     answerStringB = info['answer2']
-#     user = User.query.filter_by(email = userEmail).first()
-#     securityQuestions = SecurityQuestions.query.filter_by(userId = user.id).first()
-#     if request.method == 'POST':
-#         if securityQuestions.Answer1 == answerStringA and securityQuestions == answerStringB:
-#             return jsonify("valid"), 200
-#         else:
-#             return jsonify("invalid"), 401
+@app.route("/securityQuestionCheck", methods=['Get','POST'])
+def securityQuestionCheck():
+    info = request.get_json(silent=True)
+    userEmail = info['userEmail']
+    answerStringA = info['answer1']
+    answerStringB = info['answer2']
+    user = User.query.filter_by(email = userEmail).first()
+    securityQuestions = SecurityQuestions.query.filter_by(userId = user.id).first()
+    backend = {'secQuestion1': securityQuestions.Question1, 'secQuestion2': securityQuestions.Question2}
+    if request.method == 'POST':
+        if securityQuestions.Answer1 == answerStringA and securityQuestions.Answer2 == answerStringB:
+            return jsonify("valid"), 200
+        else:
+            return jsonify("invalid"), 401
+    return backend
+
+@app.route("/resetPassword", methods=['GET','POST'])
+def resetPassword():
+    info = request.get_json(silent=True)
+    userEmail = info['userEmail']
+    passwordInput1 = info['passwordInput1']
+    passwordInput2 = info['passwordInput2']
+    user = User.query.filter_by(email = userEmail).first()
+    if user is not None and passwordInput1 == passwordInput2:
+        password = generate_password_hash(passwordInput1)
+        user.password = password
+        db.session.commit()
+        return jsonify("valid"), 200
+    else:
+        return jsonify("invalid"), 401
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
