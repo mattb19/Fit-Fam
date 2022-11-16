@@ -1,17 +1,16 @@
-from flask import Flask, redirect, url_for, request, session, jsonify
-from flask_cors import CORS, cross_origin
+from flask import Flask, redirect, url_for, request, jsonify
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.urls import url_parse
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
-from data import Data
 #import mysql.connector
 import sqlite3
 
-
 def register_extensions(app):
-    # this and the next function are to resolve a curcular import issue
     db.init_app(app)
 
 def create_app(config):
@@ -36,33 +35,82 @@ def db_connection():
         print(e)
     return conn
 
-
 Item2 = []
+postObjList = []
+retrievalStepSize = 10
+feedPosition = 0
+targetGroupStr = 0
+targetPersonsStr = ""
+
+#target persons assignment will be
+#" AND poster = targetPersons"
+
+@app.route("/feedmeta", methods=['GET', 'POST'])
+def feedMeta():
+    if request.method == 'POST':
+        global targetGroupStr
+        global targetPersonsStr
+        info = request.get_json(silent=True)
+        targetGroupStr = info['targetGroupTmp']
+        #print("target group is " + targetGroupStr)
+        targetPersonsStr = info['targetPersonsTmp']
+        #print("targetPersonsStr is '" + targetPersonsStr + "'")
+        return "Feed targets set"
+    else:
+        global postObjList
+        global feedPosition
+        postObjList = []
+        conn = db_connection()
+        cursor = conn.cursor()
+        cursor = conn.execute(
+            'SELECT postId FROM Posts'
+        )
+        feedPosition = len(cursor.fetchall())
+        if feedPosition is None:
+            feedPosition = 0
+        else:
+            feedPosition -= retrievalStepSize
+        #print("Feed position set")
+        return "Feed position set"
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
+    global feedPosition
     conn = db_connection()
     cursor = conn.cursor()
-    cursor = conn.execute("SELECT * FROM Posts")
-
-    postObjList = [
-        dict(
-            postId=row[0],
-            postDateTime=row[1],
-            poster=row[2],
-            groupAssociation=row[3],
-            description=row[4],
-            postTags=row[5],
-            postImage=row[6],
-            postLikes=row[7]#,
-            # postLikeAssociation,
-            # postNickName
-
-            #this data needs to be pulled from key relations in other tables
+    global postObjList
+    if feedPosition > 0:
+        #print("calls made here")
+        cursor = conn.execute(
+            "WITH Posts_Numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY _ROWID_) RowNum FROM Posts) SELECT Posts_Numbered.*, User.firstName, User.lastName, User.nickname FROM Posts_Numbered LEFT JOIN User ON Posts_Numbered.poster = User.id WHERE RowNum > " + str(feedPosition) + " AND RowNum <= " + str(feedPosition+retrievalStepSize) + " AND groupAssociation = " + targetGroupStr + targetPersonsStr
         )
-        for row in cursor.fetchall()
-    ]
+        #print("call is finished")
+        tmpPostObjList = ([
+            dict(
+                postId=row[0],
+                postDateTime=row[1],
+                poster=row[2],
+                groupAssociation=row[3],
+                description=row[4],
+                postTags=(row[5].split(',')),
+                postImage=row[6],
+                postLikes=row[7],
+                #feedRow=row[9],
+                #postLikeAssociation,
+                postTitle=row[8],
+                postRow=row[9],
+                postFirstName=row[10],
+                postLastName=row[11],
+                postNickname=row[12]
 
+                #this data needs to be pulled from key relations in other tables
+            )
+            for row in cursor.fetchall()
+        ])
+        tmpPostObjList.reverse()
+        postObjList = postObjList + tmpPostObjList
+        feedPosition -= retrievalStepSize
+    #print(postObjList[0])
     return postObjList
 
 @app.route("/home", methods=['GET', 'POST'])
@@ -214,14 +262,39 @@ def post():
     # data is the post data put in jsonified format
     data = request.get_json(force=True)
 
+    postTitle = data['title']
+    description = data['description']
+    postImage = data.get('imagePath')
+    poster = data.get('userId')
+    postLikes = 0
+    postTags = data.get('tags')
+    postImage = data.get('image')
+
+    print(postImage)
+
+    post = Posts(postTitle=postTitle, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
+    db.session.add(post)
+    db.session.commit()
+
+    return "All Good"
+
+@app.route("/like", methods=['GET','POST'])
+def like():
+
+    # data is the post data put in jsonified format
+    data = request.get_json(force=True)
+
     # making dict object for post data
     item = {
-        'title': data.get('title'),
-        'description': data.get('description'),
-        'image': data.get('image'),
-        'userId': data.get('userId')
-        }
-    Item2.append(item)
+        'postId': data.get('postId'),
+        'postLikes': data.get('postLikes')
+    }
+    postId = item['postId']
+    post = Posts.query.filter_by(postId = postId).first()
+    post.postLikes += 1
+    db.session.add(post)
+    db.session.commit()
+
     print(item)
     return item
 

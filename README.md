@@ -83,6 +83,14 @@ using:
         pip install flask-login
         pip install werkzeug
         
+## INITIALIZE THE DATABASE:
+1. In the terminal, navigate to backend
+2. Type these commands and hit enter after each one:
+
+        flask db init
+        flask db migrate
+        flask db upgrade
+        
 ---
 
 ## RUNNING ON MAC:
