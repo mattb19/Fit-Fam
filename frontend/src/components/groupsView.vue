@@ -33,7 +33,7 @@ button {
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -48,7 +48,7 @@ button {
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/home">Global</a>
+              <a class="nav-link" href="/">Global</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/groups">Groups</a>
@@ -60,7 +60,10 @@ button {
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <button @click="logout">Logout</button>
+              <a class="nav-link" href="/signup">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/post">Post</a>
             </li>
           </ul>
         </div>
@@ -94,24 +97,12 @@ export default {
       }
     },
     createNewGroup() {
-      //const path = "http://127.0.0.1:5000/groups";
-      // axios
-      //   .post(path, {
-      //     test: this.test,
-      //   })
-      //   .then((res) => {
-      //     this.backend = res.data;
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //   });
-      // redirect to group after submitting
       this.$router.push({ name: "create_group" });
     },
     logout() {
       localStorage.clear();
       this.$router.push({ name: "login" });
-    },
+  },
   },
 <<<<<<< HEAD
 =======
