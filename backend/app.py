@@ -332,6 +332,6 @@ def groupPost():
     groupId=info.get('groupId')
     desc=info.get('description')
     img=info.get('image')
-    newPost = Post(groupAssociation=groupId, poster=userId, description=desc, postImage=img, postLikes=0)
+    newPost = Posts(groupAssociation=groupId, poster=userId, description=desc, postImage=img, postLikes=0)
     db.session.add(newPost)
     db.session.commit(newPost)
