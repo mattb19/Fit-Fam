@@ -1,12 +1,16 @@
-<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .addmargin {
   margin-top: 0.625em;
   margin-bottom: 0.625em;
 }
-
-.home {
-  background-color: #383c44;
+.col-sm-12 {
+  margin-right: 6.25em;
+}
+nav {
+  margin-bottom: 2em;
+}
+.large {
+  color: #488084;
 }
 </style>
 
@@ -20,7 +24,7 @@
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -35,7 +39,7 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="/home">Global</a>
+              <a class="nav-link" href="/">Global</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/groups">Groups</a>
@@ -47,78 +51,69 @@
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <button @click="logout">Logout</button>
+              <a class="nav-link" href="/signup">Sign Up</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <!-- start of feed html -->
-    <feedViewObj />
+    <h1 class="large centeralign">Security Question Check</h1>
+    <form @submit="getStats">
+      <label for="answer1">Answer to Question1:</label>
+      <input
+        type="text"
+        id="answer1"
+        name="answer1"
+        required
+        v-model="answer1"
+      /><br /><br required />
+      <label for="answer2">Answer to Question2:</label>
+      <input
+        type="text"
+        id="answer2"
+        name="answer2"
+        required
+        v-model="answer2"
+      /><br /><br />
+      <input type="submit" value="Submit" />
+    </form>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import feedViewObj from "./feedView.vue";
 
 export default {
+  // props: ["userEmail"],
   data() {
     return {
-      post_list: [],
-      posts: "",
+      //userEmail: "",
+      secQuestion1: "",
+      answer1: "",
+      secQuestion2: "",
+      answer2: "",
+      backend: "",
+      user: "",
     };
-  },
-  components: {
-    feedViewObj,
   },
   methods: {
     getStats() {
-      // default stat path call
-      const path = "http://127.0.0.1:5000/home";
+      const path = "http://127.0.0.1:5000/securityQuestionCheck";
       axios
-        .get(path)
+        .post(path, {
+          userEmail: localStorage.getItem("email"),
+          answer1: this.answer1,
+          answer2: this.answer2,
+        })
         .then((res) => {
           this.backend = res.data;
         })
         .catch((err) => {
+          this.$router.push({ name: "securityQuestionCheck" });
           console.error(err);
         });
+      this.$router.push({ name: "resetPassword" });
     },
-    postFeedMeta() {
-      // used to set the backend variables to what searches to look for
-      const path = "http://127.0.0.1:5000/feedmeta";
-      axios
-        .post(path, {
-          targetGroupTmp: "0",
-          targetPersonsTmp: "",
-          /*Configure these strings to add targeting 
-          target persons assignment will be " AND poster = " + str(targetPersons)
-          target group assignment will be str(groupId)*/
-        })
-        .then((res) => {
-          this.dataPassLog = res.data;
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-    checkLoggedIn() {
-      if (localStorage.getItem("email") === null) {
-        this.$router.push({ name: "login" });
-      }
-    },
-    logout() {
-      localStorage.clear();
-      this.$router.push({ name: "login" });
-    },
-  },
-  created() {
-    this.getStats();
-    this.postFeedMeta();
-    setTimeout(() => {
-      this.checkLoggedIn();
-    }, 200);
   },
 };
 </script>
