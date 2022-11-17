@@ -80,6 +80,7 @@ using:
         pip install sqlalchemy
         pip install flask-sqlalchemy
         pip install flask-migrate
+        pip install werkzeug
         
 ## INITIALIZE THE DATABASE:
 1. In the terminal, navigate to backend
