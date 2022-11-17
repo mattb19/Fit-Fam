@@ -152,6 +152,10 @@ export default {
         this.$router.push({ name: "login" });
       }
     },
+    logout() {
+      localStorage.clear();
+      this.$router.push({ name: "login" });
+    },
     getStats() {
       const path = "http://127.0.0.1:5000/posts";
       axios

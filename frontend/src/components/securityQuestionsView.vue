@@ -154,6 +154,10 @@ export default {
         });
       this.$router.push({ name: "home" });
     },
+    logout() {
+      localStorage.clear();
+      this.$router.push({ name: "login" });
+    },
   },
   created() {
     setTimeout(() => {
