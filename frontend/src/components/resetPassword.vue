@@ -96,7 +96,6 @@ export default {
   methods: {
     checkLoggedIn() {
       if (localStorage.getItem("id") === null) {
-        console.log("ERM STINKY");
         this.$router.push({ name: "login" });
       }
     },
