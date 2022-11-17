@@ -4,8 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
 from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.urls import url_parse
-from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from Database import db
 #import mysql.connector
 import sqlite3

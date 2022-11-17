@@ -20,7 +20,7 @@
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -35,7 +35,7 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="/">Global</a>
+              <a class="nav-link active" href="/home">Global</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/groups">Groups</a>
@@ -47,10 +47,7 @@
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/signup">Sign Up</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/post">Post</a>
+              <button @click="logout">Logout</button>
             </li>
           </ul>
         </div>

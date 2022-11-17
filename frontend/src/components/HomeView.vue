@@ -118,7 +118,7 @@ export default {
     this.postFeedMeta();
     setTimeout(() => {
       this.checkLoggedIn();
-    }, 200);
+    }, 300);
   },
 };
 </script>

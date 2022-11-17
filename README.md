@@ -80,8 +80,6 @@ using:
         pip install sqlalchemy
         pip install flask-sqlalchemy
         pip install flask-migrate
-        pip install flask-login
-        pip install werkzeug
         
 ## INITIALIZE THE DATABASE:
 1. In the terminal, navigate to backend
@@ -130,8 +128,6 @@ type:
 - SQLAlchemy
 - flask-sqlalchemy
 - flask-migrate
-- flask-login
-- werkzeug
 
 ---
 

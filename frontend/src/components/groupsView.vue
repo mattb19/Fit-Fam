@@ -33,7 +33,7 @@ button {
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -48,7 +48,7 @@ button {
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/">Global</a>
+              <a class="nav-link" href="/home">Global</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/groups">Groups</a>
