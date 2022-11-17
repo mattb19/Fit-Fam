@@ -179,7 +179,7 @@ export default {
   },
   methods: {
     checkLoggedIn() {
-      if (localStorage.getItem("email") === null) {
+      if (localStorage.getItem("id") === null) {
         this.$router.push({ name: "login" });
       }
     },

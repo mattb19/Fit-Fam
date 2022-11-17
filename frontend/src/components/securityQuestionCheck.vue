@@ -106,7 +106,7 @@ export default {
       const path = "http://127.0.0.1:5000/securityQuestionCheck";
       axios
         .post(path, {
-          userEmail: localStorage.getItem("email"),
+          userEmail: localStorage.getItem("id"),
           answer1: this.answer1,
           answer2: this.answer2,
         })

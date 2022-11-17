@@ -88,12 +88,15 @@ export default {
   // props: ["userEmail"],
   data() {
     return {
-      //userEmail: "",
+      passwordInput1: "",
+      passwordInput2: "",
+      userId: "",
     };
   },
   methods: {
     checkLoggedIn() {
-      if (localStorage.getItem("email") === null) {
+      if (localStorage.getItem("id") === null) {
+        console.log("ERM STINKY");
         this.$router.push({ name: "login" });
       }
     },
@@ -101,7 +104,7 @@ export default {
       const path = "http://127.0.0.1:5000/resetPassword";
       axios
         .post(path, {
-          userEmail: localStorage.getItem("email"),
+          userId: localStorage.getItem("id"),
           passwordInput1: this.passwordInput1,
           passwordInput2: this.passwordInput2,
         })

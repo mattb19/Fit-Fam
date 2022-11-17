@@ -92,13 +92,12 @@ export default {
         })
         .then((res) => {
           this.backend = res.data;
-          localStorage.setItem("email", this.email);
+          localStorage.setItem("id", res.data);
         })
         .catch((err) => {
           this.$router.push({ name: "signup" });
           console.error(err);
         });
-      // redirect to security questions page after submitting
       this.$router.push({ name: "security_questions" });
     },
   },
