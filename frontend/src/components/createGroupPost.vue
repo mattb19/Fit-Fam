@@ -165,7 +165,7 @@ export default {
       console.log({
         title: this.title,
       });
-      const path = "http://127.0.0.1:5000/groupPost";
+      const path = "http://127.0.0.1:5000/group_post";
       const formData = new FormData();
       formData.append("file", this.file);
       axios

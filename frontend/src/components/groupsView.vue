@@ -74,18 +74,25 @@ button {
     </div>
     <p></p>
     <p></p>
-    <p>{{ backend }}</p>
+    <p>
+      <button @click="getGroupFeed">{{ backend }}</button>
+    </p>
+    <feedViewObj />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import feedViewObj from "./feedView.vue";
 
 export default {
   data() {
     return {
       backend: "",
     };
+  },
+  components: {
+    feedViewObj,
   },
   methods: {
     checkLoggedIn() {
@@ -100,6 +107,7 @@ export default {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
+    getGroupFeed() {},
     getStats() {
       const path = "http://127.0.0.1:5000/groups";
       axios
