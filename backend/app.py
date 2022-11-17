@@ -304,15 +304,36 @@ def like():
 
 
 @app.route("/groups", methods=['GET', 'POST'])
+def groupPage():
+    userId=1
+    groupList = Groups.query.filter_by(groupId=1).first()
+    if groupList is None:
+        return ""
+    return jsonify(groupList.groupName)
+
+@app.route("/create_group", methods=['GET', 'POST'])
 def createGroup():
     info = request.get_json(silent=True)
     userId = 1
-    groupId = 2
-    groupName = "Trenything is possible"
-    group = Groups(groupName=groupName, groupOwner=userId)
+    gName = info['groupName']
+    group = Groups(groupName=gName, groupOwner=userId)
     db.session.add(group)
+    db.session.commit()
+    gId = Groups.query.filter_by(groupName = gName).first()
+    groupMem = GroupMembers(member=userId, group=gId.groupId)
+    db.session.add(groupMem)
     db.session.commit()
 
 
-    print(f"\nGroup: {groupId} {groupName}\nCreator: {userId}")
-    return "group feed will display here"
+    # print(f"\nGroup: {gName}\nCreator: {userId}")
+
+@app.route("/group_post", methods=['GET', 'POST'])
+def groupPost():
+    info = request.get_json(silent=True)
+    userId=1
+    groupId=info.get('groupId')
+    desc=info.get('description')
+    img=info.get('image')
+    newPost = Post(groupAssociation=groupId, poster=userId, description=desc, postImage=img, postLikes=0)
+    db.session.add(newPost)
+    db.session.commit(newPost)

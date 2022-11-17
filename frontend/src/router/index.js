@@ -8,6 +8,8 @@ import profileView from "../components/profileView.vue";
 import groupsView from "../components/groupsView.vue";
 import createPost from "../components/createPost.vue";
 import security_questions from "../components/securityQuestionsView.vue";
+import groupPost from "../components/createGroupPost.vue";
+import createGroup from "../components/createGroup.vue";
 import profileEdit from "../components/profileEdit.vue";
 import securityQuestionCheck from "../components/securityQuestionCheck.vue";
 import resetPassword from "../components/resetPassword.vue";
@@ -68,6 +70,16 @@ const routes = [
   {
     path: "/",
     redirect: "/login",
+  },
+  {
+    path: "/create_group",
+    name: "create_group",
+    component: createGroup,
+  },
+  {
+    path: "/create_groupPost",
+    name: "create_groupPost",
+    component: groupPost,
   },
   {
     path: "/securityQuestionCheck",
