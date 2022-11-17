@@ -1,4 +1,3 @@
-<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .addmargin {
   margin-top: 10px;
@@ -9,17 +8,16 @@
   background-color: #383c44;
 }
 
-th,
-td {
-  padding-top: 10px;
-  padding-bottom: 20px;
-  padding-left: 30px;
-  padding-right: 400px;
-  size: 20px;
+.example {
+  width: 20%;
+  height: 50%;
+  max-height: 100%;
+  border: 2px solid #488084;
 }
 
-button {
-  size: 15px;
+input {
+  width: 100%;
+  height: 10px;
 }
 </style>
 
@@ -51,10 +49,10 @@ button {
               <a class="nav-link" href="/">Global</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/groups">Groups</a>
+              <a class="nav-link" href="/groups">Groups</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
+              <a class="nav-link active" href="/profile">Profile</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/search">Search</a>
@@ -66,70 +64,52 @@ button {
         </div>
       </div>
     </nav>
-    <div>
-      <th class="groupsDisplay" align="left">
-        Groups<button @click="createNewGroup">+</button>
-      </th>
-      <th>Group Info</th>
-    </div>
     <p></p>
     <p></p>
-    <p>
-      <button @click="getGroupFeed">{{ backend }}</button>
-    </p>
-    <feedViewObj />
+    <form @submit="save" class="profile">
+      <h1>this is the profile for: {{ backend.realName }}</h1>
+      <label for="nickName">What do you want your nickname to be</label>
+      <input
+        type="text"
+        id="nickName"
+        name="nickName"
+        required
+        v-model="nickName"
+      />
+      <label for="aboutMe">What do you want in your about me</label>
+      <input
+        type="text"
+        id="aboutMe"
+        name="aboutMe"
+        required
+        v-model="aboutMe"
+      />
+      <div class="button">
+        <button class="submit" type="submit">Save</button>
+        <button @click="cancel">Cancel</button>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import feedViewObj from "./feedView.vue";
 
 export default {
   data() {
     return {
       backend: "",
+      nickName: "",
+      aboutMe: "",
     };
   },
-  components: {
-    feedViewObj,
-  },
   methods: {
-    checkLoggedIn() {
-      if (localStorage.getItem("email") === null) {
-        this.$router.push({ name: "login" });
-      }
-    },
-    createNewGroup() {
-      this.$router.push({ name: "create_group" });
-    },
-    logout() {
-      localStorage.clear();
-      this.$router.push({ name: "login" });
-    },
-    getGroupFeed() {},
-    postFeedMeta() {
-      // used to set the backend variables to what searches to look for
-      const path = "http://127.0.0.1:5000/feedmeta";
+    getStats() {
+      const path = "http://127.0.0.1:5000/profileEdit";
       axios
         .post(path, {
-          targetGroupTmp: "0",
-          targetPersonsTmp: "",
-          /*Configure these strings to add targeting 
-          target persons assignment will be " AND poster = " + str(targetPersons)
-          target group assignment will be str(groupId)*/
+          userEmail: localStorage.getItem("email"),
         })
-        .then((res) => {
-          this.dataPassLog = res.data;
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-    getStats() {
-      const path = "http://127.0.0.1:5000/groups";
-      axios
-        .get(path)
         .then((res) => {
           this.backend = res.data;
         })
@@ -137,13 +117,30 @@ export default {
           console.error(err);
         });
     },
+    logout() {
+      localStorage.clear();
+      this.$router.push({ name: "login" });
+    },
+    save() {
+      const path = "http://127.0.0.1:5000/profileEdit";
+      axios
+        .post(path, {
+          userEmail: localStorage.getItem("email"),
+          nickName: this.nickName,
+          aboutMe: this.aboutMe,
+        })
+        .then((res) => {
+          this.backend = res.data;
+        })
+        .catch(() => {});
+      this.$router.push({ name: "profile" });
+    },
+    cancel() {
+      this.$router.push({ name: "profile" });
+    },
   },
   created() {
     this.getStats();
-    this.postFeedMeta();
-    setTimeout(() => {
-      this.checkLoggedIn();
-    }, 300);
   },
 };
 </script>
