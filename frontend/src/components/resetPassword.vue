@@ -114,6 +114,10 @@ export default {
         });
       this.$router.push({ name: "profile" });
     },
+    logout() {
+      localStorage.clear();
+      this.$router.push({ name: "login" });
+    },
   },
   created() {
     setTimeout(() => {

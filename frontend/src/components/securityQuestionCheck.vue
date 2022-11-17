@@ -119,6 +119,10 @@ export default {
         });
       this.$router.push({ name: "resetPassword" });
     },
+    logout() {
+      localStorage.clear();
+      this.$router.push({ name: "login" });
+    },
   },
   created() {
     setTimeout(() => {
