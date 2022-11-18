@@ -106,7 +106,7 @@ nav {
       /><br /><br />
       <input type="submit" value="Submit" />
     </form>
-    <p>{{ user }}</p>
+    <p>{{ userId }}</p>
     <p>secQuestion1 {{ secQuestion1 }}</p>
     <p>answer1 {{ answer1 }}</p>
     <p>secQuestion2 {{ secQuestion2 }}</p>
@@ -126,13 +126,13 @@ export default {
       answer1: "",
       secQuestion2: "",
       answer2: "",
+      userId: "",
       backend: "",
-      user: "",
     };
   },
   methods: {
     checkLoggedIn() {
-      if (localStorage.getItem("email") === null) {
+      if (localStorage.getItem("id") === null) {
         this.$router.push({ name: "login" });
       }
     },
@@ -140,11 +140,11 @@ export default {
       const path = "http://127.0.0.1:5000//security_questions";
       axios
         .post(path, {
-          userEmail: localStorage.getItem("email"),
           secQuestion1: this.secQuestion1,
           answer1: this.answer1,
           secQuestion2: this.secQuestion2,
           answer2: this.answer2,
+          userId: localStorage.getItem("id"),
         })
         .then((res) => {
           this.backend = res.data;

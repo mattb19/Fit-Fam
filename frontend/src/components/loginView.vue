@@ -83,11 +83,9 @@ export default {
         })
         .then((res) => {
           this.backend = res.data;
-          console.log("LOGIN STATUS:", res.data);
-          localStorage.setItem("email", this.email);
+          localStorage.setItem("id", res.data);
         })
         .catch((err) => {
-          this.$router.push({ name: "login" });
           console.error(err);
         });
       this.$router.push({ name: "home" });

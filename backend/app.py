@@ -84,7 +84,11 @@ def posts():
     #print(feedPosition)
     #print(tmpFeedPosition)
     cursor = conn.execute(
-        "WITH Posts_Numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY _ROWID_) RowNum FROM Posts) SELECT Posts_Numbered.*, User.firstName, User.lastName, User.nickname FROM Posts_Numbered LEFT JOIN User ON Posts_Numbered.poster = User.id WHERE RowNum > " + str(tmpFeedPosition) + " AND RowNum <= " + str(feedPosition+retrievalStepSize) + " AND groupAssociation = " + targetGroupStr + targetPersonsStr
+        f"WITH Posts_Numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY _ROWID_) RowNum FROM Posts) \
+            SELECT Posts_Numbered.*, User.firstName, User.lastName, User.nickname FROM Posts_Numbered \
+         LEFT JOIN User ON Posts_Numbered.poster = User.id WHERE \
+         RowNum > {tmpFeedPosition} AND ROWNUM <= {feedPosition+retrievalStepSize} AND \
+            groupAssociation = {targetGroupStr+targetPersonsStr}"
     )
     #print("call is finished")
     tmpPostObjList = ([
@@ -125,8 +129,8 @@ def home():
 @app.route("/profile" , methods=['GET', 'POST'])
 def profile():
     info = request.get_json(silent=True)
-    userEmail = info['userEmail']
-    user = User.query.filter_by(email = userEmail).first()
+    userId = info['userId']
+    user = User.query.filter_by(id = userId).first()
     profile = Profile.query.filter_by(userId = user.id).first()
     nickName = user.nickname
     aboutMe = profile.AboutMe
@@ -142,8 +146,8 @@ def profile():
 @app.route("/profileEdit" , methods=['GET', 'POST'])
 def profileEdit():
     info = request.get_json(silent=True)
-    userEmail = info['userEmail']
-    user = User.query.filter_by(email = userEmail).first()
+    userId = info['userId']
+    user = User.query.filter_by(id = userId).first()
     profile = Profile.query.filter_by(userId = user.id).first()
     if request.method == 'POST':
         nickName = info['nickName']
@@ -168,10 +172,10 @@ def profileEdit():
 @app.route("/securityQuestionCheck", methods=['Get','POST'])
 def securityQuestionCheck():
     info = request.get_json(silent=True)
-    userEmail = info['userEmail']
+    userId = info['userId']
     answerStringA = info['answer1']
     answerStringB = info['answer2']
-    user = User.query.filter_by(email = userEmail).first()
+    user = User.query.filter_by(id = userId).first()
     securityQuestions = SecurityQuestions.query.filter_by(userId = user.id).first()
     backend = {'secQuestion1': securityQuestions.Question1, 'secQuestion2': securityQuestions.Question2}
     if request.method == 'POST':
@@ -184,10 +188,10 @@ def securityQuestionCheck():
 @app.route("/resetPassword", methods=['GET','POST'])
 def resetPassword():
     info = request.get_json(silent=True)
-    userEmail = info['userEmail']
+    userId = info['userId']
     passwordInput1 = info['passwordInput1']
     passwordInput2 = info['passwordInput2']
-    user = User.query.filter_by(email = userEmail).first()
+    user = User.query.filter_by(id = userId).first()
     if user is not None and passwordInput1 == passwordInput2:
         password = generate_password_hash(passwordInput1)
         user.password = password
@@ -205,7 +209,7 @@ def login():
         user = User.query.filter_by(email = userEmail).first()
         if user is None or not check_password_hash(user.password, userPassword):
             return jsonify("invalid"), 401
-        return jsonify("valid"), 200
+        return jsonify(user.id), 200
 
 
 @app.route("/signup", methods=['GET', 'POST'])
@@ -229,7 +233,7 @@ def signup():
             db.session.commit()
         else:
             return jsonify("invalid"), 401
-        return jsonify("valid"), 200
+        return jsonify(user.id), 200
 
 
 @app.route("/security_questions", methods=['POST'])
@@ -239,8 +243,8 @@ def securityQuestions():
     answerStringA = info['answer1']
     questionStringB = info['secQuestion2']
     answerStringB = info['answer2']
-    userEmail = info['userEmail']
-    user = User.query.filter_by(email = userEmail).first()
+    userId = info['userId']
+    user = User.query.filter_by(id = userId).first()
     securityQuestions = SecurityQuestions.query.filter_by(userId = user.id).first()
     #securityQuestions.Question1 = questionStringA
     setattr(securityQuestions,'Question1',questionStringA)

@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     checkLoggedIn() {
-      if (localStorage.getItem("email") === null) {
+      if (localStorage.getItem("id") === null) {
         this.$router.push({ name: "login" });
       }
     },
@@ -98,7 +98,7 @@ export default {
       const path = "http://127.0.0.1:5000/profile";
       axios
         .post(path, {
-          userEmail: localStorage.getItem("email"),
+          userId: localStorage.getItem("id"),
         })
         .then((res) => {
           this.backend = res.data;
