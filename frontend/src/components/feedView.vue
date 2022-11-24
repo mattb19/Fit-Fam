@@ -9,6 +9,7 @@
       v-for="(postItem, i) in posts"
       :key="i"
       :postItem="postItem"
+      :viewerId="viewerId"
     />
   </div>
 </template>
@@ -22,6 +23,7 @@ export default {
     return {
       post_list: [],
       posts: "",
+      viewerId: localStorage.getItem("id"),
     };
   },
   components: {

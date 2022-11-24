@@ -225,7 +225,8 @@ export default {
         .post(path, {
           title: this.title,
           description: this.description,
-          userId: "1" /*this should be a number no a name*/,
+          userId:
+            localStorage.getItem("id") /*this should be a number no a name*/,
           tags: this.tags,
           image: blob,
         })

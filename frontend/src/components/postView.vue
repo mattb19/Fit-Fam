@@ -41,7 +41,9 @@
           <img :src="postItem.postImage" width="270px" height="200px" />
           <p></p>
         </div>
-        <p class="card-text">{{ postItem.description }}</p>
+        <p class="card-text">
+          {{ postItem.description }}
+        </p>
       </div>
       <div class="conatiner">
         <span class="badge bg-primary" v-for="tag in postItem.postTags">{{
@@ -49,6 +51,13 @@
         }}</span>
       </div>
       <div class="like">
+        <a
+          v-if="viewerId == postItem.poster"
+          class="like-button"
+          v-on:click="deletePost(postItem.postId)"
+        >
+          <img src="../assets/delete.png" alt="Image" height="20" />
+        </a>
         <a
           class="like-button"
           href="#"
@@ -58,6 +67,9 @@
         </a>
         <p class="numLikes">{{ postItem.postLikes }}</p>
       </div>
+      <!-- start of delete button -->
+
+      <!-- end of delete box -->
     </div>
   </div>
 </template>
@@ -66,11 +78,10 @@
 import axios from "axios";
 
 export default {
-  props: ["postItem"],
+  props: ["postItem", "viewerId"],
   data() {
     return {
-      post_list: [],
-      posts: "",
+      backend: "",
     };
   },
   methods: {
@@ -110,6 +121,21 @@ export default {
         });
       this.$router.push({ name: "home" });
       this.getStats();
+    },
+    deletePost(postId) {
+      const path = "http://127.0.0.1:5000/delete_post";
+      const id = postId;
+
+      axios
+        .post(path, {
+          postId: id,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
