@@ -301,8 +301,20 @@ def like():
     db.session.add(post)
     db.session.commit()
 
-    print(item)
+    #print(item)
     return item
+
+@app.route("/delete_post", methods=['GET','POST'])
+def delete():
+    info = request.get_json(force=True)
+    postId = info['postId']
+
+    conn = db_connection()
+    sql = 'DELETE FROM Posts WHERE postId=?'
+    cursor = conn.cursor()
+    cursor.execute(sql, (postId,))
+    conn.commit()
+    return info
 
 
 @app.route("/groups", methods=['GET', 'POST'])

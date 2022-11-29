@@ -65,8 +65,7 @@ import feedViewObj from "./feedView.vue";
 export default {
   data() {
     return {
-      post_list: [],
-      posts: "",
+      backend: "",
     };
   },
   components: {
