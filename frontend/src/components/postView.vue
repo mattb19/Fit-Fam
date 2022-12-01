@@ -6,7 +6,7 @@
       class="card-header"
       style="text-align: left"
     >
-      {{ postItem.postNickname }}
+      <a href="/search">{{ postItem.postNickname }}</a>
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
     <h3
@@ -14,7 +14,9 @@
       class="card-header"
       style="text-align: left"
     >
-      {{ postItem.postFirstName }} {{ postItem.postLastName }}
+      <a href="/search" class="nameLink"
+        >{{ postItem.postFirstName }} {{ postItem.postLastName }}</a
+      >
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
     <h3 v-else class="card-header" style="text-align: left">Invalid Account</h3>

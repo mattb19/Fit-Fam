@@ -71,3 +71,8 @@ form {
     display:flex;
     justify-content: center;
   }
+  .nameLink {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+  }
