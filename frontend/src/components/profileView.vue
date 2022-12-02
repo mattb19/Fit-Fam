@@ -16,6 +16,10 @@
   margin-left: 2%;
   padding-bottom: 1%;
 }
+
+.butt {
+  margin-right: 10px;
+}
 </style>
 
 <template>
@@ -64,14 +68,18 @@
     <p></p>
     <p></p>
     <section class="profile">
+<<<<<<< Updated upstream
       <h1>{{ backend.realName }} #{{ id }}</h1>
+=======
+      <h1>{{ backend.realName }}</h1>
+>>>>>>> Stashed changes
       <h1>{{ backend.nickName }}</h1>
       <h1>{{ backend.aboutMe }}</h1>
-      <button @click="edit">Edit</button>
-      <button @click="changePassword">Reset Password</button>
-      <button @click="changeSec">Change Security Questions</button>
+      <button class="butt" @click="edit">Edit</button>
+      <button class="butt" @click="changePassword">Reset Password</button>
+      <button class="butt" @click="changeSec">Change Security Questions</button>
     </section>
-    <div style="float: right; width: 100em"><feedViewObj /></div>
+    <div class="posted"><feedViewObj /></div>
   </div>
 </template>
 
