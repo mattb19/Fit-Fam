@@ -1,13 +1,4 @@
 <style scoped>
-.addmargin {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.home {
-  background-color: #383c44;
-}
-
 .button {
   margin-top: 50px;
   width: 50em;
@@ -19,19 +10,10 @@
   width: 50em;
 }
 
-.title {
-  margin: auto;
-  width: 50em;
-}
-
 .description {
   margin: auto;
   height: auto;
   width: auto;
-}
-
-.header {
-  margin-top: 20px;
 }
 
 form {
@@ -40,16 +22,6 @@ form {
 
 .btn {
   width: 50em;
-}
-
-.types {
-  margin: auto;
-  width: 50em;
-  text-align: left;
-}
-
-.form-check {
-  margin: auto;
 }
 
 .tags {
