@@ -10,6 +10,8 @@
 
 .button {
   margin-top: 50px;
+  width: 50em;
+  padding-right: 500px;
 }
 
 .image {
@@ -25,6 +27,7 @@
 .description {
   margin: auto;
   height: auto;
+  width: auto;
 }
 
 .header {
@@ -32,7 +35,7 @@
 }
 
 form {
-  max-width: 50em;
+  max-width: 52.6em;
 }
 
 .btn {
@@ -57,6 +60,15 @@ form {
 .tag {
   text-align: center;
   width: 100px;
+}
+
+.p {
+  margin-bottom: 0px;
+  color: red;
+}
+
+.red {
+  color: red;
 }
 </style>
 
@@ -103,16 +115,20 @@ form {
         </div>
       </div>
     </nav>
-    <form @submit="createPost" method="post">
+    <form @submit="createPost">
+      <p class="p">* Required</p>
       <label>Title:</label>
-      <input type="text" v-model="title" required />
+      <label class="red">*</label>
+      <input type="text" v-model="title" required maxlength="255" />
 
       <label>Description:</label>
-      <input
+      <label class="red">*</label>
+      <textarea
         class="description"
         type="textarea"
-        rows="2"
-        max-rows="10"
+        rows="8"
+        cols="100"
+        maxlength="4096"
         v-model="description"
         required
       />
@@ -128,6 +144,7 @@ form {
         <option value="Full Body" class="tag">Full Body</option>
       </select>
       <p></p>
+
       <input
         class="image"
         type="file"
@@ -140,7 +157,15 @@ form {
       <label>Images must be jpeg, jpg or png format</label>
 
       <div class="button">
-        <button class="submit" type="submit">Submit</button>
+        <button
+          @submit="createPost"
+          type="button"
+          class="btn btn-dark"
+          href="/"
+          v-on:click="createPost"
+        >
+          Post
+        </button>
       </div>
     </form>
   </div>
@@ -200,7 +225,6 @@ export default {
       let blob;
       if (this.image != "") {
         blob = await this.yup(this.image);
-        console.log(blob);
       }
 
       axios
