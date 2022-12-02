@@ -41,7 +41,7 @@
               <a class="nav-link" href="/groups">Groups</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
+              <button @click="profile">Profile</button>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/search">Search</a>
@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       backend: "",
+      userId: localStorage.getItem("id"),
     };
   },
   components: {
@@ -91,7 +92,7 @@ export default {
         .post(path, {
           targetGroupTmp: "0",
           targetPersonsTmp: "",
-          /*Configure these strings to add targeting 
+          /*Configure these strings to add targeting
           target persons assignment will be " AND poster = " + str(targetPersons)
           target group assignment will be str(groupId)*/
         })
@@ -110,6 +111,12 @@ export default {
     logout() {
       localStorage.clear();
       this.$router.push({ name: "login" });
+    },
+    profile() {
+      this.$router.push({
+        name: "profile",
+        params: { id: localStorage.getItem("id") },
+      });
     },
   },
   created() {

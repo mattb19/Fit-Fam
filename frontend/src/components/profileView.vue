@@ -64,7 +64,7 @@
     <p></p>
     <p></p>
     <section class="profile">
-      <h1>this is the profile for: {{ backend.realName }}</h1>
+      <h1>{{ backend.realName }} #{{ id }}</h1>
       <h1>{{ backend.nickName }}</h1>
       <h1>{{ backend.aboutMe }}</h1>
       <button @click="edit">Edit</button>
@@ -80,6 +80,7 @@ import axios from "axios";
 import feedViewObj from "./feedView.vue";
 
 export default {
+  props: ["id"],
   data() {
     return {
       backend: "",
@@ -95,7 +96,9 @@ export default {
       }
     },
     getStats() {
-      const path = "http://127.0.0.1:5000/profile";
+      const str = "http://127.0.0.1:5000/profile/";
+      const url = str + this.$props.id;
+      const path = url;
       axios
         .post(path, {
           userId: localStorage.getItem("id"),
@@ -125,7 +128,7 @@ export default {
         .post(path, {
           targetGroupTmp: "0",
           targetPersonsTmp: " AND poster = 1",
-          /*Configure these strings to add targeting 
+          /*Configure these strings to add targeting
           target persons assignment will be " AND poster = " + str(targetPersons)
           target group assignment will be str(groupId)*/
         })
