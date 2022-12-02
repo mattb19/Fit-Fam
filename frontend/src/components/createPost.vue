@@ -24,11 +24,15 @@
 
 .description {
   margin: auto;
-  width: 50em;
+  height: auto;
 }
 
 .header {
   margin-top: 20px;
+}
+
+form {
+  max-width: 50em;
 }
 
 .btn {
@@ -99,46 +103,31 @@
         </div>
       </div>
     </nav>
-    <h1 class="header">NEW POST</h1>
-    <div class="form-group">
-      <div class="title">
-        <input
-          name="title"
-          type="text"
-          class="title"
-          placeholder="Title"
-          required
-          size="80"
-          id="title"
-          v-model="title"
-        />
-      </div>
-    </div>
-    <div class="form-group center-align">
-      <div class="description">
-        <textarea
-          name="description"
-          placeholder="Description"
-          required
-          class="description"
-          id="description"
-          rows="10"
-          cols="80"
-          v-model="description"
-        />
-      </div>
-    </div>
-    <label for="tags" class="tags">Choose a tag:</label>
-    <select name="tags" id="tags" class="tag" v-model="tags">
-      <option value="Back" class="tag">Back</option>
-      <option value="Chest" class="tag">Chest</option>
-      <option value="Arms" class="tag">Arms</option>
-      <option value="Legs" class="tag">Legs</option>
-      <option value="Back/Bicep" class="tag">Back/Bicep</option>
-      <option value="Chest/Tricep" class="tag">Chest/Tricep</option>
-      <option value="Full Body" class="tag">Full Body</option>
-    </select>
-    <div>
+    <form @submit="createPost" method="post">
+      <label>Title:</label>
+      <input type="text" v-model="title" required />
+
+      <label>Description:</label>
+      <input
+        class="description"
+        type="textarea"
+        rows="2"
+        max-rows="10"
+        v-model="description"
+        required
+      />
+      <p></p>
+      <label for="tags" class="tags">Choose a tag:</label>
+      <select name="tags" id="tags" class="tag" v-model="tags">
+        <option value="Back" class="tag">Back</option>
+        <option value="Chest" class="tag">Chest</option>
+        <option value="Arms" class="tag">Arms</option>
+        <option value="Legs" class="tag">Legs</option>
+        <option value="Back/Bicep" class="tag">Back/Bicep</option>
+        <option value="Chest/Tricep" class="tag">Chest/Tricep</option>
+        <option value="Full Body" class="tag">Full Body</option>
+      </select>
+      <p></p>
       <input
         class="image"
         type="file"
@@ -148,19 +137,12 @@
         ref="image"
         @change="blobIt"
       />
-    </div>
-    <p class="types">Image must be jpg, jpeg, or png</p>
-    <div class="button">
-      <button
-        @submit="createPost"
-        type="button"
-        class="btn btn-dark"
-        href="/"
-        v-on:click="createPost"
-      >
-        Post
-      </button>
-    </div>
+      <label>Images must be jpeg, jpg or png format</label>
+
+      <div class="button">
+        <button class="submit" type="submit">Submit</button>
+      </div>
+    </form>
   </div>
 </template>
 
