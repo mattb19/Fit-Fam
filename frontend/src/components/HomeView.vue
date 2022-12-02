@@ -41,7 +41,7 @@
               <a class="nav-link" href="/groups">Groups</a>
             </li>
             <li class="nav-item">
-              <button @click="profile">Profile</button>
+              <a class="nav-link" @click="profile">Profile</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/search">Search</a>
