@@ -70,6 +70,14 @@ form {
 .red {
   color: red;
 }
+
+.accept {
+  color: red;
+}
+
+.bad {
+  color: red;
+}
 </style>
 
 <template>
@@ -117,11 +125,11 @@ form {
     </nav>
     <form @submit="createPost">
       <p class="p">* Required</p>
-      <label>Title:</label>
+      <label :class="good">Title:</label>
       <label class="red">*</label>
       <input type="text" v-model="title" required maxlength="255" />
 
-      <label>Description:</label>
+      <label :class="good">Description:</label>
       <label class="red">*</label>
       <textarea
         class="description"
@@ -154,7 +162,7 @@ form {
         ref="image"
         @change="blobIt"
       />
-      <label>Images must be jpeg, jpg or png format</label>
+      <p>Images must be jpeg, jpg or png format</p>
 
       <div class="button">
         <button
@@ -167,6 +175,7 @@ form {
           Post
         </button>
       </div>
+      <p class="accept">{{ this.acceptance }}</p>
     </form>
   </div>
 </template>
@@ -182,6 +191,8 @@ export default {
       description: "",
       image: "",
       tags: "",
+      acceptance: "",
+      good: "",
     };
   },
   methods: {
@@ -227,22 +238,27 @@ export default {
         blob = await this.yup(this.image);
       }
 
-      axios
-        .post(path, {
-          title: this.title,
-          description: this.description,
-          userId:
-            localStorage.getItem("id") /*this should be a number no a name*/,
-          tags: this.tags,
-          image: blob,
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      this.$router.push({ name: "home" });
+      if (this.title == "" || this.description == "") {
+        this.acceptance = "Please complete all required * fields";
+        this.good = "bad";
+      } else {
+        axios
+          .post(path, {
+            title: this.title,
+            description: this.description,
+            userId:
+              localStorage.getItem("id") /*this should be a number no a name*/,
+            tags: this.tags,
+            image: blob,
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        this.$router.push({ name: "home" });
+      }
     },
   },
   created() {
