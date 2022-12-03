@@ -320,10 +320,22 @@ def delete():
 @app.route("/groups", methods=['GET', 'POST'])
 def groupPage():
     userId=1
-    groupList = Groups.query.filter_by(groupId=1).first()
+    conn = db_connection()
+    cursor = conn.cursor()
+    groupList = Groups.query.filter_by(groupId=1).all()
+    print(groupList)
     if groupList is None:
         return ""
-    return jsonify(groupList.groupName)
+    cursor = conn.execute(
+        f"SELECT * FROM Groups"
+    )
+    groupList = ([
+        dict(
+            groupName=row[1]
+        )
+        for row in cursor.fetchall()
+    ])
+    return groupList
 
 @app.route("/create_group", methods=['GET', 'POST'])
 def createGroup():
@@ -333,10 +345,10 @@ def createGroup():
     group = Groups(groupName=gName, groupOwner=userId)
     db.session.add(group)
     db.session.commit()
-    gId = Groups.query.filter_by(groupName = gName).first()
-    groupMem = GroupMembers(member=userId, group=gId.groupId)
-    db.session.add(groupMem)
-    db.session.commit()
+    #gId = Groups.query.filter_by(groupName = gName).first()
+    # groupMem = GroupMembers(member=userId, group=gId.groupId)
+    # db.session.add(groupMem)
+    # db.session.commit()
 
 
     # print(f"\nGroup: {gName}\nCreator: {userId}")

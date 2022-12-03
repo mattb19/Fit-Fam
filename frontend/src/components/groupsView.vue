@@ -1,5 +1,14 @@
 <!-- eslint-disable prettier/prettier -->
 <style scoped>
+li {
+  display: block;
+  float: left;
+}
+
+ul {
+  max-width: 5px;
+}
+
 .addmargin {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -72,11 +81,22 @@ button {
       </th>
       <th>Group Info</th>
     </div>
+    <div class="groups">
+      <ul>
+        <li>
+          <button
+            v-for="group in backend"
+            :key="group.groupName"
+            @click="getGroupId"
+          >
+            {{ group.groupName }} <br />
+          </button>
+        </li>
+      </ul>
+    </div>
     <p></p>
     <p></p>
-    <p>
-      <button @click="getGroupFeed">{{ backend }}</button>
-    </p>
+    <p></p>
     <feedViewObj />
   </div>
 </template>
@@ -107,13 +127,15 @@ export default {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
-    getGroupFeed() {},
-    postFeedMeta() {
+    getGroupId(e) {
+      print(e.target.groupId);
+    },
+    postFeedMeta(groupTar = "0") {
       // used to set the backend variables to what searches to look for
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
         .post(path, {
-          targetGroupTmp: "0",
+          targetGroupTmp: groupTar,
           targetPersonsTmp: "",
           /*Configure these strings to add targeting 
           target persons assignment will be " AND poster = " + str(targetPersons)
