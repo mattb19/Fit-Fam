@@ -41,7 +41,7 @@
               <a class="nav-link" href="/groups">Groups</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click="profile">Profile</a>
+              <a class="nav-link" @click="userProfile">Profile</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/search">Search</a>
@@ -112,7 +112,7 @@ export default {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
-    profile() {
+    userProfile() {
       this.$router.push({
         name: "profile",
         params: { id: localStorage.getItem("id") },

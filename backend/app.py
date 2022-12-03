@@ -129,7 +129,6 @@ def home():
 @app.route("/profile/<id>" , methods=['GET', 'POST'])
 def profile(id):
     info = request.get_json(silent=True)
-    #userId = info['userId']
     userId = id
     user = User.query.filter_by(id = userId).first()
     profile = Profile.query.filter_by(userId = user.id).first()

@@ -52,7 +52,7 @@ input {
               <a class="nav-link" href="/groups">Groups</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/profile">Profile</a>
+              <a class="nav-link" @click="userProfile">Profile</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/search">Search</a>
@@ -67,7 +67,7 @@ input {
     <p></p>
     <p></p>
     <form @submit="save" class="profile">
-      <h1>this is the profile for: {{ backend.realName }}</h1>
+      <h1>{{ backend.realName }}</h1>
       <label for="nickName">What do you want your nickname to be</label>
       <input
         type="text"
@@ -138,10 +138,16 @@ export default {
           this.backend = res.data;
         })
         .catch(() => {});
-      this.$router.push({ name: "profile" });
+      this.$router.push({
+        name: "profile",
+        params: { id: localStorage.getItem("id") },
+      });
     },
     cancel() {
-      this.$router.push({ name: "profile" });
+      this.$router.push({
+        name: "profile",
+        params: { id: localStorage.getItem("id") },
+      });
     },
   },
   created() {
@@ -149,6 +155,12 @@ export default {
     setTimeout(() => {
       this.checkLoggedIn();
     }, 200);
+  },
+  userProfile() {
+    this.$router.push({
+      name: "profile",
+      params: { id: localStorage.getItem("id") },
+    });
   },
 };
 </script>

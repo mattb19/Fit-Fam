@@ -53,7 +53,7 @@
               <a class="nav-link" href="/groups">Groups</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/profile">Profile</a>
+              <a class="nav-link active" @click="userProfile">Profile</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/search">Search</a>
@@ -68,11 +68,8 @@
     <p></p>
     <p></p>
     <section class="profile">
-<<<<<<< Updated upstream
       <h1>{{ backend.realName }} #{{ id }}</h1>
-=======
       <h1>{{ backend.realName }}</h1>
->>>>>>> Stashed changes
       <h1>{{ backend.nickName }}</h1>
       <h1>{{ backend.aboutMe }}</h1>
       <button class="butt" @click="edit">Edit</button>
@@ -104,9 +101,7 @@ export default {
       }
     },
     getStats() {
-      const str = "http://127.0.0.1:5000/profile/";
-      const url = str + this.$props.id;
-      const path = url;
+      const path = "http://127.0.0.1:5000/profile/" + this.$props.id;
       axios
         .post(path, {
           userId: localStorage.getItem("id"),
@@ -146,6 +141,12 @@ export default {
         .catch((err) => {
           console.error(err);
         });
+    },
+    userProfile() {
+      this.$router.push({
+        name: "profile",
+        params: { id: localStorage.getItem("id") },
+      });
     },
   },
   created() {

@@ -68,7 +68,6 @@
         <p class="numLikes">{{ postItem.postLikes }}</p>
       </div>
       <!-- start of delete button -->
-
       <!-- end of delete box -->
     </div>
   </div>
