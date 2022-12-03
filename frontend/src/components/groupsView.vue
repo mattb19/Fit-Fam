@@ -25,47 +25,7 @@ button {
 
 <template>
   <div class="searchView">
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css"
-      integrity="sha384-B4morbeopVCSpzeC1c4nyV0d0cqvlSAfyXVfrPJa25im5p+yEN/YmhlgQP/OyMZD"
-      crossorigin="anonymous"
-    />
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarColor02"
-          aria-controls="navbarColor02"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor02">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/home">Global</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/groups">Groups</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" @click="userProfile">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/search">Search</a>
-            </li>
-            <li class="nav-item">
-              <button @click="logout">Logout</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <navBar></navBar>
     <div>
       <th class="groupsDisplay" align="left">
         Groups<button @click="createNewGroup">+</button>
@@ -84,6 +44,7 @@ button {
 <script>
 import axios from "axios";
 import feedViewObj from "./feedView.vue";
+import NavBarComponent from "./NavBarComponent.vue";
 
 export default {
   data() {
@@ -93,6 +54,7 @@ export default {
   },
   components: {
     feedViewObj,
+    navBar: NavBarComponent,
   },
   methods: {
     checkLoggedIn() {
