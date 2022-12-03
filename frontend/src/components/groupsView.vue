@@ -105,6 +105,9 @@ button {
 <script>
 import axios from "axios";
 import feedViewObj from "./feedView.vue";
+import Vue from "vue";
+/*global*/
+Vue.prototype.$groupFeed = "1";
 
 export default {
   data() {
@@ -130,10 +133,11 @@ export default {
     },
     postFeedMeta(groupTar) {
       // used to set the backend variables to what searches to look for
+      this.$groupFeed = groupTar.toString();
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
         .post(path, {
-          targetGroupTmp: groupTar,
+          targetGroupTmp: groupTar.toString(),
           targetPersonsTmp: "0",
           /*Configure these strings to add targeting 
           target persons assignment will be " AND poster = " + str(targetPersons)
@@ -160,7 +164,7 @@ export default {
   },
   created() {
     this.getStats();
-    this.postFeedMeta();
+    this.postFeedMeta(this.$groupFeed);
     setTimeout(() => {
       this.checkLoggedIn();
     }, 300);
