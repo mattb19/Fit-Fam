@@ -138,10 +138,12 @@ export default {
           this.backend = res.data;
         })
         .catch(() => {});
-      this.$router.push({
-        name: "profile",
-        params: { id: localStorage.getItem("id") },
-      });
+      setTimeout(() => {
+        this.$router.push({
+          name: "profile",
+          params: { id: localStorage.getItem("id") },
+        });
+      }, 50);
     },
     cancel() {
       this.$router.push({
