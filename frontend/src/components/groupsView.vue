@@ -86,8 +86,9 @@ button {
         <li>
           <button
             v-for="group in backend"
-            :key="group.groupName"
-            @click="getGroupId"
+            :key="group.groupId"
+            v-bind:gID="group.groupId"
+            @click="postFeedMeta(group.groupId)"
           >
             {{ group.groupName }} <br />
           </button>
@@ -127,16 +128,13 @@ export default {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
-    getGroupId(e) {
-      print(e.target.groupId);
-    },
-    postFeedMeta(groupTar = "0") {
+    postFeedMeta(groupTar) {
       // used to set the backend variables to what searches to look for
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
         .post(path, {
           targetGroupTmp: groupTar,
-          targetPersonsTmp: "",
+          targetPersonsTmp: "0",
           /*Configure these strings to add targeting 
           target persons assignment will be " AND poster = " + str(targetPersons)
           target group assignment will be str(groupId)*/

@@ -323,7 +323,6 @@ def groupPage():
     conn = db_connection()
     cursor = conn.cursor()
     groupList = Groups.query.filter_by(groupId=1).all()
-    print(groupList)
     if groupList is None:
         return ""
     cursor = conn.execute(
@@ -331,6 +330,7 @@ def groupPage():
     )
     groupList = ([
         dict(
+            groupId=row[0],
             groupName=row[1]
         )
         for row in cursor.fetchall()
@@ -349,9 +349,6 @@ def createGroup():
     # groupMem = GroupMembers(member=userId, group=gId.groupId)
     # db.session.add(groupMem)
     # db.session.commit()
-
-
-    # print(f"\nGroup: {gName}\nCreator: {userId}")
 
 @app.route("/group_post", methods=['GET', 'POST'])
 def groupPost():
