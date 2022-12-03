@@ -68,11 +68,7 @@
     <p></p>
     <p></p>
     <section class="profile">
-<<<<<<< Updated upstream
-      <h1>{{ backend.realName }} #{{ id }}</h1>
-=======
       <h1>{{ backend.realName }}</h1>
->>>>>>> Stashed changes
       <h1>{{ backend.nickName }}</h1>
       <h1>{{ backend.aboutMe }}</h1>
       <button class="butt" @click="edit">Edit</button>
