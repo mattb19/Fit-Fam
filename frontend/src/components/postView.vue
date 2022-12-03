@@ -6,7 +6,7 @@
       class="card-header"
       style="text-align: left"
     >
-      {{ postItem.postNickname }}
+      <a class="nav-link" @click="userProfile">{{ postItem.postNickname }}</a>
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
     <h3
@@ -14,7 +14,9 @@
       class="card-header"
       style="text-align: left"
     >
-      {{ postItem.postFirstName }} {{ postItem.postLastName }}
+      <a class="nav-link" @click="userProfile"
+        >{{ postItem.postFirstName }} {{ postItem.postLastName }}</a
+      >
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
     <h3 v-else class="card-header" style="text-align: left">Invalid Account</h3>
@@ -135,6 +137,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    userProfile() {
+      this.$router.push({
+        name: "profile",
+        params: { id: this.$props.postItem.poster },
+      });
     },
   },
 };

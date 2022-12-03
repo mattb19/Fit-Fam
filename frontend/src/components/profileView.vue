@@ -72,9 +72,13 @@
       <h1>{{ backend.realName }}</h1>
       <h1>{{ backend.nickName }}</h1>
       <h1>{{ backend.aboutMe }}</h1>
-      <button class="butt" @click="edit">Edit</button>
-      <button class="butt" @click="changePassword">Reset Password</button>
-      <button class="butt" @click="changeSec">Change Security Questions</button>
+      <div v-if="userId === id">
+        <button class="butt" @click="edit">Edit</button>
+        <button class="butt" @click="changePassword">Reset Password</button>
+        <button class="butt" @click="changeSec">
+          Change Security Questions
+        </button>
+      </div>
     </section>
     <div class="posted"><feedViewObj /></div>
   </div>
@@ -89,6 +93,7 @@ export default {
   data() {
     return {
       backend: "",
+      userId: localStorage.getItem("id"),
     };
   },
   components: {
