@@ -135,7 +135,7 @@ export default {
       axios
         .post(path, {
           targetGroupTmp: "0",
-          targetPersonsTmp: " AND poster = 1",
+          targetPersonsTmp: " AND poster = " + this.$props.id,
           /*Configure these strings to add targeting
           target persons assignment will be " AND poster = " + str(targetPersons)
           target group assignment will be str(groupId)*/
