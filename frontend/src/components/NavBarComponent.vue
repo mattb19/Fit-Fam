@@ -34,16 +34,28 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
+            <li class="nav-item" v-if="currentURL === '/home'">
               <a class="nav-link active" href="/home">Global</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-else>
+              <a class="nav-link" href="/home">Global</a>
+            </li>
+            <li class="nav-item" v-if="currentURL === '/groups'">
+              <a class="nav-link active" href="/groups">Groups</a>
+            </li>
+            <li class="nav-item" v-else>
               <a class="nav-link" href="/groups">Groups</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
+            <li class="nav-item" v-if="currentURL === currentUser">
+              <a class="nav-link active" @click="userProfile">Profile</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-else>
+              <a class="nav-link" @click="userProfile">Profile</a>
+            </li>
+            <li class="nav-item" v-if="currentURL === '/search'">
+              <a class="nav-link active" href="/search">Search</a>
+            </li>
+            <li class="nav-item" v-else>
               <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
@@ -58,6 +70,12 @@
 
 <script>
 export default {
+  data() {
+    return {
+      currentURL: window.location.pathname,
+      currentUser: "/profile/" + localStorage.getItem("id"),
+    };
+  },
   methods: {
     checkLoggedIn() {
       if (localStorage.getItem("id") === null) {
@@ -68,11 +86,11 @@ export default {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
-    created() {
-      this.getStats();
-      setTimeout(() => {
-        this.checkLoggedIn();
-      }, 300);
+    userProfile() {
+      this.$router.push({
+        name: "profile",
+        params: { id: localStorage.getItem("id") },
+      });
     },
   },
 };

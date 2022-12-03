@@ -15,10 +15,6 @@
     <navBar></navBar>
     <!-- start of feed html -->
     <div>
-      <div>Extra</div>
-      <div>space</div>
-      <div>here</div>
-      <div>here</div>
       <feedViewObj />
     </div>
   </div>
