@@ -278,9 +278,8 @@ def post():
     targetGroupStr = str(data.get('groupAssociation'))
 
     print(postImage)
-    print(targetGroupStr)
-    print(type(targetGroupStr))
-    post = Posts(postTitle=postTitle, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
+
+    post = Posts(postTitle=postTitle, groupAssociation=targetGroupStr, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
     db.session.add(post)
     db.session.commit()
 

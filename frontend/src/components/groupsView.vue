@@ -134,6 +134,7 @@ export default {
     changeGroup(TarGroup) {
       this.$groupFeed = TarGroup;
       this.postFeedMeta();
+      this.$forceUpdate();
     },
     postFeedMeta() {
       // used to set the backend variables to what searches to look for

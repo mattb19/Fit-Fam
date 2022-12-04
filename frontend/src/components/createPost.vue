@@ -139,12 +139,13 @@
       <option value="Full Body" class="tag">Full Body</option>
     </select>
     <label for="group" class="group">Choose a Feed:</label>
-    <select name="group" id="group" class="group" v-model="group">
+    <select name="group" id="group" class="group" v-model="groupAssociation">
       <option value="0" class="group">Global</option>
       <option
         v-for="group in groupData"
-        :value="group.groupId"
+        v-bind:value="group.groupId"
         :key="group.groupId"
+        class="group"
       >
         {{ group.groupName }}
       </option>
@@ -187,6 +188,7 @@ export default {
       image: "",
       tags: "",
       groupData: "",
+      groupAssociation: "",
     };
   },
   methods: {
@@ -250,7 +252,7 @@ export default {
             localStorage.getItem("id") /*this should be a number no a name*/,
           tags: this.tags,
           image: blob,
-          groupAssociation: this.groupData,
+          groupAssociation: this.groupAssociation,
         })
         .then((res) => {
           console.log(res);
