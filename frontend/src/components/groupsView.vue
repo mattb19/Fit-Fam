@@ -141,10 +141,16 @@ export default {
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
         .post(path, {
+<<<<<<< HEAD
           targetGroupTmp: this.$groupFeed.toString(),
           targetPersonsTmp: "0",
+=======
+          targetGroupTmp: "0",
+          targetPersonsTmp: "0",
+          targetTagsTmp: "",
+>>>>>>> main
           /*Configure these strings to add targeting 
-          target persons assignment will be " AND poster = " + str(targetPersons)
+          target persons assignment will be str(UserId)
           target group assignment will be str(groupId)*/
         })
         .then((res) => {

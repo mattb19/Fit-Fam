@@ -6,7 +6,7 @@
       class="card-header"
       style="text-align: left"
     >
-      {{ postItem.postNickname }}
+      <a href="/search">{{ postItem.postNickname }}</a>
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
     <h3
@@ -14,7 +14,9 @@
       class="card-header"
       style="text-align: left"
     >
-      {{ postItem.postFirstName }} {{ postItem.postLastName }}
+      <a href="/search" class="nameLink"
+        >{{ postItem.postFirstName }} {{ postItem.postLastName }}</a
+      >
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
     <h3 v-else class="card-header" style="text-align: left">Invalid Account</h3>
@@ -38,18 +40,20 @@
         <h1>{{ postItem.postTitle }}</h1>
         <div v-if="postItem.postImage != null">
           <p></p>
-          <img :src="postItem.postImage" width="270px" height="200px" />
+          <img :src="postItem.postImage" width="100%" height="100%" />
           <p></p>
         </div>
         <p class="card-text">
           {{ postItem.description }}
         </p>
       </div>
-      <div class="conatiner">
-        <span class="badge bg-primary" v-for="tag in postItem.postTags">{{
-          tag
-        }}</span>
-      </div>
+      <h4>
+        <div class="conatiner">
+          <span class="badge bg-success" v-for="tag in postItem.postTags">{{
+            tag
+          }}</span>
+        </div>
+      </h4>
       <div class="like">
         <a
           v-if="viewerId == postItem.poster"
@@ -67,9 +71,6 @@
         </a>
         <p class="numLikes">{{ postItem.postLikes }}</p>
       </div>
-      <!-- start of delete button -->
-
-      <!-- end of delete box -->
     </div>
   </div>
 </template>

@@ -1,15 +1,8 @@
 <style scoped>
-.addmargin {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.home {
-  background-color: #383c44;
-}
-
 .button {
   margin-top: 50px;
+  width: 50em;
+  padding-right: 500px;
 }
 
 .image {
@@ -17,32 +10,18 @@
   width: 50em;
 }
 
-.title {
-  margin: auto;
-  width: 50em;
-}
-
 .description {
   margin: auto;
-  width: 50em;
+  height: auto;
+  width: auto;
 }
 
-.header {
-  margin-top: 20px;
+form {
+  max-width: 52.6em;
 }
 
 .btn {
   width: 50em;
-}
-
-.types {
-  margin: auto;
-  width: 50em;
-  text-align: left;
-}
-
-.form-check {
-  margin: auto;
 }
 
 .tags {
@@ -53,6 +32,23 @@
 .tag {
   text-align: center;
   width: 100px;
+}
+
+.p {
+  margin-bottom: 0px;
+  color: red;
+}
+
+.red {
+  color: red;
+}
+
+.accept {
+  color: red;
+}
+
+.bad {
+  color: red;
 }
 </style>
 
@@ -99,46 +95,35 @@
         </div>
       </div>
     </nav>
-    <h1 class="header">NEW POST</h1>
-    <div class="form-group">
-      <div class="title">
-        <input
-          name="title"
-          type="text"
-          class="title"
-          placeholder="Title"
-          required
-          size="80"
-          id="title"
-          v-model="title"
-        />
-      </div>
-    </div>
-    <div class="form-group center-align">
-      <div class="description">
-        <textarea
-          name="description"
-          placeholder="Description"
-          required
-          class="description"
-          id="description"
-          rows="10"
-          cols="80"
-          v-model="description"
-        />
-      </div>
-    </div>
-    <label for="tags" class="tags">Choose a tag:</label>
-    <select name="tags" id="tags" class="tag" v-model="tags">
-      <option value="Back" class="tag">Back</option>
-      <option value="Chest" class="tag">Chest</option>
-      <option value="Arms" class="tag">Arms</option>
-      <option value="Legs" class="tag">Legs</option>
-      <option value="Back/Bicep" class="tag">Back/Bicep</option>
-      <option value="Chest/Tricep" class="tag">Chest/Tricep</option>
-      <option value="Full Body" class="tag">Full Body</option>
-    </select>
-    <label for="group" class="group">Choose a Feed:</label>
+    <form @submit="createPost">
+      <p class="p">* Required</p>
+      <label :class="good">Title:</label>
+      <label class="red">*</label>
+   <input    type="text" v-model="title" required maxlength="255" />
+
+      <label :class="good">Description:</label>
+      <label class="red">*</label>
+      <textarea
+        class="description"
+        type="textarea"
+        rows="8"
+        cols="100"
+        maxlength="4096"
+        v-model="description"
+        required
+      />
+      <p></p>
+      <label for="tags" class="tags">Choose a tag:</label>
+      <select name="tags" id="tags" class="tag" v-model="tags">
+        <option value="Back" class="tag">Back</option>
+        <option value="Chest" class="tag">Chest</option>
+        <option value="Arms" class="tag">Arms</option>
+        <option value="Legs" class="tag">Legs</option>
+        <option value="Back/Bicep" class="tag">Back/Bicep</option>
+        <option value="Chest/Tricep" class="tag">Chest/Tricep</option>
+        <option value="Full Body" class="tag">Full Body</option>
+      </select>
+      <label for="group" class="group">Choose a Feed:</label>
     <select name="group" id="group" class="group" v-model="groupAssociation">
       <option value="0" class="group">Global</option>
       <option
@@ -150,8 +135,8 @@
         {{ group.groupName }}
       </option>
     </select>
-    <div>
-      <input
+    <p></p>
+       <input
         class="image"
         type="file"
         id="avatar"
@@ -160,19 +145,21 @@
         ref="image"
         @change="blobIt"
       />
-    </div>
-    <p class="types">Image must be jpg, jpeg, or png</p>
-    <div class="button">
-      <button
-        @submit="createPost"
-        type="button"
-        class="btn btn-dark"
-        href="/"
-        v-on:click="createPost"
-      >
-        Post
-      </button>
-    </div>
+      <p>Images must be jpeg, jpg or png format</p>
+
+      <div class="button">
+        <button
+          @submit="createPost"
+          type="button"
+          class="btn btn-dark"
+          href="/"
+          v-on:click="createPost"
+        >
+          Post
+        </button>
+      </div>
+      <p class="accept">{{ this.acceptance }}</p>
+    </form>
   </div>
 </template>
 
@@ -187,6 +174,8 @@ export default {
       description: "",
       image: "",
       tags: "",
+      acceptance: "",
+      good: "",
       groupData: "",
       groupAssociation: "",
     };
@@ -241,26 +230,30 @@ export default {
       let blob;
       if (this.image != "") {
         blob = await this.yup(this.image);
-        console.log(blob);
       }
 
-      axios
-        .post(path, {
-          title: this.title,
-          description: this.description,
-          userId:
-            localStorage.getItem("id") /*this should be a number no a name*/,
-          tags: this.tags,
-          image: blob,
-          groupAssociation: this.groupAssociation,
+      if (this.title == "" || this.description == "") {
+        this.acceptance = "Please complete all required * fields";
+        this.good = "bad";
+      } else {
+        axios
+          .post(path, {
+            title: this.title,
+            description: this.description,
+            userId:
+              localStorage.getItem("id") /*this should be a number no a name*/,
+            tags: this.tags,
+            image: blob,
+            groupAssociation: this.groupAssociation,
         })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      this.$router.push({ name: "home" });
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        this.$router.push({ name: "home" });
+      }
     },
   },
   created() {
