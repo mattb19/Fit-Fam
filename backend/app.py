@@ -50,7 +50,7 @@ def feedMeta():
         global targetPersonsStr
         info = request.get_json(silent=True)
         targetGroupStr = info['targetGroupTmp']
-        #print("target group is " + targetGroupStr)
+        print("target group is " + targetGroupStr)
         targetPersonsStr = info['targetPersonsTmp']
         #print("targetPersonsStr is '" + targetPersonsStr + "'")
         return "Feed targets set"
