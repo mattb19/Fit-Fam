@@ -1,5 +1,14 @@
 <!-- eslint-disable prettier/prettier -->
 <style scoped>
+li {
+  display: block;
+  float: left;
+}
+
+ul {
+  max-width: 5px;
+}
+
 .addmargin {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -72,18 +81,35 @@ button {
       </th>
       <th>Group Info</th>
     </div>
+    <div class="groups">
+      <ul>
+        <li>
+          <button
+            v-for="group in backend"
+            :key="group.groupId"
+            v-bind:gID="group.groupId"
+            @click="changeGroup(group.groupId)"
+          >
+            {{ group.groupName }} <br />
+          </button>
+        </li>
+      </ul>
+    </div>
     <p></p>
     <p></p>
-    <p>
-      <button @click="getGroupFeed">{{ backend }}</button>
-    </p>
-    <feedViewObj />
+    <p></p>
+    <div class="feed">
+      <feedViewObj />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import feedViewObj from "./feedView.vue";
+import Vue from "vue";
+/*global*/
+Vue.prototype.$groupFeed = "0";
 
 export default {
   data() {
@@ -107,17 +133,20 @@ export default {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
-    getGroupFeed() {},
+    changeGroup(TarGroup) {
+      this.$groupFeed = TarGroup;
+      this.postFeedMeta();
+      this.$forceUpdate();
+    },
     postFeedMeta() {
       // used to set the backend variables to what searches to look for
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
         .post(path, {
-          targetGroupTmp: "0",
+          targetGroupTmp: this.$groupFeed.toString(),
           targetPersonsTmp: "0",
-          targetTagsTmp: "",
           /*Configure these strings to add targeting 
-          target persons assignment will be str(UserId)
+          target persons assignment will be " AND poster = " + str(targetPersons)
           target group assignment will be str(groupId)*/
         })
         .then((res) => {

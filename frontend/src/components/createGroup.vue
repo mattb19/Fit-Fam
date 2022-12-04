@@ -72,7 +72,7 @@
         @submit="passGroupInfo"
         type="button"
         class="btn btn-dark"
-        href="/"
+        href="/home"
         v-on:click="passGroupInfo"
       >
         Create Group
@@ -89,7 +89,7 @@ export default {
   data() {
     return {
       groupName: "",
-      userId: 1,
+      userId: "",
     };
   },
   methods: {
@@ -106,7 +106,7 @@ export default {
       const path = "http://127.0.0.1:5000//create_group";
       axios
         .post(path, {
-          userId: this.userId,
+          userId: localStorage.getItem("id"),
           groupName: this.groupName,
         })
         .then((res) => {

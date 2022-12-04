@@ -52,7 +52,7 @@ def feedMeta():
         global targetTagsStr
         info = request.get_json(silent=True)
         targetGroupStr = info['targetGroupTmp']
-        #print("target group is " + targetGroupStr)
+        print("target group is " + targetGroupStr)
         targetPersonsStr = info['targetPersonsTmp']
         #print("targetPersonsStr is '" + targetPersonsStr + "'")
         targetTagsStr = info['targetTagsTmp']
@@ -293,10 +293,11 @@ def post():
     postLikes = 0
     postTags = data.get('tags')
     postImage = data.get('image')
+    targetGroupStr = str(data.get('groupAssociation'))
 
     print(postImage)
 
-    post = Posts(postTitle=postTitle, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
+    post = Posts(postTitle=postTitle, groupAssociation=targetGroupStr, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
     db.session.add(post)
     db.session.commit()
 
@@ -326,10 +327,22 @@ def like():
 @app.route("/groups", methods=['GET', 'POST'])
 def groupPage():
     userId=1
-    groupList = Groups.query.filter_by(groupId=1).first()
+    conn = db_connection()
+    cursor = conn.cursor()
+    groupList = Groups.query.filter_by(groupId=1).all()
     if groupList is None:
         return ""
-    return jsonify(groupList.groupName)
+    cursor = conn.execute(
+        f"SELECT * FROM Groups"
+    )
+    groupList = ([
+        dict(
+            groupId=row[0],
+            groupName=row[1]
+        )
+        for row in cursor.fetchall()
+    ])
+    return groupList
 
 @app.route("/create_group", methods=['GET', 'POST'])
 def createGroup():
@@ -339,13 +352,10 @@ def createGroup():
     group = Groups(groupName=gName, groupOwner=userId)
     db.session.add(group)
     db.session.commit()
-    gId = Groups.query.filter_by(groupName = gName).first()
-    groupMem = GroupMembers(member=userId, group=gId.groupId)
-    db.session.add(groupMem)
-    db.session.commit()
-
-
-    # print(f"\nGroup: {gName}\nCreator: {userId}")
+    #gId = Groups.query.filter_by(groupName = gName).first()
+    # groupMem = GroupMembers(member=userId, group=gId.groupId)
+    # db.session.add(groupMem)
+    # db.session.commit()
 
 @app.route("/group_post", methods=['GET', 'POST'])
 def groupPost():
