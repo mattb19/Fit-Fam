@@ -109,7 +109,7 @@ import axios from "axios";
 import feedViewObj from "./feedView.vue";
 import Vue from "vue";
 /*global*/
-Vue.prototype.$groupFeed = "1";
+Vue.prototype.$groupFeed = "0";
 
 export default {
   data() {
