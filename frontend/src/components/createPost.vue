@@ -1,15 +1,8 @@
 <style scoped>
-.addmargin {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.home {
-  background-color: #383c44;
-}
-
 .button {
   margin-top: 50px;
+  width: 50em;
+  padding-right: 500px;
 }
 
 .image {
@@ -17,32 +10,18 @@
   width: 50em;
 }
 
-.title {
-  margin: auto;
-  width: 50em;
-}
-
 .description {
   margin: auto;
-  width: 50em;
+  height: auto;
+  width: auto;
 }
 
-.header {
-  margin-top: 20px;
+form {
+  max-width: 52.6em;
 }
 
 .btn {
   width: 50em;
-}
-
-.types {
-  margin: auto;
-  width: 50em;
-  text-align: left;
-}
-
-.form-check {
-  margin: auto;
 }
 
 .tags {
@@ -53,6 +32,23 @@
 .tag {
   text-align: center;
   width: 100px;
+}
+
+.p {
+  margin-bottom: 0px;
+  color: red;
+}
+
+.red {
+  color: red;
+}
+
+.accept {
+  color: red;
+}
+
+.bad {
+  color: red;
 }
 </style>
 
@@ -108,19 +104,21 @@
         ref="image"
         @change="blobIt"
       />
-    </div>
-    <p class="types">Image must be jpg, jpeg, or png</p>
-    <div class="button">
-      <button
-        @submit="createPost"
-        type="button"
-        class="btn btn-dark"
-        href="/"
-        v-on:click="createPost"
-      >
-        Post
-      </button>
-    </div>
+      <p>Images must be jpeg, jpg or png format</p>
+
+      <div class="button">
+        <button
+          @submit="createPost"
+          type="button"
+          class="btn btn-dark"
+          href="/"
+          v-on:click="createPost"
+        >
+          Post
+        </button>
+      </div>
+      <p class="accept">{{ this.acceptance }}</p>
+    </form>
   </div>
 </template>
 
@@ -136,6 +134,8 @@ export default {
       description: "",
       image: "",
       tags: "",
+      acceptance: "",
+      good: "",
     };
   },
   components: {
@@ -182,25 +182,29 @@ export default {
       let blob;
       if (this.image != "") {
         blob = await this.yup(this.image);
-        console.log(blob);
       }
 
-      axios
-        .post(path, {
-          title: this.title,
-          description: this.description,
-          userId:
-            localStorage.getItem("id") /*this should be a number no a name*/,
-          tags: this.tags,
-          image: blob,
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      this.$router.push({ name: "home" });
+      if (this.title == "" || this.description == "") {
+        this.acceptance = "Please complete all required * fields";
+        this.good = "bad";
+      } else {
+        axios
+          .post(path, {
+            title: this.title,
+            description: this.description,
+            userId:
+              localStorage.getItem("id") /*this should be a number no a name*/,
+            tags: this.tags,
+            image: blob,
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        this.$router.push({ name: "home" });
+      }
     },
     userProfile() {
       this.$router.push({

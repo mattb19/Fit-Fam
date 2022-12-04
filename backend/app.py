@@ -39,6 +39,7 @@ retrievalStepSize = 10
 feedPosition = 0
 targetGroupStr = "0"
 targetPersonsStr = "0"
+targetTagsStr = ""
 
 #target persons assignment will be
 #" AND poster = targetPersons"
@@ -48,11 +49,13 @@ def feedMeta():
     if request.method == 'POST':
         global targetGroupStr
         global targetPersonsStr
+        global targetTagsStr
         info = request.get_json(silent=True)
         targetGroupStr = info['targetGroupTmp']
         #print("target group is " + targetGroupStr)
         targetPersonsStr = info['targetPersonsTmp']
         #print("targetPersonsStr is '" + targetPersonsStr + "'")
+        targetTagsStr = info['targetTagsTmp']
         return "Feed targets set"
     else:
         global postObjList
@@ -87,12 +90,23 @@ def posts():
         tmpTargetPersonsStr = targetPersonsStr
     else:
         tmpTargetPersonsStr = " AND poster = " + targetPersonsStr
+    tmpTargetTagsStr = ""
+    if targetTagsStr != "":
+        tmpTargetTagsStr = " AND ("
+        targetTagsArr = targetTagsStr.split(',')
+        print(targetTagsArr)
+        for i in range(len(targetTagsArr)):
+            tmpTargetTagsStr = tmpTargetTagsStr + " postTags = '" + targetTagsArr[i] + "'"
+            if i+1 != len(targetTagsArr):
+                tmpTargetTagsStr += " OR"
+        tmpTargetTagsStr += ")"
+    print(tmpTargetTagsStr)
     cursor = conn.execute(
         f"WITH Posts_Numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY _ROWID_) RowNum FROM Posts) \
             SELECT Posts_Numbered.*, User.firstName, User.lastName, User.nickname FROM Posts_Numbered \
          LEFT JOIN User ON Posts_Numbered.poster = User.id WHERE \
          RowNum > {tmpFeedPosition} AND ROWNUM <= {feedPosition+retrievalStepSize} AND \
-            groupAssociation = {targetGroupStr+tmpTargetPersonsStr}"
+            groupAssociation = {targetGroupStr+tmpTargetPersonsStr+tmpTargetTagsStr}"
     )
     #print("call is finished")
     tmpPostObjList = ([
