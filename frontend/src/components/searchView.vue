@@ -32,33 +32,32 @@ input {
 <template>
   <div class="searchView">
     <navBar></navBar>
-    <form class="tags">
+    <form>
       <label>
-        <input type="checkbox" value="Arms" v-model="tag1" /> Arms
+        <input type="checkbox" value="Arms" v-model="tags" /> Arms
       </label>
       <label>
-        <input type="checkbox" value="Back" v-model="tag2" /> Back
+        <input type="checkbox" value="Back" v-model="tags" /> Back
       </label>
       <label>
-        <input type="checkbox" value="Back/Bicep" v-model="tag3" />
+        <input type="checkbox" value="Back/Bicep" v-model="tags" />
         Back/Bicep
       </label>
       <label>
-        <input type="checkbox" value="Chest" v-model="tag4" /> Chest
+        <input type="checkbox" value="Chest" v-model="tags" /> Chest
       </label>
       <label>
-        <input type="checkbox" value="Chest/Tricep" v-model="tag5" />
+        <input type="checkbox" value="Chest/Tricep" v-model="tags" />
         Chest/Tricep
       </label>
       <label>
-        <input type="checkbox" value="Legs" v-model="tag6" /> Legs
+        <input type="checkbox" value="Legs" v-model="tags" /> Legs
       </label>
       <label>
-        <input type="checkbox" value="Full Body" v-model="tag7" /> Full Body
+        <input type="checkbox" value="Full Body" v-model="tags" /> Full Body
       </label>
-      <button @click="searchTags">Search</button>
+      <button @click="postFeedMeta">Search</button>
     </form>
-    <h1>{{ tags }}</h1>
     <div><feedViewObj /></div>
   </div>
 </template>
@@ -73,14 +72,7 @@ export default {
     return {
       backend: "",
       checked: "",
-      tag1: "",
-      tag2: "",
-      tag3: "",
-      tag4: "",
-      tag5: "",
-      tag6: "",
-      tag7: "",
-      tags: "",
+      tags: [],
     };
   },
   components: {
@@ -96,6 +88,9 @@ export default {
     getStats() {
       const path = "http://127.0.0.1:5000/search";
       axios
+        .post(path, {
+          tags: this.tags,
+        })
         .get(path)
         .then((res) => {
           this.backend = res.data;
@@ -124,7 +119,7 @@ export default {
         .post(path, {
           targetGroupTmp: "0",
           targetPersonsTmp: "0",
-          targetTagsTmp: "Legs",
+          targetTagsTmp: this.tags.join(),
           /*Configure these strings to add targeting
           target persons assignment will be str(UserId)
           target group assignment will be str(groupId)*/

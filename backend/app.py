@@ -255,6 +255,14 @@ def signup():
         return jsonify(user.id), 200
 
 
+@app.route("/search", methods=['POST', 'GET'])
+def search():
+    info = request.get_json(silent=True)
+    tags = info['tags']
+    print(tags)
+    return info
+
+
 @app.route("/security_questions", methods=['POST'])
 def securityQuestions():
     info = request.get_json(silent=True)
