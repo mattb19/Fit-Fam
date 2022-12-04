@@ -57,7 +57,7 @@ export default {
           targetGroupTmp: "0",
           targetPersonsTmp: "0",
           targetTagsTmp: "",
-          /*Configure these strings to add targeting 
+          /*Configure these strings to add targeting
           target persons assignment will be " AND poster = " + str(targetPersons)
           target group assignment will be str(groupId)*/
         })

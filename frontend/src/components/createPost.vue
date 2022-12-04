@@ -118,7 +118,7 @@ form {
         </button>
       </div>
       <p class="accept">{{ this.acceptance }}</p>
-    </form>
+    </div>
   </div>
 </template>
 
