@@ -147,6 +147,16 @@ def home():
 
 @app.route("/profile/<id>" , methods=['GET', 'POST'])
 def profile(id):
+    ################################
+    #function for profileView.vue the route is dynamic
+    #
+    #Use: looks up data from db and sends it to profileView.vue to be displayed
+    #
+    #Input: int id: used to look up the user in the db
+    #
+    #Return: backend: list of user information
+    #
+    ################################
     info = request.get_json(silent=True)
     userId = id
     user = User.query.filter_by(id = userId).first()
@@ -164,6 +174,16 @@ def profile(id):
 
 @app.route("/profileEdit" , methods=['GET', 'POST'])
 def profileEdit():
+    ################################
+    #function for profileEdit.vue
+    #
+    #Use: change nickname and aboutMe in db to the data sent by profileEdit.vue
+    #
+    #Input:
+    #
+    #Return: Json request
+    #
+    ################################
     info = request.get_json(silent=True)
     userId = info['userId']
     user = User.query.filter_by(id = userId).first()
@@ -190,6 +210,17 @@ def profileEdit():
 
 @app.route("/securityQuestionCheck", methods=['Get','POST'])
 def securityQuestionCheck():
+    ################################
+    #function for securityQuestionCheck.vue
+    #
+    #Use: used to check the users answers to their security questions and
+    #  will send a json message to the frontend
+    #
+    #Input:
+    #
+    #Return: json
+    #
+    ################################
     info = request.get_json(silent=True)
     userId = info['userId']
     answerStringA = info['answer1']
@@ -206,6 +237,17 @@ def securityQuestionCheck():
 
 @app.route("/resetPassword", methods=['GET','POST'])
 def resetPassword():
+    ################################
+    #function for resetPassword.vue
+    #
+    #Use: used to reset the user's password to the data
+    #  that is sent from the frontend
+    #
+    #Input:
+    #
+    #Return: json
+    #
+    ################################
     info = request.get_json(silent=True)
     userId = info['userId']
     passwordInput1 = info['passwordInput1']
@@ -265,6 +307,17 @@ def search():
 
 @app.route("/security_questions", methods=['POST'])
 def securityQuestions():
+    ################################
+    #function for securityQuestionView.vue
+    #
+    #Use: used to set the users' security questions in the db
+    # to the data sent by the frontend
+    #
+    #Input:
+    #
+    #Return: json
+    #
+    ################################
     info = request.get_json(silent=True)
     questionStringA = info['secQuestion1']
     answerStringA = info['answer1']
@@ -273,13 +326,9 @@ def securityQuestions():
     userId = info['userId']
     user = User.query.filter_by(id = userId).first()
     securityQuestions = SecurityQuestions.query.filter_by(userId = user.id).first()
-    #securityQuestions.Question1 = questionStringA
     setattr(securityQuestions,'Question1',questionStringA)
-    #securityQuestions.Answer1 = answerStringA
     setattr(securityQuestions,'Answer1',answerStringA)
-    #securityQuestions.Question2 = questionStringB
     setattr(securityQuestions,'Question2',questionStringB)
-    #securityQuestions.Answer2 = answerStringB
     setattr(securityQuestions,'Answer2',answerStringB)
     db.session.commit()
     print(f"\nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
