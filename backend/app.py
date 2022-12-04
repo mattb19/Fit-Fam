@@ -94,7 +94,6 @@ def posts():
     if targetTagsStr != "":
         tmpTargetTagsStr = " AND ("
         targetTagsArr = targetTagsStr.split(',')
-        print(targetTagsArr)
         for i in range(len(targetTagsArr)):
             tmpTargetTagsStr = tmpTargetTagsStr + " postTags = '" + targetTagsArr[i] + "'"
             if i+1 != len(targetTagsArr):
