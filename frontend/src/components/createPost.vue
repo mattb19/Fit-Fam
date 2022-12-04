@@ -138,6 +138,17 @@
       <option value="Chest/Tricep" class="tag">Chest/Tricep</option>
       <option value="Full Body" class="tag">Full Body</option>
     </select>
+    <label for="group" class="group">Choose a Feed:</label>
+    <select name="group" id="group" class="group" v-model="group">
+      <option value="0" class="group">Global</option>
+      <option
+        v-for="group in groupData"
+        :value="group.groupId"
+        :key="group.groupId"
+      >
+        {{ group.groupName }}
+      </option>
+    </select>
     <div>
       <input
         class="image"
@@ -175,6 +186,7 @@ export default {
       description: "",
       image: "",
       tags: "",
+      groupData: "",
     };
   },
   methods: {
@@ -193,6 +205,15 @@ export default {
         .get(path)
         .then((res) => {
           this.backend = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      const groupPath = "http://127.0.0.1:5000/groups";
+      axios
+        .get(groupPath)
+        .then((res) => {
+          this.groupData = res.data;
         })
         .catch((err) => {
           console.error(err);
@@ -229,6 +250,7 @@ export default {
             localStorage.getItem("id") /*this should be a number no a name*/,
           tags: this.tags,
           image: blob,
+          groupAssociation: this.groupData,
         })
         .then((res) => {
           console.log(res);

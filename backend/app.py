@@ -275,9 +275,11 @@ def post():
     postLikes = 0
     postTags = data.get('tags')
     postImage = data.get('image')
+    targetGroupStr = str(data.get('groupAssociation'))
 
     print(postImage)
-
+    print(targetGroupStr)
+    print(type(targetGroupStr))
     post = Posts(postTitle=postTitle, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
     db.session.add(post)
     db.session.commit()
