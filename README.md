@@ -134,6 +134,7 @@ type:
 
 ## TESTING:
 - [Flask](https://flask.palletsprojects.com/en/2.2.x/testing/)
+- All tests can be found in the "tests" folder. Black box test files will be marked with (BB)
 
 
 
