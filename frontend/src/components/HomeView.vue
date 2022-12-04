@@ -99,7 +99,7 @@ export default {
         .post(path, {
           targetGroupTmp: "0",
           targetPersonsTmp: "0",
-          targetTagsTmp: "Legs,Arms",
+          targetTagsTmp: "",
           /*Configure these strings to add targeting 
           target persons assignment will be " AND poster = " + str(targetPersons)
           target group assignment will be str(groupId)*/
