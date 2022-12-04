@@ -55,6 +55,7 @@ def feedMeta():
         #print("target group is " + targetGroupStr)
         targetPersonsStr = info['targetPersonsTmp']
         #print("targetPersonsStr is '" + targetPersonsStr + "'")
+        #targetTagsStr = info['targetTagsTmp']
         targetTagsStr = info['targetTagsTmp']
         return "Feed targets set"
     else:

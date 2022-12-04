@@ -40,7 +40,7 @@
         </button>
       </div>
     </section>
-    <div class="posted"><feedViewObj /></div>
+    <div><feedViewObj /></div>
   </div>
 </template>
 

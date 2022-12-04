@@ -34,31 +34,32 @@ input {
     <navBar></navBar>
     <form class="tags">
       <label>
-        <input type="checkbox" value="Arms" v-model="tags" /> Arms
+        <input type="checkbox" value="Arms" v-model="tag1" /> Arms
       </label>
       <label>
-        <input type="checkbox" value="Back" v-model="tags" /> Back
+        <input type="checkbox" value="Back" v-model="tag2" /> Back
       </label>
       <label>
-        <input type="checkbox" value="Back/Bicep" v-model="tags" />
+        <input type="checkbox" value="Back/Bicep" v-model="tag3" />
         Back/Bicep
       </label>
       <label>
-        <input type="checkbox" value="Chest" v-model="tags" /> Chest
+        <input type="checkbox" value="Chest" v-model="tag4" /> Chest
       </label>
       <label>
-        <input type="checkbox" value="Chest/Tricep" v-model="tags" />
+        <input type="checkbox" value="Chest/Tricep" v-model="tag5" />
         Chest/Tricep
       </label>
       <label>
-        <input type="checkbox" value="Legs" v-model="tags" /> Legs
+        <input type="checkbox" value="Legs" v-model="tag6" /> Legs
       </label>
       <label>
-        <input type="checkbox" value="Full Body" v-model="tags" /> Full Body
+        <input type="checkbox" value="Full Body" v-model="tag7" /> Full Body
       </label>
-      <button @click="pog">Search</button>
+      <button @click="searchTags">Search</button>
     </form>
-    <div class="posted"><feedViewObj /></div>
+    <h1>{{ tags }}</h1>
+    <div><feedViewObj /></div>
   </div>
 </template>
 
@@ -72,7 +73,14 @@ export default {
     return {
       backend: "",
       checked: "",
-      tags: [],
+      tag1: "",
+      tag2: "",
+      tag3: "",
+      tag4: "",
+      tag5: "",
+      tag6: "",
+      tag7: "",
+      tags: "",
     };
   },
   components: {
@@ -86,7 +94,7 @@ export default {
       }
     },
     getStats() {
-      const path = "http://127.0.0.1:5000/home";
+      const path = "http://127.0.0.1:5000/search";
       axios
         .get(path)
         .then((res) => {
@@ -105,6 +113,9 @@ export default {
         name: "profile",
         params: { id: localStorage.getItem("id") },
       });
+    },
+    searchTags() {
+      this.$router.push({ name: "search" });
     },
     postFeedMeta() {
       // used to set the backend variables to what searches to look for
