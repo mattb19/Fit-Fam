@@ -16,47 +16,7 @@ nav {
 
 <template>
   <div class="searchView">
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css"
-      integrity="sha384-B4morbeopVCSpzeC1c4nyV0d0cqvlSAfyXVfrPJa25im5p+yEN/YmhlgQP/OyMZD"
-      crossorigin="anonymous"
-    />
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarColor02"
-          aria-controls="navbarColor02"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor02">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/home">Global</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/groups">Groups</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/search">Search</a>
-            </li>
-            <li class="nav-item">
-              <button @click="logout">Logout</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <navBar></navBar>
     <h1 class="large centeralign">Security Question Check</h1>
     <form @submit="getStats">
       <label for="answer1">Answer to Question1:</label>
@@ -82,6 +42,7 @@ nav {
 
 <script>
 import axios from "axios";
+import NavBarComponent from "./NavBarComponent.vue";
 
 export default {
   // props: ["userEmail"],
@@ -96,9 +57,12 @@ export default {
       user: "",
     };
   },
+  components: {
+    navBar: NavBarComponent,
+  },
   methods: {
     checkLoggedIn() {
-      if (localStorage.getItem("email") === null) {
+      if (localStorage.getItem("id") === null) {
         this.$router.push({ name: "login" });
       }
     },
@@ -106,7 +70,7 @@ export default {
       const path = "http://127.0.0.1:5000/securityQuestionCheck";
       axios
         .post(path, {
-          userEmail: localStorage.getItem("id"),
+          userId: localStorage.getItem("id"),
           answer1: this.answer1,
           answer2: this.answer2,
         })
@@ -122,6 +86,12 @@ export default {
     logout() {
       localStorage.clear();
       this.$router.push({ name: "login" });
+    },
+    userProfile() {
+      this.$router.push({
+        name: "profile",
+        params: { id: localStorage.getItem("id") },
+      });
     },
   },
   created() {

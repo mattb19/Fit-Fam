@@ -1,5 +1,14 @@
 <!-- eslint-disable prettier/prettier -->
 <style scoped>
+li {
+  display: block;
+  float: left;
+}
+
+ul {
+  max-width: 5px;
+}
+
 .addmargin {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -25,65 +34,43 @@ button {
 
 <template>
   <div class="searchView">
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css"
-      integrity="sha384-B4morbeopVCSpzeC1c4nyV0d0cqvlSAfyXVfrPJa25im5p+yEN/YmhlgQP/OyMZD"
-      crossorigin="anonymous"
-    />
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarColor02"
-          aria-controls="navbarColor02"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor02">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/home">Global</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/groups">Groups</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/search">Search</a>
-            </li>
-            <li class="nav-item">
-              <button @click="logout">Logout</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <navBar></navBar>
     <div>
       <th class="groupsDisplay" align="left">
         Groups<button @click="createNewGroup">+</button>
       </th>
       <th>Group Info</th>
     </div>
+    <div class="groups">
+      <ul>
+        <li>
+          <button
+            v-for="group in backend"
+            :key="group.groupId"
+            v-bind:gID="group.groupId"
+            @click="changeGroup(group.groupId)"
+          >
+            {{ group.groupName }} <br />
+          </button>
+        </li>
+      </ul>
+    </div>
     <p></p>
     <p></p>
-    <p>
-      <button @click="getGroupFeed">{{ backend }}</button>
-    </p>
-    <feedViewObj />
+    <p></p>
+    <div class="feed">
+      <feedViewObj />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import feedViewObj from "./feedView.vue";
+import NavBarComponent from "./NavBarComponent.vue";
+import Vue from "vue";
+/*global*/
+Vue.prototype.$groupFeed = "0";
 
 export default {
   data() {
@@ -93,6 +80,7 @@ export default {
   },
   components: {
     feedViewObj,
+    navBar: NavBarComponent,
   },
   methods: {
     checkLoggedIn() {
@@ -107,17 +95,20 @@ export default {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
-    getGroupFeed() {},
+    changeGroup(TarGroup) {
+      this.$groupFeed = TarGroup;
+      this.postFeedMeta();
+      this.$forceUpdate();
+    },
     postFeedMeta() {
       // used to set the backend variables to what searches to look for
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
         .post(path, {
-          targetGroupTmp: "0",
+          targetGroupTmp: this.$groupFeed.toString(),
           targetPersonsTmp: "0",
-          targetTagsTmp: "",
           /*Configure these strings to add targeting 
-          target persons assignment will be str(UserId)
+          target persons assignment will be " AND poster = " + str(targetPersons)
           target group assignment will be str(groupId)*/
         })
         .then((res) => {
@@ -137,6 +128,12 @@ export default {
         .catch((err) => {
           console.error(err);
         });
+    },
+    userProfile() {
+      this.$router.push({
+        name: "profile",
+        params: { id: localStorage.getItem("id") },
+      });
     },
   },
   created() {

@@ -7,66 +7,77 @@
 .home {
   background-color: #383c44;
 }
+label {
+  display: inline-block;
+  padding-left: 15px;
+  text-indent: -15px;
+}
+
+input {
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  top: -1px;
+}
+.tags {
+  display: flex;
+  width: 100%;
+  max-height: 10%;
+  max-width: 80%;
+}
 </style>
 
 <template>
   <div class="searchView">
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css"
-      integrity="sha384-B4morbeopVCSpzeC1c4nyV0d0cqvlSAfyXVfrPJa25im5p+yEN/YmhlgQP/OyMZD"
-      crossorigin="anonymous"
-    />
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarColor02"
-          aria-controls="navbarColor02"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor02">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/home">Global</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/groups">Groups</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/search">Search</a>
-            </li>
-            <li class="nav-item">
-              <button @click="logout">Logout</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <h3 class="large centeralign">WOOHOO SEARCH!!!!</h3>
-    <p></p>
-    <p></p>
-    <p>{{ backend }}</p>
+    <navBar></navBar>
+    <form>
+      <label>
+        <input type="checkbox" value="Arms" v-model="tags" /> Arms
+      </label>
+      <label>
+        <input type="checkbox" value="Back" v-model="tags" /> Back
+      </label>
+      <label>
+        <input type="checkbox" value="Back/Bicep" v-model="tags" />
+        Back/Bicep
+      </label>
+      <label>
+        <input type="checkbox" value="Chest" v-model="tags" /> Chest
+      </label>
+      <label>
+        <input type="checkbox" value="Chest/Tricep" v-model="tags" />
+        Chest/Tricep
+      </label>
+      <label>
+        <input type="checkbox" value="Legs" v-model="tags" /> Legs
+      </label>
+      <label>
+        <input type="checkbox" value="Full Body" v-model="tags" /> Full Body
+      </label>
+      <button @click="postFeedMeta">Search</button>
+    </form>
+    <div><feedViewObj /></div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import NavBarComponent from "./NavBarComponent.vue";
+import feedViewObj from "./feedView.vue";
 
 export default {
   data() {
     return {
       backend: "",
+      checked: "",
+      tags: [],
     };
+  },
+  components: {
+    feedViewObj,
+    navBar: NavBarComponent,
   },
   methods: {
     checkLoggedIn() {
@@ -75,8 +86,11 @@ export default {
       }
     },
     getStats() {
-      const path = "http://127.0.0.1:5000/home";
+      const path = "http://127.0.0.1:5000/search";
       axios
+        .post(path, {
+          tags: this.tags,
+        })
         .get(path)
         .then((res) => {
           this.backend = res.data;
@@ -88,6 +102,31 @@ export default {
     logout() {
       localStorage.clear();
       this.$router.push({ name: "login" });
+    },
+    userProfile() {
+      this.$router.push({
+        name: "profile",
+        params: { id: localStorage.getItem("id") },
+      });
+    },
+    postFeedMeta() {
+      // used to set the backend variables to what searches to look for
+      const path = "http://127.0.0.1:5000/feedmeta";
+      axios
+        .post(path, {
+          targetGroupTmp: "0",
+          targetPersonsTmp: "0",
+          targetTagsTmp: this.tags.join(),
+          /*Configure these strings to add targeting
+          target persons assignment will be str(UserId)
+          target group assignment will be str(groupId)*/
+        })
+        .then((res) => {
+          this.dataPassLog = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
   created() {

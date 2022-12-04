@@ -23,51 +23,11 @@ input {
 
 <template>
   <div class="searchView">
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css"
-      integrity="sha384-B4morbeopVCSpzeC1c4nyV0d0cqvlSAfyXVfrPJa25im5p+yEN/YmhlgQP/OyMZD"
-      crossorigin="anonymous"
-    />
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/home">FitFam</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarColor02"
-          aria-controls="navbarColor02"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor02">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/home">Global</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/groups">Groups</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/profile">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/search">Search</a>
-            </li>
-            <li class="nav-item">
-              <button @click="logout">Logout</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <navBar></navBar>
     <p></p>
     <p></p>
     <form @submit="save" class="profile">
-      <h1>this is the profile for: {{ backend.realName }}</h1>
+      <h1>{{ backend.realName }}</h1>
       <label for="nickName">What do you want your nickname to be</label>
       <input
         type="text"
@@ -94,6 +54,7 @@ input {
 
 <script>
 import axios from "axios";
+import NavBarComponent from "./NavBarComponent.vue";
 
 export default {
   data() {
@@ -102,6 +63,9 @@ export default {
       nickName: "",
       aboutMe: "",
     };
+  },
+  components: {
+    navBar: NavBarComponent,
   },
   methods: {
     checkLoggedIn() {
@@ -138,10 +102,18 @@ export default {
           this.backend = res.data;
         })
         .catch(() => {});
-      this.$router.push({ name: "profile" });
+      setTimeout(() => {
+        this.$router.push({
+          name: "profile",
+          params: { id: localStorage.getItem("id") },
+        });
+      }, 50);
     },
     cancel() {
-      this.$router.push({ name: "profile" });
+      this.$router.push({
+        name: "profile",
+        params: { id: localStorage.getItem("id") },
+      });
     },
   },
   created() {
@@ -149,6 +121,12 @@ export default {
     setTimeout(() => {
       this.checkLoggedIn();
     }, 200);
+  },
+  userProfile() {
+    this.$router.push({
+      name: "profile",
+      params: { id: localStorage.getItem("id") },
+    });
   },
 };
 </script>
