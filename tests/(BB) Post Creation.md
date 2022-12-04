@@ -6,7 +6,15 @@
 - ## FAIL: Above doesn't happen
 
 
-# TEST 2: Post Creation With Image
+# TEST 2: Post Creation Character Count
+- Navigate to the create post page using the "+" button in the bottom right of global feed
+- Fill out the title field with as many characters as possible
+- Fill out the description field with as many characters as possible
+- Click "Post"
+- ## PASS: The text fields for title and description will limit you to 255 & 4096 characters respectively
+- ## FAIL: The text fields for title and description will let you type more than 255 & 4096 characters respectively
+
+# TEST 3: Post Creation With Image
 - Navigate to the create post page using the "+" button in the bottom right of global feed
 - Fill out the title and description page with whatever you want
 - Select an image using the "Choose File" button
@@ -15,7 +23,7 @@
 - ## FAIL: Above doesn't happen
 
 
-# TEST 3: Post Creation With Tag
+# TEST 4: Post Creation With Tag
 - Navigate to the create post page using the "+" button in the bottom right of global feed
 - Fill out the title and description page with whatever you want
 - Select a tag from the "Choose a tag" dropdown
@@ -24,7 +32,7 @@
 - ## FAIL: Above doesn't happen
 
 
-# TEST 4: Empty Title/Description
+# TEST 5: Empty Title/Description
 - Navigate to the create post page using the "+" button in the bottom right of global feed
 - Leave either the title or description field blank
 - Click "Post"
