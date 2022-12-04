@@ -99,7 +99,7 @@ form {
       <p class="p">* Required</p>
       <label :class="good">Title:</label>
       <label class="red">*</label>
-   <input    type="text" v-model="title" required maxlength="255" />
+      <input type="text" v-model="title" required maxlength="255" />
 
       <label :class="good">Description:</label>
       <label class="red">*</label>
@@ -124,19 +124,19 @@ form {
         <option value="Full Body" class="tag">Full Body</option>
       </select>
       <label for="group" class="group">Choose a Feed:</label>
-    <select name="group" id="group" class="group" v-model="groupAssociation">
-      <option value="0" class="group">Global</option>
-      <option
-        v-for="group in groupData"
-        v-bind:value="group.groupId"
-        :key="group.groupId"
-        class="group"
-      >
-        {{ group.groupName }}
-      </option>
-    </select>
-    <p></p>
-       <input
+      <select name="group" id="group" class="group" v-model="groupAssociation">
+        <option value="0" class="group">Global</option>
+        <option
+          v-for="group in groupData"
+          v-bind:value="group.groupId"
+          :key="group.groupId"
+          class="group"
+        >
+          {{ group.groupName }}
+        </option>
+      </select>
+      <p></p>
+      <input
         class="image"
         type="file"
         id="avatar"
@@ -245,7 +245,7 @@ export default {
             tags: this.tags,
             image: blob,
             groupAssociation: this.groupAssociation,
-        })
+          })
           .then((res) => {
             console.log(res);
           })
