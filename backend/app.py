@@ -55,6 +55,7 @@ def feedMeta():
         print("target group is " + targetGroupStr)
         targetPersonsStr = info['targetPersonsTmp']
         #print("targetPersonsStr is '" + targetPersonsStr + "'")
+        #targetTagsStr = info['targetTagsTmp']
         targetTagsStr = info['targetTagsTmp']
         return "Feed targets set"
     else:
@@ -144,10 +145,10 @@ def home():
     else:
         return "This message is a test for backend."
 
-@app.route("/profile" , methods=['GET', 'POST'])
-def profile():
+@app.route("/profile/<id>" , methods=['GET', 'POST'])
+def profile(id):
     info = request.get_json(silent=True)
-    userId = info['userId']
+    userId = id
     user = User.query.filter_by(id = userId).first()
     profile = Profile.query.filter_by(userId = user.id).first()
     nickName = user.nickname
@@ -252,6 +253,14 @@ def signup():
         else:
             return jsonify("invalid"), 401
         return jsonify(user.id), 200
+
+
+@app.route("/search", methods=['POST', 'GET'])
+def search():
+    info = request.get_json(silent=True)
+    tags = info['tags']
+    print(tags)
+    return info
 
 
 @app.route("/security_questions", methods=['POST'])

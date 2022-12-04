@@ -43,8 +43,9 @@ const routes = [
     component: searchView,
   },
   {
-    path: "/profile",
+    path: "/profile/:id",
     name: "profile",
+    props: true,
     component: profileView,
   },
   {
@@ -63,7 +64,7 @@ const routes = [
     component: security_questions,
   },
   {
-    path: "/profileEdit",
+    path: "/profileEdit/",
     name: "profileEdit",
     component: profileEdit,
   },

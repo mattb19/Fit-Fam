@@ -23,7 +23,7 @@ nav {
     />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8080/signup">FitFam</a>
+        <a class="navbar-brand" href="http://localhost:8080/login">FitFam</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -38,10 +38,10 @@ nav {
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+              <a class="nav-link active" href="/login">Login</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/signup">Sign Up</a>
+              <a class="nav-link" href="/signup">Sign Up</a>
             </li>
           </ul>
         </div>

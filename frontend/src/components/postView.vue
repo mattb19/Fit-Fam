@@ -6,7 +6,7 @@
       class="card-header"
       style="text-align: left"
     >
-      <a href="/search">{{ postItem.postNickname }}</a>
+      <a class="nav-link" @click="userProfile">{{ postItem.postNickname }}</a>
       <span style="float: right"> {{ postItem.postDateTime }} </span>
     </h3>
     <h3
@@ -14,7 +14,7 @@
       class="card-header"
       style="text-align: left"
     >
-      <a href="/search" class="nameLink"
+      <a class="nav-link" @click="userProfile"
         >{{ postItem.postFirstName }} {{ postItem.postLastName }}</a
       >
       <span style="float: right"> {{ postItem.postDateTime }} </span>
@@ -137,6 +137,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    userProfile() {
+      this.$router.push({
+        name: "profile",
+        params: { id: this.$props.postItem.poster },
+      });
     },
   },
 };
