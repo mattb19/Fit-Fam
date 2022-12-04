@@ -109,9 +109,6 @@ export default {
         params: { id: localStorage.getItem("id") },
       });
     },
-    searchTags() {
-      this.$router.push({ name: "search" });
-    },
     postFeedMeta() {
       // used to set the backend variables to what searches to look for
       const path = "http://127.0.0.1:5000/feedmeta";
