@@ -115,6 +115,7 @@ export default {
         .post(path, {
           targetGroupTmp: "0",
           targetPersonsTmp: "0",
+          targetTagsTmp: "",
           /*Configure these strings to add targeting 
           target persons assignment will be str(UserId)
           target group assignment will be str(groupId)*/
