@@ -26,12 +26,24 @@ from models import *    # IMPORT THE MODELS
 CORS(app, resources={r'/*':{'origins': '*'}})
 
 def db_connection():
+    ################################
+    # '''
+    # Used to initialize connection to the database app.db
+    # :return: the database connection object
+    # '''
+    ################################
     conn = None
     try:
         conn = sqlite3.connect("app.db")
     except sqlite3.error as e:
         print(e)
     return conn
+
+################################
+# '''
+# Global params for post feed retrieval
+# '''
+################################
 
 Item2 = []
 postObjList = []
@@ -45,8 +57,15 @@ targetTagsStr = ""
 #" AND poster = targetPersons"
 
 @app.route("/feedmeta", methods=['GET', 'POST'])
-def feedMeta():
+def feedMeta():  
     if request.method == 'POST':
+        ################################
+        # '''
+        # Post method is used to retirieve information about which page is requesting a feed for display. 
+        # :param info: dict of the target parameters for querying
+        # :return: confirmation string
+        # '''
+        ################################
         global targetGroupStr
         global targetPersonsStr
         global targetTagsStr
@@ -59,6 +78,12 @@ def feedMeta():
         targetTagsStr = info['targetTagsTmp']
         return "Feed targets set"
     else:
+        ################################
+        # '''
+        # Get method is used to retrieve the length of the sql post table from which the posts are being pulled. This is needed for the pagination of the posts. feed position is set globaly. The curent list of posts is cleared.
+        # :return: confirmation string 
+        # '''
+        ################################
         global postObjList
         global feedPosition
         postObjList = []
@@ -77,6 +102,12 @@ def feedMeta():
 
 @app.route("/posts", methods=['GET', 'POST'])
 def posts():
+    ################################
+    # '''
+    # Driving code for post SQL requests and post passing. Everything up until the declaration of 'tmpPostObjList' is for setting up a sql query string to be executed. After that the response is pushed into a dictionary. Pushes the next ten posts onto the post list on every call.
+    # :return: dictionary of all relevant posts stored in the backend with most recent posts at the front.
+    # '''
+    ################################
     global feedPosition
     conn = db_connection()
     cursor = conn.cursor()
@@ -136,6 +167,25 @@ def posts():
     #print(postObjList[0])
     #print(len(postObjList))
     return postObjList
+
+@app.route("/delete_post", methods=['GET','POST'])
+def delete():
+    ################################
+    # '''
+    # Deletes a post from the database.
+    # :param info: requests the post ID being deleted
+    # :return: confirmation string
+    # '''
+    ################################
+    info = request.get_json(force=True)
+    postId = info['postId']
+
+    conn = db_connection()
+    sql = 'DELETE FROM Posts WHERE postId=?'
+    cursor = conn.cursor()
+    cursor.execute(sql, (postId,))
+    conn.commit()
+    return "deleted post"
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
