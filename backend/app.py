@@ -5,7 +5,6 @@ from flask_migrate import Migrate
 from config import Config
 from werkzeug.security import generate_password_hash, check_password_hash
 from Database import db
-#import mysql.connector
 import sqlite3
 
 def register_extensions(app):
@@ -52,7 +51,7 @@ def feedMeta():
         global targetTagsStr
         info = request.get_json(silent=True)
         targetGroupStr = info['targetGroupTmp']
-        print("target group is " + targetGroupStr)
+        #print("target group is " + targetGroupStr)
         targetPersonsStr = info['targetPersonsTmp']
         #print("targetPersonsStr is '" + targetPersonsStr + "'")
         #targetTagsStr = info['targetTagsTmp']
@@ -88,20 +87,19 @@ def posts():
     #print(feedPosition)
     #print(tmpFeedPosition)
     if targetPersonsStr == "0":
-        tmpTargetPersonsStr = targetPersonsStr
+        tmpTargetPersonsStr = ""
     else:
         tmpTargetPersonsStr = " AND poster = " + targetPersonsStr
     tmpTargetTagsStr = ""
     if targetTagsStr != "":
         tmpTargetTagsStr = " AND ("
         targetTagsArr = targetTagsStr.split(',')
-        print(targetTagsArr)
         for i in range(len(targetTagsArr)):
             tmpTargetTagsStr = tmpTargetTagsStr + " postTags = '" + targetTagsArr[i] + "'"
             if i+1 != len(targetTagsArr):
                 tmpTargetTagsStr += " OR"
         tmpTargetTagsStr += ")"
-    print(tmpTargetTagsStr)
+    #print(tmpTargetTagsStr)
     cursor = conn.execute(
         f"WITH Posts_Numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY _ROWID_) RowNum FROM Posts) \
             SELECT Posts_Numbered.*, User.firstName, User.lastName, User.nickname FROM Posts_Numbered \
@@ -263,6 +261,16 @@ def resetPassword():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    ################################
+    #function for loginView.vue
+    #
+    #Use: Used to access the site using already existing account information
+    #
+    #Input: string email, string password
+    #
+    #Return: status code detailing if login was good or bad
+    #
+    ################################
     if request.method == 'POST':
         info = request.get_json(silent=True)
         userEmail = info['email']
@@ -275,6 +283,16 @@ def login():
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+    ################################
+    #function for signupView.vue
+    #
+    #Use: Used to create an account to access the site with
+    #
+    #Input: string first name, string last name, string email, string password
+    #
+    #Return: status code detailing if signup was good or bad
+    #
+    ################################
     if request.method == 'POST':
         info = request.get_json(silent=True)
         first = info['first']
@@ -301,7 +319,7 @@ def signup():
 def search():
     info = request.get_json(silent=True)
     tags = info['tags']
-    print(tags)
+    #print(tags)
     return info
 
 
@@ -331,7 +349,7 @@ def securityQuestions():
     setattr(securityQuestions,'Question2',questionStringB)
     setattr(securityQuestions,'Answer2',answerStringB)
     db.session.commit()
-    print(f"\nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
+    #print(f"\nSecurity Question 1: {questionStringA} \nanswer1: {answerStringA} \nSecurity question2: {questionStringB} \nAnswer2: {answerStringB}")
     return info
 
 @app.route("/")
@@ -353,7 +371,7 @@ def post():
     postImage = data.get('image')
     targetGroupStr = str(data.get('groupAssociation'))
 
-    print(postImage)
+    #print(postImage)
 
     post = Posts(postTitle=postTitle, groupAssociation=targetGroupStr, description=description, postDateTime=datetime.today().strftime('%Y-%m-%d'), postImage=postImage, poster=poster, postLikes=postLikes, postTags=postTags)
     db.session.add(post)
@@ -378,7 +396,7 @@ def like():
     db.session.add(post)
     db.session.commit()
 
-    print(item)
+    #print(item)
     return item
 
 
