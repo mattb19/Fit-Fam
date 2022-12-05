@@ -99,7 +99,7 @@ button {
     <p></p>
     <p></p>
     <div class="feed">
-      <feedViewObj />
+      <feedViewObj :key="renderComponent" />
     </div>
   </div>
 </template>
@@ -115,6 +115,7 @@ export default {
   data() {
     return {
       backend: "",
+      renderComponent: 0,
     };
   },
   components: {
@@ -133,10 +134,13 @@ export default {
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
+    renderComp() {
+      this.renderComponent += 1;
+    },
     changeGroup(TarGroup) {
       this.$groupFeed = TarGroup;
       this.postFeedMeta();
-      this.$forceUpdate();
+      this.renderComp();
     },
     postFeedMeta() {
       // used to set the backend variables to what searches to look for
