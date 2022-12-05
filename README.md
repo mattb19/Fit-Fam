@@ -18,6 +18,9 @@ CSC 450 - 2 Team Project
         
 ## FIRST TIME INSTALLATION MAC:
 1. Install Vue.js 2.7.10, Python 3.10.7 and Visual Studio Code
+- [Python](https://wiki.python.org/moin/BeginnersGuide/Download)
+- [Vue](https://vuejs.org/guide/quick-start.html#using-vue-from-cdn)
+- [Visual Studio Code](https://code.visualstudio.com/download)
 2. Clone the github repo into your desired directory then open the directory in vscode
 3. Open terminal in vscode, navigate to the backend folder and
 run the following:
@@ -135,6 +138,7 @@ type:
 ## TESTING:
 - [Flask](https://flask.palletsprojects.com/en/2.2.x/testing/)
 - All tests can be found in the "tests" folder. Black box test files will be marked with (BB)
+- Run tests by compiling the markdown files into brain byte-code and then executing the steps listed manually
 
 
 
