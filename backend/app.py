@@ -483,6 +483,20 @@ def createGroup():
     # db.session.add(groupMem)
     # db.session.commit()
 
+
+@app.route("/delete_post", methods=['GET','POST'])
+def delete():
+    info = request.get_json(force=True)
+    postId = info['postId']
+
+    conn = db_connection()
+    sql = 'DELETE FROM Posts WHERE postId=?'
+    cursor = conn.cursor()
+    cursor.execute(sql, (postId,))
+    conn.commit()
+    return info
+
+
 @app.route("/group_post", methods=['GET', 'POST'])
 def groupPost():
     info = request.get_json(silent=True)
