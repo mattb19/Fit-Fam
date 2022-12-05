@@ -31,7 +31,9 @@ export default {
   },
   methods: {
     getFeedMeta() {
-      // used to set the position in the feed on page load
+      // '''
+      // used to set the position in the feed on page load. Changes are handled in backend
+      // '''
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
         .get(path)
@@ -44,7 +46,10 @@ export default {
         });
     },
     getPost() {
-      // used to retrieve posts dict list from backend
+      // '''
+      // Used to retrieve posts dict list from backend.
+      // :return: dict of posts for curent vieable area.
+      // '''
       const path = "http://127.0.0.1:5000/posts";
       axios
         .get(path)
@@ -61,6 +66,9 @@ export default {
     },
     // scroll window listener
     handleScroll() {
+      // '''
+      // Event listener which retirves the next sublist of posts from the backend by triggering 'getPost'
+      // '''
       if (
         window.scrollY + window.innerHeight >=
         document.body.scrollHeight - 50
@@ -72,6 +80,9 @@ export default {
     },
   },
   mounted() {
+    // '''
+    // initialization of the feed page which sets up all previous methods for ordered execution
+    // '''
     this.getFeedMeta();
     setTimeout(() => {
       this.post_list = this.getPost();

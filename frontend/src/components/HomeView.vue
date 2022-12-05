@@ -50,7 +50,9 @@ export default {
         });
     },
     postFeedMeta() {
+      // '''
       // used to set the backend variables to what searches to look for
+      // '''
       const path = "http://127.0.0.1:5000/feedmeta";
       axios
         .post(path, {

@@ -124,6 +124,10 @@ export default {
       this.getStats();
     },
     deletePost(postId) {
+      //'''
+      // method for deleting post via sql in backend
+      // :param id: id of post to be deleted
+      //'''
       const path = "http://127.0.0.1:5000/delete_post";
       const id = postId;
 
