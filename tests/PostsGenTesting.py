@@ -1,3 +1,5 @@
+#Noah Davis
+
 #Drop this file into backend to let it work
 #Clear the fake data from the SQL data base using 'Delete from Posts'
 
@@ -11,7 +13,7 @@ cursor = conn.cursor()
 poster = random.randint(1,7)
 groupAssociation = 0
 
-tagsList = ["Legs","Arms","Cardio","Core","Weights","Low Intensity","High Intensity"]
+tagsList = ["Legs","Arms","Cardio","Core","Weights","Low Intensity","HighIntensity"]
 
 timeIncr = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 for i in range(15):
