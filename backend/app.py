@@ -88,7 +88,7 @@ def posts():
     #print(feedPosition)
     #print(tmpFeedPosition)
     if targetPersonsStr == "0":
-        tmpTargetPersonsStr = targetPersonsStr
+        tmpTargetPersonsStr = ""
     else:
         tmpTargetPersonsStr = " AND poster = " + targetPersonsStr
     tmpTargetTagsStr = ""
@@ -101,7 +101,7 @@ def posts():
             if i+1 != len(targetTagsArr):
                 tmpTargetTagsStr += " OR"
         tmpTargetTagsStr += ")"
-    print(tmpTargetTagsStr)
+    print("in posts, "+targetGroupStr)
     cursor = conn.execute(
         f"WITH Posts_Numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY _ROWID_) RowNum FROM Posts) \
             SELECT Posts_Numbered.*, User.firstName, User.lastName, User.nickname FROM Posts_Numbered \
