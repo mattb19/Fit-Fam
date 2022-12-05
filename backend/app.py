@@ -5,7 +5,6 @@ from flask_migrate import Migrate
 from config import Config
 from werkzeug.security import generate_password_hash, check_password_hash
 from Database import db
-#import mysql.connector
 import sqlite3
 
 def register_extensions(app):
@@ -262,6 +261,16 @@ def resetPassword():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    ################################
+    #function for loginView.vue
+    #
+    #Use: Used to access the site using already existing account information
+    #
+    #Input: string email, string password
+    #
+    #Return: status code detailing if login was good or bad
+    #
+    ################################
     if request.method == 'POST':
         info = request.get_json(silent=True)
         userEmail = info['email']
@@ -274,6 +283,16 @@ def login():
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+    ################################
+    #function for signupView.vue
+    #
+    #Use: Used to create an account to access the site with
+    #
+    #Input: string first name, string last name, string email, string password
+    #
+    #Return: status code detailing if signup was good or bad
+    #
+    ################################
     if request.method == 'POST':
         info = request.get_json(silent=True)
         first = info['first']
