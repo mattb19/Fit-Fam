@@ -88,7 +88,7 @@ def posts():
     #print(feedPosition)
     #print(tmpFeedPosition)
     if targetPersonsStr == "0":
-        tmpTargetPersonsStr = targetPersonsStr
+        tmpTargetPersonsStr = ""
     else:
         tmpTargetPersonsStr = " AND poster = " + targetPersonsStr
     tmpTargetTagsStr = ""
